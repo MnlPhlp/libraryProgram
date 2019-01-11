@@ -2,6 +2,17 @@
 #define MENU
 
 #include "structs.h"
+
+#define mainMenuText "\n    main menu\n"\
+                     "------------------\n"\
+                     "1) borrow a book\n"\
+                     "2) return a book\n"\
+                     "3) search a book\n"\
+                     "4) add a book\n"\
+                     "5) delete a book\n"\
+                     "6) show all books\n"\
+                     "7) quit\n\n"
+
 /*
  * Function: yesno
  * ----------------------------

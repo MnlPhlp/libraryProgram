@@ -75,15 +75,6 @@ void deleteMenu()
 
 void mainMenu(library *lib)
 {
-  char *mainMenuText = "\n    main menu\n"
-                       "------------------\n"
-                       "1) borrow a book\n"
-                       "2) return a book\n"
-                       "3) search a book\n"
-                       "4) add a book\n"
-                       "5) delete a book\n"
-                       "6) show all books\n"
-                       "7) quit\n\n";
   while (1)
   {
     switch (menu(mainMenuText, 7))
@@ -125,11 +116,18 @@ void mainMenu(library *lib)
  */
 int yesno(int def)
 {
-  char buff = getchar();
-  char *options = "[Y/n]";
+  char buff;
+  char *options;
+  if (def == 1)
+    options = "[Y/n]";
+  else
+    options = "[y/N]";
+
   int input = -1;
   while (input == -1)
   {
+    printf("%s: ", options);
+    buff = getchar();
     switch (toupper(buff))
     {
     case 'Y':
@@ -142,10 +140,10 @@ int yesno(int def)
       input = def;
       break;
     default:
-      if (def == 0)
-        options = "[y/N]";
-      printf("invalid input, try again\n%s: ", options);
+      printf("invalid input, try again\n");
       break;
+    while (buff != '\n')
+      buff = getchar();
     }
   }
   return input;

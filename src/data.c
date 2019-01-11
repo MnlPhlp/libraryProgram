@@ -72,7 +72,7 @@ int saveData(library *lib, char *saveFile)
   strcat(backup, saveFile);
   while (rename(saveFile, backup))
   {
-    printf(ANSI_COLOR_RED "backup couldn't be created" ANSI_COLOR_RESET"\ntry again?");
+    printf(ANSI_COLOR_RED "backup couldn't be created" ANSI_COLOR_RESET"\ntry again?\n");
     if (!yesno(1))
       break;
   }
