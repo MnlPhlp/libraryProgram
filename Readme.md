@@ -30,4 +30,4 @@ Bewertungskriterien 2018/19<br>
 10 Punkte: Programmiertechniken<br>
 10 Punkte: Benutzerinterface<br>
 10 Punkte: Kompilierbarkeit und Robustheit<br>
-5  Punkte: Strukturierung und Kommentierung<br>
+5 &nbsp;&nbsp;Punkte: Strukturierung und Kommentierung<br>
