@@ -1,3 +1,7 @@
+#ifndef MENU
+#define MENU
+
+#include "structs.h"
 /*
  * Function: yesno
  * ----------------------------
@@ -9,3 +13,7 @@
  *  returns: 1 for 'y', 0 for 'n', <def> for 'enter'
  */
 int yesno(int def);
+
+void mainMenu(library *lib);
+
+#endif

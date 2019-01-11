@@ -2,7 +2,7 @@
 #include "visual.h"
 #include <stdio.h>
 
-void printLib(struct library *lib)
+void printLib(library *lib)
 {
   printf(PrintLibText, lib->count);
   for (int i = 0; i < lib->count; i++)

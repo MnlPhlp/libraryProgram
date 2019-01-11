@@ -1,14 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "structs.h"
-
-#define ANSI_COLOR_RED "\x1b[31m"
-#define ANSI_COLOR_RESET "\x1b[0m"
+#include <string.h>
+#include "data.h"
+#include "visual.h"
 
 int yesno(int def);
 
 unsigned long
-hash(struct library *lib)
+hash(library *lib)
 {
   unsigned long *str = (unsigned long *)lib;
   unsigned long hash = 5381;
@@ -19,19 +18,19 @@ hash(struct library *lib)
   return 1234565432345;
 }
 
-struct library *loadData(char *savefile)
+library *loadData(char *saveFile)
 {
-  FILE *save = fopen(savefile, "r");
+  FILE *save = fopen(saveFile, "r");
   int count;
   size_t length;
   fread(&count, sizeof(int), 1, save);
-  struct library *lib = malloc(sizeof(struct library) + sizeof(struct book *) * count);
+  library *lib = malloc(sizeof(library) + sizeof(book *) * count);
   lib->count = count;
   for (int i = 0; i < lib->count; i++)
   {
     //read borrowed amount as int
     fread(&count, sizeof(int), 1, save);
-    lib->books[i] = malloc(sizeof(struct book) + sizeof(char *) * count);
+    lib->books[i] = malloc(sizeof(book) + sizeof(char *) * count);
     lib->books[i]->borrowed = count;
     //read amount as int
     fread(&lib->books[i]->amount, sizeof(int), 1, save);
@@ -65,19 +64,19 @@ struct library *loadData(char *savefile)
   return lib;
 }
 
-int saveData(struct library *lib, char *savefile)
+int saveData(library *lib, char *saveFile)
 {
-  char *backup = malloc(strlen(savefile) + 8);
+  char *backup = malloc(strlen(saveFile) + 8);
   size_t length;
   strcpy(backup, "backup_");
-  strcat(backup, savefile);
-  while (rename(savefile, backup))
+  strcat(backup, saveFile);
+  while (rename(saveFile, backup))
   {
     printf(ANSI_COLOR_RED "backup couldn't be created" ANSI_COLOR_RESET"\ntry again?");
     if (!yesno(1))
       break;
   }
-  FILE *save = fopen(savefile, "w+");
+  FILE *save = fopen(saveFile, "w+");
   fwrite(&lib->count, sizeof(int), 1, save);
   for (int i = 0; i < lib->count; i++)
   {
@@ -110,9 +109,9 @@ int saveData(struct library *lib, char *savefile)
   return 0;
 }
 
-struct library *addBook(struct library *lib)
+library *addBook(library *lib)
 {
-  lib = realloc(lib, sizeof(lib)+sizeof(struct book *));
-  lib->books[lib->count+1] = malloc(sizeof(struct book));
+  lib = realloc(lib, sizeof(lib)+sizeof(book *));
+  lib->books[lib->count+1] = malloc(sizeof(book));
   return lib;
 }

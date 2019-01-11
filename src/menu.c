@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include "data.h"
 #include "visual.h"
+#include "menu.h"
 
 int menu(char *text, int options)
 {
@@ -72,7 +73,7 @@ void deleteMenu()
 {
 }
 
-void mainMenu(struct library *lib)
+void mainMenu(library *lib)
 {
   char *mainMenuText = "\n    main menu\n"
                        "------------------\n"

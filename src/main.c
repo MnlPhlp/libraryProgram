@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 #include "menu.h"
-#define savefile "Save"
+#include "visual.h"
+#include "structs.h"
+#include "data.h"
+#define savefile "bin/Save"
 
 int main(int argc, char const *argv[])
 { 
   printf("\nlibrary gets loaded from file '%s' ...\n",savefile);
   //load library from savefile
-  struct library *lib;
+  library *lib;
   while((lib = loadData(savefile)) == NULL)
   {
     printf(ANSI_COLOR_RED"File could not be loaded succesfully"ANSI_COLOR_RESET
