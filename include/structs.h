@@ -8,13 +8,13 @@ typedef struct book
   long isbn;
   char *title;
   char *author;
-  char *borrower[0];
+  char **borrower;
 }book;
 
 typedef struct library
 {
   int count;
-  book *books[0];
+  book **books;
 }library;
 
 #endif

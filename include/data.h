@@ -35,8 +35,8 @@ int saveData(library *lib,char *saveFile);
  * 
  * lib: pointer to the library that should be extended
  * 
- * returns: pointer to the extended Library
+ * returns: 0 if succesfull, 1 if an error occured
 */
-library *addBook(library *lib);
+int addBook(library *lib, int amount, int borrowed, long isbn, char *title, char *author, char **borrower);
 
 #endif

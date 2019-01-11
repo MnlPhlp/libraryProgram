@@ -21,19 +21,17 @@ hash(library *lib)
 library *loadData(char *saveFile)
 {
   FILE *save = fopen(saveFile, "r");
-  int count;
   size_t length;
-  fread(&count, sizeof(int), 1, save);
-  library *lib = malloc(sizeof(library) + sizeof(book *) * count);
-  lib->count = count;
+  library *lib = malloc(sizeof(library));
+  fread(&lib->count, sizeof(int), 1, save);
+  lib->books = malloc(sizeof(book*)*lib->count);
   for (int i = 0; i < lib->count; i++)
   {
-    //read borrowed amount as int
-    fread(&count, sizeof(int), 1, save);
-    lib->books[i] = malloc(sizeof(book) + sizeof(char *) * count);
-    lib->books[i]->borrowed = count;
+    lib->books[i] = malloc(sizeof(book));
     //read amount as int
     fread(&lib->books[i]->amount, sizeof(int), 1, save);
+    //read borrowed amount as int
+    fread(&lib->books[i]->borrowed, sizeof(int), 1, save);
     //read isbn as long
     fread(&lib->books[i]->isbn, sizeof(long), 1, save);
     //read title with length-value encoding
@@ -45,6 +43,7 @@ library *loadData(char *saveFile)
     lib->books[i]->author = malloc(length);
     fread(lib->books[i]->author, length, 1, save);
     //read each element of the borrower array
+    lib->books[i]->borrower=malloc(sizeof(char*) * lib->books[i]->borrowed);
     for (int j = 0; j < lib->books[i]->borrowed; j++)
     {
       //read borrower with length-value encoding
@@ -72,7 +71,7 @@ int saveData(library *lib, char *saveFile)
   strcat(backup, saveFile);
   while (rename(saveFile, backup))
   {
-    printf(ANSI_COLOR_RED "backup couldn't be created" ANSI_COLOR_RESET"\ntry again?\n");
+    printf(ANSI_COLOR_RED "backup couldn't be created" ANSI_COLOR_RESET "\ntry again?\n");
     if (!yesno(1))
       break;
   }
@@ -80,25 +79,25 @@ int saveData(library *lib, char *saveFile)
   fwrite(&lib->count, sizeof(int), 1, save);
   for (int i = 0; i < lib->count; i++)
   {
-    //save borrowed amount as int
-    fwrite(&lib->books[i]->borrowed, sizeof(int), 1, save);
     //save amount as int
     fwrite(&lib->books[i]->amount, sizeof(int), 1, save);
+    //save borrowed amount as int
+    fwrite(&lib->books[i]->borrowed, sizeof(int), 1, save);
     //save isbn as long
     fwrite(&lib->books[i]->isbn, sizeof(long), 1, save);
     //save title with length-value encoding
-    length = strlen(lib->books[i]->title)+1;
+    length = strlen(lib->books[i]->title) + 1;
     fwrite(&length, sizeof(size_t), 1, save);
     fwrite(lib->books[i]->title, length, 1, save);
     //save author with length-value encoding
-    length = strlen(lib->books[i]->author)+1;
+    length = strlen(lib->books[i]->author) + 1;
     fwrite(&length, sizeof(size_t), 1, save);
     fwrite(lib->books[i]->author, length, 1, save);
     //save each element of the borrower array
     for (int j = 0; j < lib->books[i]->borrowed; j++)
     {
       //save borrower with length-value encoding
-      length = strlen(lib->books[i]->borrower[j])+1;
+      length = strlen(lib->books[i]->borrower[j]) + 1;
       fwrite(&length, sizeof(size_t), 1, save);
       fwrite(lib->books[i]->borrower[j], length, 1, save);
     }
@@ -109,9 +108,31 @@ int saveData(library *lib, char *saveFile)
   return 0;
 }
 
-library *addBook(library *lib)
+book *newBook(int amount, int borrowed, long isbn, char *title, char *author, char **borrower)
 {
-  lib = realloc(lib, sizeof(lib)+sizeof(book *));
-  lib->books[lib->count+1] = malloc(sizeof(book));
-  return lib;
+  book *newBook = malloc(sizeof(book));
+  newBook->amount = amount;
+  newBook->borrowed = borrowed;
+  newBook->isbn = isbn;
+  newBook->title = malloc(strlen(title)+1);
+  strcpy(newBook->title,title);
+  newBook->author = malloc(strlen(author)+1);
+  strcpy(newBook->author,author);
+  newBook->borrower=malloc(sizeof(char *) * borrowed);
+  
+  for(int i = 0; i < newBook->borrowed; i++)
+  {
+    newBook->borrower[i] = malloc(strlen(borrower[i]));
+    strcpy(newBook->borrower[i],borrower[i]);
+  }
+  
+  return newBook;
+}
+
+int addBook(library *lib, int amount, int borrowed, long isbn, char *title, char *author, char **borrower)
+{
+  lib->books = realloc(lib->books, sizeof(lib->books) + sizeof(book *));
+  lib->count += 1;
+  lib->books[lib->count] = newBook(amount,borrowed,isbn,title,author,borrower);
+  return 0;
 }
