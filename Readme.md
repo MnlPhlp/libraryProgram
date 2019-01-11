@@ -18,12 +18,12 @@ Weiterhin sind die folgenden Funktionen zum Anzeigen und Bearbeiten der Liste zu
 
 Bedingungen:<br>
 • Die Bearbeitung kann in Gruppen zu 2-3 Studierenden erfolgen. <br>
-  Alle Studierenden einer Gruppe erhalten die gleiche Bewertung.<br>
+  &nbsp;&nbsp;&nbsp;Alle Studierenden einer Gruppe erhalten die gleiche Bewertung.<br>
 • Das Programm muss mit dem GCC-Compiler kompilierbar sein. <br>
-  Es dürfen nur ANSI-kompatible Funktionen der Standard-Bibliothek verwendet werden.<br>
+  &nbsp;&nbsp;&nbsp;Es dürfen nur ANSI-kompatible Funktionen der Standard-Bibliothek verwendet werden.<br>
 • Abgabe: Source-Code als zip-File auf Moodle hochladen. <br>
-  Das zip-File mit den Namen der Gruppenmitglieder benennen.<br>
-  Abgabetermin ist 17.03.2019.<br>
+  &nbsp;&nbsp;&nbsp;Das zip-File mit den Namen der Gruppenmitglieder benennen.<br>
+  &nbsp;&nbsp;&nbsp;Abgabetermin ist 17.03.2019.<br>
 
 Bewertungskriterien 2018/19<br>
 Funktionsumfang                   15 Punkte<br>
