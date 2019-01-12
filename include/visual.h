@@ -3,10 +3,10 @@
 
 #include "structs.h"
 
-#define PrintLibText "The library contains %d Books\n"\
-                     "-----------------------------------\n\n"
+#define LibText "\nThe library contains %d Books\n"\
+                     "-----------------------------------\n"
 
-#define PrintBookText "This is Book number %d\n"\
+#define BookText "\nThis is Book number %d\n"\
                       "------------------------\n"\
                       " title: %s\n"\
                       " author: %s\n"\

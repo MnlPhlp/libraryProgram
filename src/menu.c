@@ -142,8 +142,8 @@ int yesno(int def)
     default:
       printf("invalid input, try again\n");
       break;
-    while (buff != '\n')
-      buff = getchar();
+      while (buff != '\n')
+        buff = getchar();
     }
   }
   return input;

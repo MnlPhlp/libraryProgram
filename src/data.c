@@ -4,6 +4,7 @@
 #include "data.h"
 #include "visual.h"
 
+//only function used from menu so including menu.h would be to much
 int yesno(int def);
 
 unsigned long
@@ -131,8 +132,16 @@ book *newBook(int amount, int borrowed, long isbn, char *title, char *author, ch
 
 int addBook(library *lib, int amount, int borrowed, long isbn, char *title, char *author, char **borrower)
 {
-  lib->books = realloc(lib->books, sizeof(lib->books) + sizeof(book *));
   lib->count += 1;
-  lib->books[lib->count] = newBook(amount,borrowed,isbn,title,author,borrower);
+  lib->books = realloc (lib->books, lib->count * sizeof(book *));
+  lib->books[lib->count -1] = newBook(amount,borrowed,isbn,title,author,borrower);
+  return 0;
+}
+
+int deleteBook(library *lib, int index)
+{
+  free(lib->books[index]);
+  lib->count -= 1;
+  lib->books[index] = lib->books[lib->count];
   return 0;
 }

@@ -4,10 +4,10 @@
 
 void printLib(library *lib)
 {
-  printf(PrintLibText, lib->count);
+  printf(LibText, lib->count);
   for (int i = 0; i < lib->count; i++)
   {
-    printf(PrintBookText, i, lib->books[i]->title, lib->books[i]->author, lib->books[i]->isbn, lib->books[i]->amount, lib->books[i]->borrowed);
+    printf(BookText, i+1, lib->books[i]->title, lib->books[i]->author, lib->books[i]->isbn, lib->books[i]->amount, lib->books[i]->borrowed);
 
     for (int j = 0; j < lib->books[i]->borrowed; j++)
     {

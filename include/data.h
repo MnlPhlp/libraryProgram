@@ -39,4 +39,6 @@ int saveData(library *lib,char *saveFile);
 */
 int addBook(library *lib, int amount, int borrowed, long isbn, char *title, char *author, char **borrower);
 
+int deleteBook(library *lib, int index);
+
 #endif
