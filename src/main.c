@@ -4,7 +4,7 @@
 #include "visual.h"
 #include "structs.h"
 #include "data.h"
-#define savefile "bin/Save/test/fail"
+#define savefile "bin/Save"
 
 int main()
 {

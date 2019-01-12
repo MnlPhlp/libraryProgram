@@ -24,6 +24,8 @@ int menu(char *text, int options)
       printf(text);
     else
       printf("invalid input, try again (enter 'm' to show menu again)\n");
+    while (buff != '\n' && buff != EOF)
+      buff = getchar();
   }
   return input;
 }
@@ -140,6 +142,8 @@ int yesno(int def)
     default:
       printf("invalid input, try again\n");
       break;
+    while (buff != '\n' && buff != EOF)
+      buff = getchar();
     }
   }
   return input;

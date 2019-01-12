@@ -24,7 +24,8 @@ FILE *openFile(char *saveFile, char *mode)
   while (save == NULL)
   {
     printf(ANSI_COLOR_RED "standard save file could not be opened\n" ANSI_COLOR_RESET
-          "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET, strerror(errno));
+                          "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET,
+           strerror(errno));
     printf("try again? ");
     if (!yesno(1))
       break;
@@ -34,14 +35,14 @@ FILE *openFile(char *saveFile, char *mode)
 
 library *loadData(char *saveFile)
 {
-  FILE *save = openFile(saveFile,"r");
+  FILE *save = openFile(saveFile, "r");
   if (save == NULL)
     return NULL;
   size_t length;
   library *lib = malloc(sizeof(library));
   if (lib == NULL)
   {
-     printf("memory could not be allocated\n");
+    printf("memory could not be allocated\n");
     return NULL;
   }
   fread(&lib->count, sizeof(int), 1, save);
@@ -54,6 +55,11 @@ library *loadData(char *saveFile)
   for (int i = 0; i < lib->count; i++)
   {
     lib->books[i] = malloc(sizeof(book));
+    if (lib->books[i] == NULL)
+    {
+      printf("memory could not be allocated\n");
+      return NULL;
+    }
     //read amount as int
     fread(&lib->books[i]->amount, sizeof(int), 1, save);
     //read borrowed amount as int
@@ -63,18 +69,38 @@ library *loadData(char *saveFile)
     //read title with length-value encoding
     fread(&length, sizeof(size_t), 1, save);
     lib->books[i]->title = malloc(length);
+    if (lib->books[i]->title == NULL)
+    {
+      printf("memory could not be allocated\n");
+      return NULL;
+    }
     fread(lib->books[i]->title, length, 1, save);
     //read author with length-value encoding
     fread(&length, sizeof(size_t), 1, save);
     lib->books[i]->author = malloc(length);
+    if (lib->books[i]->author == NULL)
+    {
+      printf("memory could not be allocated\n");
+      return NULL;
+    }
     fread(lib->books[i]->author, length, 1, save);
     //read each element of the borrower array
     lib->books[i]->borrower = malloc(sizeof(char *) * lib->books[i]->borrowed);
+    if (lib->books[i]->borrower == NULL)
+    {
+      printf("memory could not be allocated\n");
+      return NULL;
+    }
     for (int j = 0; j < lib->books[i]->borrowed; j++)
     {
       //read borrower with length-value encoding
       fread(&length, sizeof(size_t), 1, save);
       lib->books[i]->borrower[j] = malloc(length);
+      if (lib->books[i]->borrower[j] == NULL)
+      {
+        printf("memory could not be allocated\n");
+        return NULL;
+      }
       fread(lib->books[i]->borrower[j], length, 1, save);
     }
   }
@@ -101,7 +127,7 @@ int saveData(library *lib, char *saveFile)
     if (!yesno(1))
       break;
   }
-  FILE *save = openFile(saveFile,"w+");
+  FILE *save = openFile(saveFile, "w+");
   if (save == NULL)
     return 1;
   fwrite(&lib->count, sizeof(int), 1, save);

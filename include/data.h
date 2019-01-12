@@ -30,8 +30,6 @@ int saveData(library *lib,char *saveFile);
  * Function: addBook
  * ----------------------------
  * adds a new Book to the library
- * pointer to the extended library only differs from given pointer 
- * if there is not enough free memory available at the old location
  * 
  * lib: pointer to the library that should be extended
  * 
@@ -39,6 +37,17 @@ int saveData(library *lib,char *saveFile);
 */
 int addBook(library *lib, int amount, int borrowed, long isbn, char *title, char *author, char **borrower);
 
+/*
+ * Function: addBook
+ * ----------------------------
+ * removes a Book from the library
+ * the last Book in the array is moved to the free position
+ * 
+ * lib: pointer to the library 
+ * index: index of the book that should be deleted
+ * 
+ * returns: 0 if succesfull, 1 if an error occured
+*/
 int deleteBook(library *lib, int index);
 
 #endif
