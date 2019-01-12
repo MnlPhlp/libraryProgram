@@ -39,8 +39,18 @@ library *loadData(char *saveFile)
     return NULL;
   size_t length;
   library *lib = malloc(sizeof(library));
+  if (lib == NULL)
+  {
+     printf("memory could not be allocated\n");
+    return NULL;
+  }
   fread(&lib->count, sizeof(int), 1, save);
-  lib->books = malloc(sizeof(book *) * lib->count);
+  lib->books = calloc(lib->count, sizeof(book *));
+  if (lib->books == NULL)
+  {
+    printf("memory could not be allocated\n");
+    return NULL;
+  }
   for (int i = 0; i < lib->count; i++)
   {
     lib->books[i] = malloc(sizeof(book));
@@ -73,7 +83,7 @@ library *loadData(char *saveFile)
   fread(&checksum_file, sizeof(unsigned long), 1, save);
   if (checksum_test != checksum_file)
   {
-    printf(ANSI_COLOR_RED "Die Datei wurde verändert oder beschädigt\n" ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_RED "the file was changed or damaged\n" ANSI_COLOR_RESET);
   }
   fclose(save);
   return lib;
