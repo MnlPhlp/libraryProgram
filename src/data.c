@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include "data.h"
 #include "visual.h"
 
@@ -22,6 +23,14 @@ hash(library *lib)
 library *loadData(char *saveFile)
 {
   FILE *save = fopen(saveFile, "r");
+  while (save == NULL)
+  {
+    printf(ANSI_COLOR_RED"standard save file could not be opened"ANSI_COLOR_RESET
+           "\nError message: %s\n",strerror(errno));
+    printf("try again? ");
+    if (!yesno(1))
+      return NULL;
+  }
   size_t length;
   library *lib = malloc(sizeof(library));
   fread(&lib->count, sizeof(int), 1, save);
@@ -68,8 +77,8 @@ int saveData(library *lib, char *saveFile)
 {
   char *backup = malloc(strlen(saveFile) + 8);
   size_t length;
-  strcpy(backup, "backup_");
-  strcat(backup, saveFile);
+  strcpy(backup, saveFile);
+  strcat(backup, "_backup");
   while (rename(saveFile, backup))
   {
     printf(ANSI_COLOR_RED "backup couldn't be created" ANSI_COLOR_RESET "\ntry again?\n");
