@@ -4,9 +4,7 @@
 #include <errno.h>
 #include "data.h"
 #include "visual.h"
-
-//only function used from menu so including menu.h would be to much
-int yesno(int def);
+#include "menu.h"
 
 unsigned long
 hash(library *lib)
@@ -20,21 +18,29 @@ hash(library *lib)
   return 1234565432345;
 }
 
-library *loadData(char *saveFile)
+FILE *openFile(char *saveFile, char *mode)
 {
-  FILE *save = fopen(saveFile, "r");
+  FILE *save = fopen(saveFile, mode);
   while (save == NULL)
   {
-    printf(ANSI_COLOR_RED"standard save file could not be opened"ANSI_COLOR_RESET
-           "\nError message: %s\n",strerror(errno));
+    printf(ANSI_COLOR_RED "standard save file could not be opened\n" ANSI_COLOR_RESET
+          "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET, strerror(errno));
     printf("try again? ");
     if (!yesno(1))
-      return NULL;
+      break;
   }
+  return save;
+}
+
+library *loadData(char *saveFile)
+{
+  FILE *save = openFile(saveFile,"r");
+  if (save == NULL)
+    return NULL;
   size_t length;
   library *lib = malloc(sizeof(library));
   fread(&lib->count, sizeof(int), 1, save);
-  lib->books = malloc(sizeof(book*)*lib->count);
+  lib->books = malloc(sizeof(book *) * lib->count);
   for (int i = 0; i < lib->count; i++)
   {
     lib->books[i] = malloc(sizeof(book));
@@ -53,7 +59,7 @@ library *loadData(char *saveFile)
     lib->books[i]->author = malloc(length);
     fread(lib->books[i]->author, length, 1, save);
     //read each element of the borrower array
-    lib->books[i]->borrower=malloc(sizeof(char*) * lib->books[i]->borrowed);
+    lib->books[i]->borrower = malloc(sizeof(char *) * lib->books[i]->borrowed);
     for (int j = 0; j < lib->books[i]->borrowed; j++)
     {
       //read borrower with length-value encoding
@@ -85,7 +91,9 @@ int saveData(library *lib, char *saveFile)
     if (!yesno(1))
       break;
   }
-  FILE *save = fopen(saveFile, "w+");
+  FILE *save = openFile(saveFile,"w+");
+  if (save == NULL)
+    return 1;
   fwrite(&lib->count, sizeof(int), 1, save);
   for (int i = 0; i < lib->count; i++)
   {
@@ -124,26 +132,26 @@ book *newBook(int amount, int borrowed, long isbn, char *title, char *author, ch
   newBook->amount = amount;
   newBook->borrowed = borrowed;
   newBook->isbn = isbn;
-  newBook->title = malloc(strlen(title)+1);
-  strcpy(newBook->title,title);
-  newBook->author = malloc(strlen(author)+1);
-  strcpy(newBook->author,author);
-  newBook->borrower=malloc(sizeof(char *) * borrowed);
-  
-  for(int i = 0; i < newBook->borrowed; i++)
+  newBook->title = malloc(strlen(title) + 1);
+  strcpy(newBook->title, title);
+  newBook->author = malloc(strlen(author) + 1);
+  strcpy(newBook->author, author);
+  newBook->borrower = malloc(sizeof(char *) * borrowed);
+
+  for (int i = 0; i < newBook->borrowed; i++)
   {
     newBook->borrower[i] = malloc(strlen(borrower[i]));
-    strcpy(newBook->borrower[i],borrower[i]);
+    strcpy(newBook->borrower[i], borrower[i]);
   }
-  
+
   return newBook;
 }
 
 int addBook(library *lib, int amount, int borrowed, long isbn, char *title, char *author, char **borrower)
 {
   lib->count += 1;
-  lib->books = realloc (lib->books, lib->count * sizeof(book *));
-  lib->books[lib->count -1] = newBook(amount,borrowed,isbn,title,author,borrower);
+  lib->books = realloc(lib->books, lib->count * sizeof(book *));
+  lib->books[lib->count - 1] = newBook(amount, borrowed, isbn, title, author, borrower);
   return 0;
 }
 

@@ -17,11 +17,17 @@ int main()
     return 1;
   }
   printf("%d books loaded\n", lib->count);
+
   //show main menu
   mainMenu(lib);
+
   //save library to savefile
   printf("library gets saved into file '%s' ...\n", savefile);
-  saveData(lib, savefile);
-  printf("%d books saved\n", lib->count);
+  if (saveData(lib, savefile))
+  {
+    printf(ANSI_COLOR_RED"nothing saved"ANSI_COLOR_RESET);
+  }
+  else
+    printf("%d books saved\n", lib->count);
   return 0;
 }
