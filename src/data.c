@@ -195,6 +195,24 @@ int deleteBook(library *lib, int index)
 {
   free(lib->books[index]);
   lib->count -= 1;
-  lib->books[index] = lib->books[lib->count];
+  //if array is not empty and the deleted book was not last element
+  if (lib->count != 0 && lib->count != index)
+    //move last element to the position of the deleted book
+    lib->books[index] = lib->books[lib->count];
+  return 0;
+}
+
+int borrowBook(book *book, char *borrower)
+{
+  //return 1 if there are no books available
+  if (book->amount == book->borrowed)
+    return 1;
+
+  book->borrowed += 1;
+  book->borrower = realloc(book->borrower, sizeof(char *) * book->borrowed);
+  book->borrower[book->borrowed - 1] = malloc(strlen(borrower));
+  if (book->borrower[book->borrowed - 1] == NULL)
+    return 2;
+  strcpy(book->borrower[book->borrowed - 1], borrower);
   return 0;
 }

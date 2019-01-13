@@ -11,7 +11,7 @@ void printLib(library *lib)
 
     for (int j = 0; j < lib->books[i]->borrowed; j++)
     {
-      printf("  %d: %s\n", j, lib->books[i]->borrower[j]);
+      printf("  %d: %s\n", j+1, lib->books[i]->borrower[j]);
     }
   }
 }

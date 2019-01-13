@@ -6,8 +6,12 @@
 #include "data.h"
 #define savefile "bin/Save"
 
+void runTests();
+
 int main()
 {
+  runTests();
+  /*
   printf("\nlibrary gets loaded from file '%s' ...\n", savefile);
   //load library from savefile
   library *lib = loadData(savefile);
@@ -28,6 +32,6 @@ int main()
     printf(ANSI_COLOR_RED"nothing saved"ANSI_COLOR_RESET);
   }
   else
-    printf("%d books saved\n", lib->count);
+    printf("%d books saved\n", lib->count);*/
   return 0;
 }
