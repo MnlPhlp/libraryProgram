@@ -11,7 +11,8 @@
                      "4) add a book\n"\
                      "5) delete a book\n"\
                      "6) show all books\n"\
-                     "7) quit\n\n"
+                     "7) tests\n"\
+                     "8) quit\n\n"
 
 /*
  * Function: yesno

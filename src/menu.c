@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
 #include "data.h"
 #include "visual.h"
 #include "menu.h"
+
+void runTests();
 
 int menu(char *text, int options)
 {
@@ -77,7 +80,7 @@ void mainMenu(library *lib)
 {
   while (1)
   {
-    switch (menu(mainMenuText, 7))
+    switch (menu(mainMenuText, 8))
     {
     case 1:
       borrowMenu();
@@ -98,6 +101,13 @@ void mainMenu(library *lib)
       printLib(lib);
       break;
     case 7:
+      saveData(lib,"bin/Save");
+      free(lib);
+      lib = NULL;
+      runTests();
+      lib = loadData("bin/Save");
+      break;
+    case 8:
     default:
       return;
     }
