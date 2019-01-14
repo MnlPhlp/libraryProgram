@@ -35,15 +35,21 @@ FILE *openFile(char *saveFile, char *mode)
 
 library *loadData(char *saveFile)
 {
-  FILE *save = openFile(saveFile, "r");
-  if (save == NULL)
-    return NULL;
   size_t length;
   library *lib = malloc(sizeof(library));
   if (lib == NULL)
   {
     printf("memory could not be allocated\n");
     return NULL;
+  }
+  FILE *save = openFile(saveFile, "r");
+  //if the file couldn't be loaded create a new empty library
+  if (save == NULL)
+  {
+    printf("new empty library will be used\n");
+    lib->count = 0;
+    lib->books = NULL;
+    return lib;
   }
   fread(&lib->count, sizeof(int), 1, save);
   lib->books = calloc(lib->count, sizeof(book *));
@@ -127,7 +133,7 @@ int saveData(library *lib, char *saveFile)
     if (!yesno(1))
       break;
   }
-  FILE *save = openFile(saveFile, "w+");
+  FILE *save = openFile(saveFile, "w");
   if (save == NULL)
     return 1;
   fwrite(&lib->count, sizeof(int), 1, save);
