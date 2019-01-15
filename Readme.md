@@ -26,10 +26,10 @@ Bedingungen:
   - Abgabetermin ist 17.03.2019.
 
 Bewertungskriterien 2018/19
-Punkte|Kriterium
---------:|:------------------|
-15 Punkte:| Funktionsumfang
-10 Punkte:| Programmiertechniken
-10 Punkte: |Benutzerinterface
-10 Punkte: |Kompilierbarkeit und Robustheit
-5 Punkte:|Strukturierung und Kommentierung
+|    Punkte|Kriterium                       |
+|---------:|:-------------------------------|
+|15 Punkte:|Funktionsumfang                 |
+|10 Punkte:|Programmiertechniken            |
+|10 Punkte:|Benutzerinterface               |
+|10 Punkte:|Kompilierbarkeit und Robustheit |
+| 5 Punkte:|Strukturierung und Kommentierung|

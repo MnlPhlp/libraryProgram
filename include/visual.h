@@ -1,8 +1,6 @@
 #ifndef VISUAL
 #define VISUAL
 
-#include "structs.h"
-
 #define LibText "\nThe library contains %d Books\n"\
                      "-----------------------------------\n"
 
