@@ -1,0 +1,4 @@
+bin/main*
+*compiling_error.txt
+*.DS_Store
+.vscode
