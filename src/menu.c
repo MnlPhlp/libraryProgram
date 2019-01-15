@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "../include/data.h"
-#include "../include/visual.h"
-#include "../include/menu.h"
+#include "data.h"
+#include "visual.h"
+#include "menu.h"
 
 void runTests();
 

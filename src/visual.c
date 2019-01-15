@@ -1,5 +1,5 @@
-#include "../include/structs.h"
-#include "../include/visual.h"
+#include "structs.h"
+#include "visual.h"
 #include <stdio.h>
 
 void printLib(library *lib)
