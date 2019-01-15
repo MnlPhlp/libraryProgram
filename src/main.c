@@ -7,7 +7,7 @@
 #define savefile "bin/Save"
 
 
-int main()asdf
+int main()
 {
   printf("\nlibrary gets loaded from file '%s' ...\n", savefile);
   //load library from savefile
