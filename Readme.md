@@ -1,5 +1,8 @@
 # libraryProgram
 
+Das ist ein Test lol
+Was ist denn los hier.
+
 In dem Programmentwurf soll ein C-Programm zur Verwaltung der Bücher einer Bibliothek
 implementiert werden. Dazu wird eine Liste der Bücher erstellt, die zu jedem Buch die folgenden Daten enthält:
 - ISBN-Nummer
@@ -20,7 +23,7 @@ Bedingungen:
 - Alle Studierenden einer Gruppe erhalten die gleiche Bewertung.
 - Das Programm muss mit dem GCC-Compiler kompilierbar sein.
 - Es dürfen nur ANSI-kompatible Funktionen der Standard-Bibliothek verwendet werden.
-- Abgabe: 
+- Abgabe:
   - Source-Code als zip-File auf Moodle hochladen.
   - Das zip-File mit den Namen der Gruppenmitglieder benennen.
   - Abgabetermin ist 17.03.2019.
