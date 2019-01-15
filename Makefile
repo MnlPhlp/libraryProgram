@@ -1,11 +1,9 @@
 CC		:= gcc
-C_FLAGS := -Wall -Wextra -C99
+C_FLAGS := -Wall -Wextra -ansi
 
 BIN		:= bin
 SRC		:= src
 INCLUDE	:= include
-
-LIBRARIES	:=
 
 ifeq ($(OS),Windows_NT)
 EXECUTABLE	:= main.exe
@@ -22,4 +20,4 @@ run: all
 	./$(BIN)/$(EXECUTABLE)
 
 $(BIN)/$(EXECUTABLE): $(SRC)/*
-	$(CC) $(C_FLAGS) -I$(INCLUDE) $^ -o $@ $(LIBRARIES)
+	$(CC) $(C_FLAGS) -I$(INCLUDE) $^ -o $@ 
