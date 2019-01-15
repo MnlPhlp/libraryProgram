@@ -1,12 +1,11 @@
 CC		:= gcc
-C_FLAGS := -Wall -Wextra -C99
+C_FLAGS := -Wall -Wextra
 
 BIN		:= bin
 SRC		:= src
 INCLUDE	:= include
 
 LIBRARIES	:=
-
 ifeq ($(OS),Windows_NT)
 EXECUTABLE	:= main.exe
 else
