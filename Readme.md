@@ -1,8 +1,5 @@
 # libraryProgram
 
-Das ist ein Test lol
-Was ist denn los hier.
-
 In dem Programmentwurf soll ein C-Programm zur Verwaltung der Bücher einer Bibliothek
 implementiert werden. Dazu wird eine Liste der Bücher erstellt, die zu jedem Buch die folgenden Daten enthält:
 - ISBN-Nummer
@@ -26,7 +23,7 @@ Bedingungen:
 <<<<<<< HEAD
 - Abgabe:
 =======
-- Abgabe: 
+- Abgabe:
 >>>>>>> cacf3c405363cb52b90446c9acb6be7adcce37af
   - Source-Code als zip-File auf Moodle hochladen.
   - Das zip-File mit den Namen der Gruppenmitglieder benennen.
