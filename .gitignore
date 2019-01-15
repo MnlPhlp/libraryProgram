@@ -1,5 +1,7 @@
 bin/Save*
 bin/Test*
+bin\Test*
+bin\Save*
 *compiling_error.txt
 *.DS_Store
 .vscode
