@@ -1,1 +1,4 @@
 bin
+compiling_error.txt
+.DS_Store
+.gitignore
