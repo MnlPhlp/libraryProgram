@@ -32,13 +32,14 @@ int saveData(library *lib,char *saveFile);
  * adds a new Book to the library
  * 
  * lib: pointer to the library that should be extended
+ * and all parameters the book has
  * 
  * returns: 0 if succesfull, 1 if an error occured
 */
 int addBook(library *lib, int amount, int borrowed, long isbn, char *title, char *author, char **borrower);
 
 /*
- * Function: addBook
+ * Function: deleteBook
  * ----------------------------
  * removes a Book from the library
  * the last Book in the array is moved to the free position
