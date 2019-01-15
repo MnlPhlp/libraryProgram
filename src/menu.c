@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "data.h"
-#include "visual.h"
-#include "menu.h"
+#include "../include/data.h"
+#include "../include/visual.h"
+#include "../include/menu.h"
 
 void runTests();
 
@@ -12,7 +12,7 @@ int menu(char *text, int options)
   int input = 0;
   char buff;
   //print specific menu text
-  printf(text);
+  printf("%s",text);
 
   while (input == 0)
   {
@@ -24,7 +24,7 @@ int menu(char *text, int options)
     else if (buff == 'm')
       //print specific menu text again
       //useful after many invalid inputs to see the valid options again
-      printf(text);
+      printf("%s",text);
     else
       printf("invalid input, try again (enter 'm' to show menu again)\n");
     while (buff != '\n' && buff != EOF)
@@ -117,10 +117,10 @@ void mainMenu(library *lib)
 /*
  * Function: yesno
  * ----------------------------
- *  parses single character yes or no input (Y or N) 
+ *  parses single character yes or no input (Y or N)
  *  user input is not case sensitive
- *  
- *  def: default answer that is used if the user just presses enter 
+ *
+ *  def: default answer that is used if the user just presses enter
  *
  *  returns: 1 for 'y', 0 for 'n', value of def for 'enter'
  */
