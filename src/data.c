@@ -2,21 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include "data.h"
-#include "visual.h"
-#include "menu.h"
+#include "../include/data.h"
+#include "../include/visual.h"
+#include "../include/menu.h"
 
-unsigned long
-hash(library *lib)
-{
-  unsigned long *str = (unsigned long *)lib;
-  unsigned long hash = 5381;
-  int c;
-
-  while (c = *str++)
-    hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
-  return 1234565432345;
-}
+unsigned long hash(library *lol) {return 0;}
 
 FILE *openFile(char *saveFile, char *mode)
 {

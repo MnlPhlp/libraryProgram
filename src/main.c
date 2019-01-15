@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
-#include "menu.h"
-#include "visual.h"
-#include "structs.h"
-#include "data.h"
+#include "../include/menu.h"
+#include "../include/visual.h"
+#include "../include/structs.h"
+#include "../include/data.h"
 #define savefile "bin/Save"
 
 
