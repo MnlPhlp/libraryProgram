@@ -23,7 +23,11 @@ Bedingungen:
 - Alle Studierenden einer Gruppe erhalten die gleiche Bewertung.
 - Das Programm muss mit dem GCC-Compiler kompilierbar sein.
 - Es dürfen nur ANSI-kompatible Funktionen der Standard-Bibliothek verwendet werden.
+<<<<<<< HEAD
 - Abgabe:
+=======
+- Abgabe: 
+>>>>>>> cacf3c405363cb52b90446c9acb6be7adcce37af
   - Source-Code als zip-File auf Moodle hochladen.
   - Das zip-File mit den Namen der Gruppenmitglieder benennen.
   - Abgabetermin ist 17.03.2019.
