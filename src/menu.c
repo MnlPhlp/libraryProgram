@@ -130,6 +130,12 @@ bool isbnValidation(char isbn[]) {
   int i = 0;
   while ((c = getchar()) != '\n' && c != EOF) {
     if(c != ' ' && c != '-') {
+      if(i<9 && !((c >= '0') && (c <= '9'))){
+        clearInput();
+        printf("First 9 characters have to be digits:\
+                char[%d]\" %c\" is invalid\n",i,c);
+        return true;
+      }
       if(i<10) {
         if(c == 'x') {
           isbn[i]='X';
@@ -151,8 +157,8 @@ bool isbnValidation(char isbn[]) {
     return true;
   }
 
-  if(isbn[9]!='x' && isbn[9]!='x' && isbn[9]-isbn[9] >= '0' && isbn[9]-isbn[9] <= '9') {
-    printf("last digit is NaN or 'x'\n");
+  if(isbn[9]!='x' && isbn[9]!='X' && !(isbn[9] >= '0') && !(isbn[9] <= '9')) {
+    printf("last digit is NaN or 'X'\n");
     return true;
   }
 
