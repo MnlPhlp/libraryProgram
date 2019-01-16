@@ -115,27 +115,32 @@ int addMenu()
   }
   clearInput();
 
-  char isbn[10] = "";
+  char isbn[11] = "";
   printf("ISBN: ");
-  i = 0;
-  while ((c = getchar()) != '\n' && c != EOF) {
+  while(isbnValidation(isbn)){
+    printf("\nNot an ISBN\n");
+  }
+  addBook(amount,0,isbn,title,author,NULL);
+  printf("Book added\n");
+  return 0;
+}
+
+bool isbnValidation(char isbn[]) {
+  char c;
+  int i = 0;
+  while ((c = getchar()) != '\n' && c != EOF && c != ' ') {
     if(i<10) {
       isbn[i]=c;
       i++;
     }
     else{
-      printf("\nNot an ISBN\n");
-      clearInput();
-      getchar();
-      i=0;
+      return true;
     }
   }
-
-  addBook(amount,0,isbn,title,author,NULL);
-
-  clearConsole();
-  printf("Book added\n");
-  return 0;
+  if(i!=10) {
+    return true;
+  }
+  return false;
 }
 
 void deleteMenu()
