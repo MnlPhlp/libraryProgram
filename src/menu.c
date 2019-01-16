@@ -7,29 +7,42 @@
 
 void runTests();
 
-int menu(char *text, int options)
+void mainMenu()
 {
-  int input = 0;
-  char buff;
-  //print specific menu text
-  printf("%s",text);
-
-  while (input == 0)
+  while (1)
   {
-    printf("choose option: ");
-    buff = getchar();
-    if (buff >= '1' && buff <= '0' + options)
-      //save choosen option if in valid range
-      input = buff - '0';
-    else if (buff == 'm')
-      //print specific menu text again
-      //useful after many invalid inputs to see the valid options again
-      printf("%s",text);
-    else
-      printf("invalid input, try again (enter 'm' to show menu again)\n");
+    switch (menu(mainMenuText, 8))
+    {
+    case 1:
+      borrowMenu();
+      break;
+    case 2:
+      returnMenu();
+      break;
+    case 3:
+      searchMenu();
+      break;
+    case 4:
+      addMenu();
+      break;
+    case 5:
+      deleteMenu();
+      break;
+    case 6:
+      printLib();
+      break;
+    case 7:
+      saveData("bin/Save");
+      lib.count=0;
+      lib.books = NULL;
+      runTests();
+      loadData("bin/Save");
+      break;
+    case 8:
+    default:
+      return;
+    }
   }
-  clearConsole();
-  return input;
 }
 
 void borrowMenu()
@@ -113,42 +126,29 @@ void deleteMenu()
 {
 }
 
-void mainMenu()
+int menu(char *text, int options)
 {
-  while (1)
+  int input = 0;
+  char buff;
+  //print specific menu text
+  printf("%s",text);
+
+  while (input == 0)
   {
-    switch (menu(mainMenuText, 8))
-    {
-    case 1:
-      borrowMenu();
-      break;
-    case 2:
-      returnMenu();
-      break;
-    case 3:
-      searchMenu();
-      break;
-    case 4:
-      addMenu();
-      break;
-    case 5:
-      deleteMenu();
-      break;
-    case 6:
-      printLib();
-      break;
-    case 7:
-      saveData("bin/Save");
-      lib.count=0;
-      lib.books = NULL;
-      runTests();
-      loadData("bin/Save");
-      break;
-    case 8:
-    default:
-      return;
-    }
+    printf("choose option: ");
+    buff = getchar();
+    if (buff >= '1' && buff <= '0' + options)
+      //save choosen option if in valid range
+      input = buff - '0';
+    else if (buff == 'm')
+      //print specific menu text again
+      //useful after many invalid inputs to see the valid options again
+      printf("%s",text);
+    else
+      printf("invalid input, try again (enter 'm' to show menu again)\n");
   }
+  clearConsole();
+  return input;
 }
 
 /*
@@ -161,6 +161,30 @@ void mainMenu()
  *
  *  returns: 1 for 'y', 0 for 'n', value of def for 'enter'
  */
+
+void clearConsole() {
+  clearInput();
+  for(int i = 0;i<10;i++) {
+    printf("\n\n\n\n\n");
+  }
+}
+
+void clearInput() {
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF) { }
+}
+
+void printBook(book *book,int count) {
+  printf("\n Book number (%d):\n"
+         "------------------------\n"
+         " Title: %s\n"
+         " Author: %s\n"
+         " ISBN: %ld\n"
+         " Amount: %d\n"
+         " In stock: %d\n\n",
+         count,book->title,book->author,book->isbn,book->amount,book->amount-book->borrowed);
+}
+
 int yesno(int def)
 {
   char buff;
@@ -193,27 +217,4 @@ int yesno(int def)
     }
   }
   return input;
-}
-
-void clearConsole() {
-  clearInput();
-  for(int i = 0;i<10;i++) {
-    printf("\n\n\n\n\n");
-  }
-}
-
-void clearInput() {
-  int c;
-  while ((c = getchar()) != '\n' && c != EOF) { }
-}
-
-void printBook(book *book,int count) {
-  printf("\n Book number (%d):\n"
-         "------------------------\n"
-         " Title: %s\n"
-         " Author: %s\n"
-         " ISBN: %ld\n"
-         " Amount: %d\n"
-         " In stock: %d\n\n",
-         count,book->title,book->author,book->isbn,book->amount,book->amount-book->borrowed);
 }
