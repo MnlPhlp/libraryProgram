@@ -14,5 +14,5 @@ void runTests()
   loadData("bin/Test_Save");
   addBook(2,0,12312412,"Harry Potter", "J.K. Rowling",NULL);
   deleteBook(0);
-  printLib();
+  // printLib();
 }

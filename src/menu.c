@@ -27,8 +27,8 @@ int menu(char *text, int options)
       printf("%s",text);
     else
       printf("invalid input, try again (enter 'm' to show menu again)\n");
-    clearInput();
   }
+  clearConsole();
   return input;
 }
 
@@ -69,16 +69,16 @@ void searchMenu()
 
 int addMenu()
 {
-  char title[32];
+  char title[32] = "";
   printf("Title: ");
   char c;
   int i = 0;
   while ((c = getchar()) != '\n' && c != EOF) {
-    title[i]=c;
+    title[i] = c;
     i++;
   }
 
-  char author[32];
+  char author[32] = "";
   printf("Author: ");
   i = 0;
   while ((c = getchar()) != '\n' && c != EOF) {
@@ -134,7 +134,12 @@ void mainMenu()
       deleteMenu();
       break;
     case 6:
-      printLib();
+      printf("Amount of Books is %d: \n",lib.count);
+      for(int i = 0;i<lib.count;i++){
+        printBook(lib.books[i],i+1);
+      }
+      printf("Hit ENTER to continue...");
+      clearConsole();
       break;
     case 7:
       saveData("bin/Save");
@@ -204,4 +209,15 @@ void clearConsole() {
 void clearInput() {
   int c;
   while ((c = getchar()) != '\n' && c != EOF) { }
+}
+
+void printBook(book *book,int count) {
+  printf("\n Book number (%d):\n"
+         "------------------------\n"
+         " Title: %s\n"
+         " Author: %s\n"
+         " ISBN: %ld\n"
+         " Amount: %d\n"
+         " In stock: %d\n\n",
+         count,book->title,book->author,book->isbn,book->amount,book->amount-book->borrowed);
 }

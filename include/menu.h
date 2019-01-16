@@ -3,16 +3,19 @@
 
 #include "structs.h"
 
-#define mainMenuText "\n    main menu\n"\
-                     "------------------\n"\
-                     "1) borrow a book\n"\
-                     "2) return a book\n"\
-                     "3) search a book\n"\
-                     "4) add a book\n"\
-                     "5) delete a book\n"\
-                     "6) show all books\n"\
-                     "7) tests\n"\
-                     "8) quit\n\n"
+#define mainMenuText  "\n ________________________\n"\
+                    "|What do you want to do?:|\n"\
+                    "|------------------------|\n"\
+                    "|(1) Borrow a book       |\n"\
+                    "|(2) Return a book       |\n"\
+                    "|(3) Search a book       |\n"\
+                    "|(4) Add a book          |\n"\
+                    "|(5) Delete a book       |\n"\
+                    "|(6) Show all books      |\n"\
+                    "|(7) Tests r/woosh       |\n"\
+                    "|------------------------|\n"\
+                    "|(5) QUIT                |\n"\
+                    "'------------------------'\n"
 
 /*
  * Function: yesno
@@ -27,6 +30,8 @@
 int yesno(int def);
 
 void mainMenu();
+
+void printBook(book *book,int count);
 
 int addMenu();
 
