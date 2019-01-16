@@ -118,7 +118,7 @@ int addMenu()
   char isbn[11] = "";
   printf("ISBN: ");
   while(isbnValidation(isbn)){
-    printf("Not an ISBN \n\nISBN: ");
+    printf("ISBN: ");
   }
   addBook(amount,0,isbn,title,author,NULL);
   printf("Book added\n");
@@ -131,18 +131,37 @@ bool isbnValidation(char isbn[]) {
   while ((c = getchar()) != '\n' && c != EOF) {
     if(c != ' ' && c != '-') {
       if(i<10) {
-        isbn[i]=c;
+        if(c == 'x') {
+          isbn[i]='X';
+        }
+        else {
+          isbn[i]=c;
+        }
         i++;
       }
       else{
         clearInput();
+        printf("ISBN to long\n");
         return true;
       }
     }
   }
   if(i!=10) {
+    printf("ISBN to short\n");
     return true;
   }
+  printf("\n%d\n",isbn[9]);
+  if(isbn[9]!='x' && isbn[9]!='x' && isbn[9]-isbn[9] >= 48 && isbn[9]-isbn[9] >= 57) {
+    printf("ISBN last digit is NaN or 'x'\n");
+    return true;
+  }
+
+  //  ISBN Checksum
+  int total = 0;
+  for(int i = 0;i<9;i++) {
+    total += isbn[i];
+  }
+
   return false;
 }
 
