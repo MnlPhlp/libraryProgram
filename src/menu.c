@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include "../include/data.h"
@@ -8,7 +9,8 @@ void runTests();    //Was das? :D
 
 void mainMenu()
 {
-  while (1)
+  bool status = true;
+  while (status)
   {
     switch(menu(mainMenuText, 8))
     {
@@ -38,6 +40,7 @@ void mainMenu()
       loadData("bin/Save");
       break;
     case 8:
+      status = false;
     default:
       return;
     }
