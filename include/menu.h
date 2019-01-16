@@ -14,6 +14,8 @@
                      "7) tests\n"\
                      "8) quit\n\n"
 
+#define buffSize 32                     
+
 /*
  * Function: yesno
  * ----------------------------

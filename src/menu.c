@@ -69,22 +69,24 @@ void searchMenu()
 
 int addMenu()
 {
-  char title[32];
+  char title[buffSize];
   printf("Title: ");
   char c;
   int i = 0;
-  while ((c = getchar()) != '\n' && c != EOF) {
+  while ((c = getchar()) != '\n' && c != EOF && i < buffSize) {
     title[i]=c;
     i++;
   }
+  clearInput();
 
-  char author[32];
+  char author[buffSize];
   printf("Author: ");
   i = 0;
-  while ((c = getchar()) != '\n' && c != EOF) {
+  while ((c = getchar()) != '\n' && c != EOF && i < buffSize) {
     author[i]=c;
     i++;
   }
+  clearInput();
 
   int amount;
   printf("Amount: ");
@@ -100,6 +102,7 @@ int addMenu()
     clearInput();
     printf("Invalid Character \n\nISBN:");
   }
+  clearInput();
 
   addBook(amount,0,isbn,title,author,NULL);
 
