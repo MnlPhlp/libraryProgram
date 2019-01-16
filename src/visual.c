@@ -4,6 +4,15 @@
 
 extern library lib;
 
+void printLib() {
+  printf("Amount of Books is %d: \n",lib.count);
+  for(int i = 0;i<lib.count;i++){
+    printBook(lib.books[i],i+1);
+  }
+  printf("Hit ENTER to continue...");
+  clearConsole();
+}
+
 // void printLib()
 // {
 //   printf(LibText, lib.count);
