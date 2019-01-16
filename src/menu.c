@@ -70,34 +70,34 @@ void searchMenu()
 int addMenu()
 {
   char title[32];
-  printf("Title:");
+  printf("Title: ");
   while(scanf("%s",title) == 0) {
     clearInput();
-    printf("invalid Character \n");
+    printf("Invalid Character \n\nTitle:");
   }
   clearInput();
 
   char author[32];
-  printf("Author:");
+  printf("Author: ");
   while(scanf("%s",author) == 0) {
     clearInput();
-    printf("invalid Character \n");
+    printf("Invalid Character \n\nAuthor:");
   }
   clearInput();
 
   int amount;
-  printf("Amount:");
+  printf("Amount: ");
   while(scanf("%d",&amount) == 0) {
     clearInput();
-    printf("invalid Character \n");
+    printf("Invalid Character \n\nAmount:");
   }
   clearInput();
 
   long isbn;
-  printf("ISBN:");
-  while(scanf("%ld",&isbn) == 0) {
+  printf("ISBN: ");
+  while(scanf("%ld",&isbn) == 0 && !isbnValidate(isbn)) {
     clearInput();
-    printf("invalid Character \n");
+    printf("Invalid Character \n\nISBN:");
   }
 
   addBook(amount,0,isbn,title,author,NULL);
@@ -194,10 +194,10 @@ int yesno(int def)
 }
 
 void clearConsole() {
+  clearInput();
   for(int i = 0;i<10;i++) {
     printf("\n\n\n\n\n");
   }
-  clearInput();
 }
 
 void clearInput() {
