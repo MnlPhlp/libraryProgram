@@ -5,7 +5,7 @@ typedef struct book
 {
   int amount;
   int borrowed;
-  long isbn;
+  char isbn[11];
   char *title;
   char *author;
   char **borrower;

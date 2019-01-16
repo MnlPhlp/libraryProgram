@@ -115,18 +115,64 @@ int addMenu()
   }
   clearInput();
 
-  long isbn;
+  char isbn[11] = "";
   printf("ISBN: ");
-  while(scanf("%ld",&isbn) == 0) {
-    clearInput();
-    printf("Invalid Character \n\nISBN:");
+  while(isbnValidation(isbn)){
+    printf("ISBN: ");
   }
-
   addBook(amount,0,isbn,title,author,NULL);
-
-  clearConsole();
   printf("Book added\n");
   return 0;
+}
+
+bool isbnValidation(char isbn[]) {
+  char c;
+  int i = 0;
+  while ((c = getchar()) != '\n' && c != EOF) {
+    if(c != ' ' && c != '-') {
+      if(i<10) {
+        if(c == 'x') {
+          isbn[i]='X';
+        }
+        else {
+          isbn[i]=c;
+        }
+        i++;
+      }
+      else{
+        clearInput();
+        printf("to long\n");
+        return true;
+      }
+    }
+  }
+  if(i!=10) {
+    printf("to short\n");
+    return true;
+  }
+
+  if(isbn[9]!='x' && isbn[9]!='x' && isbn[9]-isbn[9] >= '0' && isbn[9]-isbn[9] <= '9') {
+    printf("last digit is NaN or 'x'\n");
+    return true;
+  }
+
+  //  ISBN Checksum
+  int total = 0;
+  for(int i = 0;i<9;i++) {
+    total += (isbn[i]-'0')*(10-i);
+  }
+  if(isbn[9]=='X') {
+    total+=10;
+  }
+  else {
+    total+=isbn[9]-'0';
+  }
+  if(total%11){
+    printf("Not an ISBN check checksum\n");
+    return true;
+  }
+
+  return false;
 }
 
 void deleteMenu()
@@ -186,7 +232,7 @@ void printBook(book *book,int count) {
          "------------------------\n"
          " Title: %s\n"
          " Author: %s\n"
-         " ISBN: %ld\n"
+         " ISBN: %s\n"
          " Amount: %d\n"
          " In stock: %d\n\n",
          count,book->title,book->author,book->isbn,book->amount,book->amount-book->borrowed);

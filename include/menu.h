@@ -1,6 +1,7 @@
 #ifndef MENU
 #define MENU
 
+#include <stdbool.h>
 #include "structs.h"
 
 #define mainMenuText  "\n ________________________\n"\
@@ -55,6 +56,7 @@ void printLib();
 void printBook(book *book,int count);
 void clearConsole();
 void clearInput();
+bool isbnValidation();
 
 
 #endif

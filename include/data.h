@@ -38,7 +38,7 @@ int saveData(char *saveFile);
  *
  * returns: 0 if succesfull, 1 if an error occured
 */
-int addBook(int amount, int borrowed, long isbn, char *title, char *author, char **borrower);
+int addBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower);
 
 /*
  * Function: deleteBook

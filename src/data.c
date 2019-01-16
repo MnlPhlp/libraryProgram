@@ -153,12 +153,12 @@ int saveData(char *saveFile)
   return 0;
 }
 
-book *newBook(int amount, int borrowed, long isbn, char *title, char *author, char **borrower)
+book *newBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower)
 {
   book *newBook = malloc(sizeof(book));
   newBook->amount = amount;
   newBook->borrowed = borrowed;
-  newBook->isbn = isbn;
+  strcpy(newBook->isbn,isbn);
   newBook->title = malloc(strlen(title) + 1);
   strcpy(newBook->title, title);
   newBook->author = malloc(strlen(author) + 1);
@@ -174,7 +174,7 @@ book *newBook(int amount, int borrowed, long isbn, char *title, char *author, ch
   return newBook;
 }
 
-int addBook(int amount, int borrowed, long isbn, char *title, char *author, char **borrower)
+int addBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower)
 {
   lib.count += 1;
   lib.books = realloc(lib.books, lib.count * sizeof(book *));
