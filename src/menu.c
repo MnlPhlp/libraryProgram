@@ -115,11 +115,20 @@ int addMenu()
   }
   clearInput();
 
-  long isbn;
+  char isbn[10] = "";
   printf("ISBN: ");
-  while(scanf("%ld",&isbn) == 0) {
-    clearInput();
-    printf("Invalid Character \n\nISBN:");
+  i = 0;
+  while ((c = getchar()) != '\n' && c != EOF) {
+    if(i<10) {
+      isbn[i]=c;
+      i++;
+    }
+    else{
+      printf("\nNot an ISBN\n");
+      clearInput();
+      getchar();
+      i=0;
+    }
   }
 
   addBook(amount,0,isbn,title,author,NULL);
@@ -186,7 +195,7 @@ void printBook(book *book,int count) {
          "------------------------\n"
          " Title: %s\n"
          " Author: %s\n"
-         " ISBN: %ld\n"
+         " ISBN: %s\n"
          " Amount: %d\n"
          " In stock: %d\n\n",
          count,book->title,book->author,book->isbn,book->amount,book->amount-book->borrowed);
