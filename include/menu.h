@@ -26,7 +26,7 @@
  */
 int yesno(int def);
 
-void mainMenu(library *lib);
+void mainMenu();
 
 int addMenu();
 

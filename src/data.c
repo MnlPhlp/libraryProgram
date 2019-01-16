@@ -6,7 +6,9 @@
 #include "visual.h"
 #include "menu.h"
 
-unsigned long hash(library *lol) {return 0;}
+library lib;
+
+unsigned long hashLib() {return 23;}
 
 FILE *openFile(char *saveFile, char *mode)
 {
@@ -23,84 +25,78 @@ FILE *openFile(char *saveFile, char *mode)
   return save;
 }
 
-library *loadData(char *saveFile)
+int loadData(char *saveFile)
 {
-  size_t length;
-  library *lib = malloc(sizeof(library));
-  if (lib == NULL)
-  {
-    printf("memory could not be allocated\n");
-    return NULL;
-  }
   FILE *save = openFile(saveFile, "r");
+  unsigned long length;
   //if the file couldn't be loaded create a new empty library
   if (save == NULL)
   {
     printf("new empty library will be used\n");
-    lib->count = 0;
-    lib->books = NULL;
-    return lib;
+    lib.count = 0;
+    lib.books = NULL;
+    return 0;
   }
-  fread(&lib->count, sizeof(int), 1, save);
-  lib->books = calloc(lib->count, sizeof(book *));
-  if (lib->books == NULL)
+  fread(&lib.count, sizeof(int), 1, save);
+  lib.books = calloc(lib.count, sizeof(book *));
+  if (lib.books == NULL)
   {
     printf("memory could not be allocated\n");
-    return NULL;
+    return 0;
   }
-  for (int i = 0; i < lib->count; i++)
+  for (int i = 0; i < lib.count; i++)
   {
-    lib->books[i] = malloc(sizeof(book));
-    if (lib->books[i] == NULL)
+    lib.books[i] = malloc(sizeof(book));
+    if (lib.books[i] == NULL)
     {
       printf("memory could not be allocated\n");
-      return NULL;
+      return 0;
     }
     //read amount as int
-    fread(&lib->books[i]->amount, sizeof(int), 1, save);
+    fread(&lib.books[i]->amount, sizeof(int), 1, save);
     //read borrowed amount as int
-    fread(&lib->books[i]->borrowed, sizeof(int), 1, save);
+    fread(&lib.books[i]->borrowed, sizeof(int), 1, save);
     //read isbn as long
-    fread(&lib->books[i]->isbn, sizeof(long), 1, save);
+    fread(&lib.books[i]->isbn, sizeof(long), 1, save);
     //read title with length-value encoding
     fread(&length, sizeof(size_t), 1, save);
-    lib->books[i]->title = malloc(length);
-    if (lib->books[i]->title == NULL)
+    lib.books[i]->title = malloc(length);
+    if (lib.books[i]->title == NULL)
     {
       printf("memory could not be allocated\n");
-      return NULL;
+      return 0;
     }
-    fread(lib->books[i]->title, length, 1, save);
+    fread(lib.books[i]->title, length, 1, save);
     //read author with length-value encoding
     fread(&length, sizeof(size_t), 1, save);
-    lib->books[i]->author = malloc(length);
-    if (lib->books[i]->author == NULL)
+    lib.books[i]->author = malloc(length);
+    if (lib.books[i]->author == NULL)
     {
       printf("memory could not be allocated\n");
-      return NULL;
+      return 0;
     }
-    fread(lib->books[i]->author, length, 1, save);
+    fread(lib.books[i]->author, length, 1, save);
     //read each element of the borrower array
-    lib->books[i]->borrower = malloc(sizeof(char *) * lib->books[i]->borrowed);
-    if (lib->books[i]->borrower == NULL)
+    lib.books[i]->borrower = malloc(sizeof(char *) * lib.books[i]->borrowed);
+    if (lib.books[i]->borrower == NULL)
     {
       printf("memory could not be allocated\n");
-      return NULL;
+      return 0;
     }
-    for (int j = 0; j < lib->books[i]->borrowed; j++)
+    for (int j = 0; j < lib.books[i]->borrowed; j++)
     {
       //read borrower with length-value encoding
       fread(&length, sizeof(size_t), 1, save);
-      lib->books[i]->borrower[j] = malloc(length);
-      if (lib->books[i]->borrower[j] == NULL)
+      lib.books[i]->borrower[j] = malloc(length);
+      if (lib.books[i]->borrower[j] == NULL)
       {
         printf("memory could not be allocated\n");
-        return NULL;
+        return 0;
       }
-      fread(lib->books[i]->borrower[j], length, 1, save);
+      fread(lib.books[i]->borrower[j], length, 1, save);
     }
   }
-  unsigned long checksum_test = hash(lib);
+  unsigned long checksum_test = hashLib();
   unsigned long checksum_file;
   fread(&checksum_file, sizeof(unsigned long), 1, save);
   if (checksum_test != checksum_file)
@@ -108,10 +104,10 @@ library *loadData(char *saveFile)
     printf(ANSI_COLOR_RED "the file was changed or damaged\n" ANSI_COLOR_RESET);
   }
   fclose(save);
-  return lib;
+  return 0;
 }
 
-int saveData(library *lib, char *saveFile)
+int saveData(char *saveFile)
 {
   char *backup = malloc(strlen(saveFile) + 8);
   size_t length;
@@ -126,33 +122,33 @@ int saveData(library *lib, char *saveFile)
   FILE *save = openFile(saveFile, "w");
   if (save == NULL)
     return 1;
-  fwrite(&lib->count, sizeof(int), 1, save);
-  for (int i = 0; i < lib->count; i++)
+  fwrite(&lib.count, sizeof(int), 1, save);
+  for (int i = 0; i < lib.count; i++)
   {
     //save amount as int
-    fwrite(&lib->books[i]->amount, sizeof(int), 1, save);
+    fwrite(&lib.books[i]->amount, sizeof(int), 1, save);
     //save borrowed amount as int
-    fwrite(&lib->books[i]->borrowed, sizeof(int), 1, save);
+    fwrite(&lib.books[i]->borrowed, sizeof(int), 1, save);
     //save isbn as long
-    fwrite(&lib->books[i]->isbn, sizeof(long), 1, save);
+    fwrite(&lib.books[i]->isbn, sizeof(long), 1, save);
     //save title with length-value encoding
-    length = strlen(lib->books[i]->title) + 1;
+    length = strlen(lib.books[i]->title) + 1;
     fwrite(&length, sizeof(size_t), 1, save);
-    fwrite(lib->books[i]->title, length, 1, save);
+    fwrite(lib.books[i]->title, length, 1, save);
     //save author with length-value encoding
-    length = strlen(lib->books[i]->author) + 1;
+    length = strlen(lib.books[i]->author) + 1;
     fwrite(&length, sizeof(size_t), 1, save);
-    fwrite(lib->books[i]->author, length, 1, save);
+    fwrite(lib.books[i]->author, length, 1, save);
     //save each element of the borrower array
-    for (int j = 0; j < lib->books[i]->borrowed; j++)
+    for (int j = 0; j < lib.books[i]->borrowed; j++)
     {
       //save borrower with length-value encoding
-      length = strlen(lib->books[i]->borrower[j]) + 1;
+      length = strlen(lib.books[i]->borrower[j]) + 1;
       fwrite(&length, sizeof(size_t), 1, save);
-      fwrite(lib->books[i]->borrower[j], length, 1, save);
+      fwrite(lib.books[i]->borrower[j], length, 1, save);
     }
   }
-  unsigned long checksum = hash(lib);
+  unsigned long checksum = hashLib();
   fwrite(&checksum, sizeof(unsigned long), 1, save);
   fclose(save);
   return 0;
@@ -179,22 +175,22 @@ book *newBook(int amount, int borrowed, long isbn, char *title, char *author, ch
   return newBook;
 }
 
-int addBook(library *lib, int amount, int borrowed, long isbn, char *title, char *author, char **borrower)
+int addBook(int amount, int borrowed, long isbn, char *title, char *author, char **borrower)
 {
-  lib->count += 1;
-  lib->books = realloc(lib->books, lib->count * sizeof(book *));
-  lib->books[lib->count - 1] = newBook(amount, borrowed, isbn, title, author, borrower);
+  lib.count += 1;
+  lib.books = realloc(lib.books, lib.count * sizeof(book *));
+  lib.books[lib.count - 1] = newBook(amount, borrowed, isbn, title, author, borrower);
   return 0;
 }
 
-int deleteBook(library *lib, int index)
+int deleteBook(int index)
 {
-  free(lib->books[index]);
-  lib->count -= 1;
+  free(lib.books[index]);
+  lib.count -= 1;
   //if array is not empty and the deleted book was not last element
-  if (lib->count != 0 && lib->count != index)
+  if (lib.count != 0 && lib.count != index)
     //move last element to the position of the deleted book
-    lib->books[index] = lib->books[lib->count];
+    lib.books[index] = lib.books[lib.count];
   return 0;
 }
 

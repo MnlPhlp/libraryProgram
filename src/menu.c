@@ -27,8 +27,7 @@ int menu(char *text, int options)
       printf("%s",text);
     else
       printf("invalid input, try again (enter 'm' to show menu again)\n");
-    while (buff != '\n' && buff != EOF)
-      buff = getchar();
+    clearInput();
   }
   return input;
 }
@@ -101,7 +100,7 @@ int addMenu()
     printf("invalid Character \n");
   }
 
-  addBook(NULL,&amount,0,&isbn,title,author,NULL);
+  addBook(amount,0,isbn,title,author,NULL);
 
   clearConsole();
   printf("Book added\n");
@@ -112,7 +111,7 @@ void deleteMenu()
 {
 }
 
-void mainMenu(library *lib)
+void mainMenu()
 {
   while (1)
   {
@@ -134,14 +133,14 @@ void mainMenu(library *lib)
       deleteMenu();
       break;
     case 6:
-      printLib(lib);
+      printLib();
       break;
     case 7:
-      saveData(lib,"bin/Save");
-      free(lib);
-      lib = NULL;
+      saveData("bin/Save");
+      lib.count=0;
+      lib.books = NULL;
       runTests();
-      lib = loadData("bin/Save");
+      loadData("bin/Save");
       break;
     case 8:
     default:
@@ -188,8 +187,7 @@ int yesno(int def)
     default:
       printf("invalid input, try again\n");
       break;
-    while (buff != '\n' && buff != EOF)
-      buff = getchar();
+    clearInput();
     }
   }
   return input;

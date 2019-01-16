@@ -12,7 +12,7 @@
  * 
  * returns: pointer to the loaded Library, NULL if an error occured
 */
-library *loadData(char * saveFile);
+int loadData(char * saveFile);
 
 /*
  * Function: saveData
@@ -24,7 +24,9 @@ library *loadData(char * saveFile);
  * 
  * returns: 0 if succesfull, 1 if an error occured
 */
-int saveData(library *lib,char *saveFile);
+
+
+int saveData(char *saveFile);
 
 /*
  * Function: addBook
@@ -36,7 +38,7 @@ int saveData(library *lib,char *saveFile);
  * 
  * returns: 0 if succesfull, 1 if an error occured
 */
-int addBook(library *lib, int amount, int borrowed, long isbn, char *title, char *author, char **borrower);
+int addBook(int amount, int borrowed, long isbn, char *title, char *author, char **borrower);
 
 /*
  * Function: deleteBook
@@ -44,12 +46,11 @@ int addBook(library *lib, int amount, int borrowed, long isbn, char *title, char
  * removes a Book from the library
  * the last Book in the array is moved to the free position
  * 
- * lib: pointer to the library 
  * index: index of the book that should be deleted
  * 
  * returns: 0 if succesfull, 1 if an error occured
 */
-int deleteBook(library *lib, int index);
+int deleteBook(int index);
 
 
 /*
@@ -64,6 +65,8 @@ int deleteBook(library *lib, int index);
  * returns: 0 if succesfull, 1 if there are no copies left, 2 if memmory could not be allocated
 */
 int borrowBook(book *book, char* borrower);
+
+extern library lib;
 
 
 #endif
