@@ -5,7 +5,7 @@
 #include "visual.h"
 #include "menu.h"
 
-void runTests();
+void runTests();    //Was das? :D
 
 void mainMenu()
 {

@@ -17,7 +17,7 @@
                     "|(5) QUIT                |\n"\
                     "'------------------------'\n"
 
-#define buffSize 32                     
+#define buffSize 32
 
 /*
  * Function: yesno
@@ -30,15 +30,11 @@
  *  returns: 1 for 'y', 0 for 'n', <def> for 'enter'
  */
 int yesno(int def);
-
-void mainMenu();
-
-void printBook(book *book,int count);
-
 int addMenu();
 
+void mainMenu();
+void printBook(book *book,int count);
 void clearConsole();
-
 void clearInput();
 
 #endif
