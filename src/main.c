@@ -6,6 +6,8 @@
 #include "data.h"
 #define savefile "bin/Save"
 
+//toll das ich hier bin
+
 
 int main()
 {

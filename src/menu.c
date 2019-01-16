@@ -68,8 +68,44 @@ void searchMenu()
   }
 }
 
-void addMenu()
+int addMenu()
 {
+  char title[32];
+  printf("Title:");
+  while(scanf("%s",title) == 0) {
+    clearInput();
+    printf("invalid Character \n");
+  }
+  clearInput();
+
+  char author[32];
+  printf("Author:");
+  while(scanf("%s",author) == 0) {
+    clearInput();
+    printf("invalid Character \n");
+  }
+  clearInput();
+
+  int amount;
+  printf("Amount:");
+  while(scanf("%d",&amount) == 0) {
+    clearInput();
+    printf("invalid Character \n");
+  }
+  clearInput();
+
+  long isbn;
+  printf("ISBN:");
+  while(scanf("%ld",&isbn) == 0) {
+    clearInput();
+    printf("invalid Character \n");
+  }
+
+  addBook(&amount,&0,&isbn,title,author,NULL);
+
+  clearConsole();
+  printf("Book added\n");
+  return 0;
 }
 
 void deleteMenu()
@@ -157,4 +193,16 @@ int yesno(int def)
     }
   }
   return input;
+}
+
+void clearConsole() {
+  for(int i = 0;i<10;i++) {
+    printf("\n\n\n\n\n");
+  }
+  clearInput();
+}
+
+void clearInput() {
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF) { }
 }
