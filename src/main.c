@@ -6,9 +6,6 @@
 #include "data.h"
 #define savefile "bin/Save"
 
-//toll das ich hier bin
-
-
 int main()
 {
   printf("\nlibrary gets loaded from file '%s' ...\n", savefile);
@@ -22,7 +19,7 @@ int main()
 
   //show main menu
   mainMenu();
-  
+
   //save library to savefile
   printf("library gets saved into file '%s' ...\n", savefile);
   if (saveData(savefile))

@@ -13,6 +13,9 @@ void printLib() {
   clearConsole();
 }
 
+
+/* Manuels printLib version */
+
 // void printLib()
 // {
 //   printf(LibText, lib.count);

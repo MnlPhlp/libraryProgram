@@ -215,4 +215,3 @@ int returnBook(book *book, char *borrower)
 
   return 1;
 }
-
