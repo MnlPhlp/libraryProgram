@@ -77,7 +77,6 @@ int addMenu()
     title[i] = c;
     i++;
   }
-  clearInput();
 
   char author[buffSize] = "";
   printf("Author: ");
@@ -86,7 +85,6 @@ int addMenu()
     author[i]=c;
     i++;
   }
-  clearInput();
 
   int amount;
   printf("Amount: ");
