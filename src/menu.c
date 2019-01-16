@@ -69,30 +69,17 @@ void searchMenu()
 
 int addMenu()
 {
-<<<<<<< HEAD
   char title[32] = "";
   printf("Title: ");
   char c;
   int i = 0;
   while ((c = getchar()) != '\n' && c != EOF) {
     title[i] = c;
-=======
-  char title[buffSize];
-  printf("Title: ");
-  char c;
-  int i = 0;
-  while ((c = getchar()) != '\n' && c != EOF && i < buffSize) {
-    title[i]=c;
->>>>>>> 25548582165ebf140a88be817f50e9b4a837f077
     i++;
   }
   clearInput();
 
-<<<<<<< HEAD
   char author[32] = "";
-=======
-  char author[buffSize];
->>>>>>> 25548582165ebf140a88be817f50e9b4a837f077
   printf("Author: ");
   i = 0;
   while ((c = getchar()) != '\n' && c != EOF && i < buffSize) {
