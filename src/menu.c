@@ -71,19 +71,20 @@ int addMenu()
 {
   char title[32];
   printf("Title: ");
-  while(scanf("%s",title) == 0) {
-    clearInput();
-    printf("Invalid Character \n\nTitle:");
+  char c;
+  int i = 0;
+  while ((c = getchar()) != '\n' && c != EOF) {
+    title[i]=c;
+    i++;
   }
-  clearInput();
 
   char author[32];
   printf("Author: ");
-  while(scanf("%s",author) == 0) {
-    clearInput();
-    printf("Invalid Character \n\nAuthor:");
+  i = 0;
+  while ((c = getchar()) != '\n' && c != EOF) {
+    author[i]=c;
+    i++;
   }
-  clearInput();
 
   int amount;
   printf("Amount: ");
@@ -95,7 +96,7 @@ int addMenu()
 
   long isbn;
   printf("ISBN: ");
-  while(scanf("%ld",&isbn) == 0 && !isbnValidate(isbn)) {
+  while(scanf("%ld",&isbn) == 0) {
     clearInput();
     printf("Invalid Character \n\nISBN:");
   }
