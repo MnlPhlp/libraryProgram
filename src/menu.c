@@ -141,25 +141,35 @@ bool isbnValidation(char isbn[]) {
       }
       else{
         clearInput();
-        printf("ISBN to long\n");
+        printf("to long\n");
         return true;
       }
     }
   }
   if(i!=10) {
-    printf("ISBN to short\n");
+    printf("to short\n");
     return true;
   }
-  
-  if(isbn[9]!='x' && isbn[9]!='x' && isbn[9]-isbn[9] > 47 && isbn[9]-isbn[9] < 58) {
-    printf("ISBN last digit is NaN or 'x'\n");
+
+  if(isbn[9]!='x' && isbn[9]!='x' && isbn[9]-isbn[9] >= '0' && isbn[9]-isbn[9] <= '9') {
+    printf("last digit is NaN or 'x'\n");
     return true;
   }
 
   //  ISBN Checksum
   int total = 0;
   for(int i = 0;i<9;i++) {
-    total += isbn[i];
+    total += (isbn[i]-'0')*(10-i);
+  }
+  if(isbn[9]=='X') {
+    total+=10;
+  }
+  else {
+    total+=isbn[9]-'0';
+  }
+  if(total%11){
+    printf("Not an ISBN check checksum\n");
+    return true;
   }
 
   return false;
