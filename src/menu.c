@@ -150,8 +150,8 @@ bool isbnValidation(char isbn[]) {
     printf("ISBN to short\n");
     return true;
   }
-  printf("\n%d\n",isbn[9]);
-  if(isbn[9]!='x' && isbn[9]!='x' && isbn[9]-isbn[9] >= 48 && isbn[9]-isbn[9] >= 57) {
+  
+  if(isbn[9]!='x' && isbn[9]!='x' && isbn[9]-isbn[9] > 47 && isbn[9]-isbn[9] < 58) {
     printf("ISBN last digit is NaN or 'x'\n");
     return true;
   }
