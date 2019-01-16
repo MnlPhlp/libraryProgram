@@ -2,7 +2,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "../include/data.h"
-#include "../include/visual.h"
 #include "../include/menu.h"
 
 void runTests();    //Was das? :D
@@ -190,6 +189,15 @@ void printBook(book *book,int count) {
          count,book->title,book->author,book->isbn,book->amount,book->amount-book->borrowed);
 }
 
+void printLib() {
+  printf("Amount of different Books is %d: \n",lib.count);
+  for(int i = 0;i<lib.count;i++){
+    printBook(lib.books[i],i+1);
+  }
+  printf("Hit ENTER to continue...");
+  clearConsole();
+}
+
 int yesno(int def)
 {
   char buff;
@@ -223,3 +231,20 @@ int yesno(int def)
   }
   return input;
 }
+
+
+/* Manuels printLib version */
+
+// void printLib()
+// {
+//   printf(LibText, lib.count);
+//   for (int i = 0; i < lib.count; i++)
+//   {
+//     printf(BookText, i+1, lib.books[i]->title, lib.books[i]->author, lib.books[i]->isbn, lib.books[i]->amount, lib.books[i]->borrowed);
+//
+//     for (int j = 0; j < lib.books[i]->borrowed; j++)
+//     {
+//       printf("  %d: %s\n", j+1, lib.books[i]->borrower[j]);
+//     }
+//   }
+// }

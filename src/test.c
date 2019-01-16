@@ -1,8 +1,7 @@
 #include <stdlib.h>
-#include "structs.h"
-#include "data.h"
-#include "visual.h"
-
+#include "../include/structs.h"
+#include "../include/data.h"
+#include "../include/menu.h"
 
 void runTests()
 {

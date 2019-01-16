@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include "data.h"
-#include "visual.h"
-#include "menu.h"
+#include "../include/data.h"
+#include "../include/menu.h"
 
 library lib;
 
