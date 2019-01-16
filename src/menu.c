@@ -77,6 +77,9 @@ int addMenu()
     title[i] = c;
     i++;
   }
+  //if the user enters a title longer than buffSize the remaining input has to be cleared
+  if (c != '\n')
+    clearInput();
 
   char author[buffSize] = "";
   printf("Author: ");
@@ -85,6 +88,9 @@ int addMenu()
     author[i]=c;
     i++;
   }
+  //if the user enters a title longer than buffSize the remaining input has to be cleared
+  if (c != '\n')
+    clearInput();
 
   int amount;
   printf("Amount: ");
@@ -100,7 +106,6 @@ int addMenu()
     clearInput();
     printf("Invalid Character \n\nISBN:");
   }
-  clearInput();
 
   addBook(amount,0,isbn,title,author,NULL);
 
