@@ -140,12 +140,7 @@ void mainMenu()
       deleteMenu();
       break;
     case 6:
-      printf("Amount of Books is %d: \n",lib.count);
-      for(int i = 0;i<lib.count;i++){
-        printBook(lib.books[i],i+1);
-      }
-      printf("Hit ENTER to continue...");
-      clearConsole();
+      printLib();
       break;
     case 7:
       saveData("bin/Save");

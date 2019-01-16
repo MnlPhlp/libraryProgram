@@ -18,6 +18,6 @@
 #define ANSI_COLOR_YELLOW  "\x1b[33m"
 
 //prints the whole library to the console
-// void printLib();
+ void printLib();
 
 #endif
