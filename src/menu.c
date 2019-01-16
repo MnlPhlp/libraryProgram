@@ -101,7 +101,7 @@ int addMenu()
     printf("invalid Character \n");
   }
 
-  addBook(&amount,&0,&isbn,title,author,NULL);
+  addBook(NULL,&amount,0,&isbn,title,author,NULL);
 
   clearConsole();
   printf("Book added\n");
