@@ -32,7 +32,13 @@
 int yesno(int def);
 int addMenu();
 
+int menu(char *text, int options);
 void mainMenu();
+void returnMenu();
+void borrowMenu();
+void deleteMenu();
+void searchMenu();
+
 void printBook(book *book,int count);
 void clearConsole();
 void clearInput();

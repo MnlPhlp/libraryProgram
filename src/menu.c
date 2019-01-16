@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "data.h"
-#include "visual.h"
-#include "menu.h"
+#include "../include/data.h"
+#include "../include/visual.h"
+#include "../include/menu.h"
 
 void runTests();    //Was das? :D
 
@@ -11,7 +11,7 @@ void mainMenu()
 {
   while (1)
   {
-    switch (menu(mainMenuText, 8))
+    switch(menu(mainMenuText, 8))
     {
     case 1:
       borrowMenu();
