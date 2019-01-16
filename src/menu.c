@@ -118,7 +118,7 @@ int addMenu()
   char isbn[11] = "";
   printf("ISBN: ");
   while(isbnValidation(isbn)){
-    printf("\nNot an ISBN\n");
+    printf("Not an ISBN \n\nISBN: ");
   }
   addBook(amount,0,isbn,title,author,NULL);
   printf("Book added\n");
@@ -128,13 +128,16 @@ int addMenu()
 bool isbnValidation(char isbn[]) {
   char c;
   int i = 0;
-  while ((c = getchar()) != '\n' && c != EOF && c != ' ') {
-    if(i<10) {
-      isbn[i]=c;
-      i++;
-    }
-    else{
-      return true;
+  while ((c = getchar()) != '\n' && c != EOF) {
+    if(c != ' ' && c != '-') {
+      if(i<10) {
+        isbn[i]=c;
+        i++;
+      }
+      else{
+        clearInput();
+        return true;
+      }
     }
   }
   if(i!=10) {
