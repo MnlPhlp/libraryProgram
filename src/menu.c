@@ -89,12 +89,12 @@ int addMenu()
 {
   char title[buffSize] = "";
   do{
-    printf("Title: ", buffSize);
+    printf("Title: ");
   }while(getString(title, buffSize));
 
   char author[buffSize] = "";
   do{
-    printf("Author: ", buffSize);
+    printf("Author: ");
   }while(getString(author, buffSize));
 
   int amount;
