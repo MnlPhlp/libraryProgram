@@ -212,7 +212,7 @@ int borrowBook(book *book, char *borrower)
 library *searchISBN(char *isbn) {
   library *results = malloc(sizeof(library));
   results->count = 0;
-  printf("jap\n%d",lib.count);
+  results->books = NULL;
   for(int i = 0,j=0;i<lib.count;i++) {
     if(strstr(lib.books[i]->isbn,isbn)){
       j++;

@@ -35,11 +35,7 @@ void mainMenu()
       printLib(&lib);
       break;
     case '7':
-      saveData("bin/Save");
-      lib.count = 0;
-      lib.books = NULL;
       runTests();
-      loadData("bin/Save");
       break;
     case '8':
       status = false;
