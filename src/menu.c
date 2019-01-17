@@ -31,8 +31,13 @@ void mainMenu()
     case '5':
       deleteMenu();
       break;
+<<<<<<< HEAD
     case '6':
       printLib();
+=======
+    case 6:
+      printLib(&lib);
+>>>>>>> master
       break;
     case '7':
       saveData("bin/Save");

@@ -209,6 +209,20 @@ int borrowBook(book *book, char *borrower)
   return 0;
 }
 
+library *searchISBN(char *isbn) {
+  library *results = malloc(sizeof(library));
+  results->count = 0;
+  for(int i = 0,j=0;i<lib.count;i++) {
+    if(strstr(lib.books[i]->isbn,isbn)){
+      j++;
+      results->books = realloc(results->books,j*sizeof(book*));
+      results->books[j-1] = lib.books[i];
+      results->count = j;
+    }
+  }
+  return results;
+}
+
 // int returnBook(book *book, char *borrower)
 // {
 //   //return 1 if there are no books borrowed from the given borrower

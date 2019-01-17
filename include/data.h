@@ -66,6 +66,8 @@ int deleteBook(int index);
 */
 int borrowBook(book *book, char* borrower);
 
+library *searchISBN(char*);
+
 extern library lib;
 
 

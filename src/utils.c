@@ -131,12 +131,13 @@ void printBook(book *book, int count)
          count, book->title, book->author, book->isbn, book->amount, book->amount - book->borrowed);
 }
 
-void printLib()
+void printLib(library* pLib)
 {
+  printf("jap\n%d",lib.count);
   printf("Amount of different Books is %d: \n", lib.count);
-  for (int i = 0; i < lib.count; i++)
+  for (int i = 0; i < pLib->count; i++)
   {
-    printBook(lib.books[i], i + 1);
+    printBook(pLib->books[i], i + 1);
   }
   printf("Hit ENTER to continue...");
   clearConsole();
