@@ -16,7 +16,7 @@ char menu(char *text, int options);
  *
  *  returns: 1 for 'y', 0 for 'n', <def> for 'enter'
  */
-int yesno(bool def);
+bool yesno(bool def);
 void printLib();
 void printBook(book *book,int count);
 void clearConsole();
