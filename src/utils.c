@@ -133,7 +133,7 @@ void printBook(book *book, int count)
 
 void printLib(library* pLib)
 {
-  printf("Amount of different Books is %d: \n", lib.count);
+  printf("Amount of different Books is %d: \n", pLib->count);
   for (int i = 0; i < pLib->count; i++)
   {
     printBook(pLib->books[i], i + 1);
