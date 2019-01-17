@@ -78,26 +78,22 @@ bool isbnValidation(char isbn[])
   return false;
 }
 
-int menu(char *text, int options)
+char menu(char *text, int options)
 {
-  int input = 0;
   char buff;
+  char input = '\0';
   //print specific menu text
   printf("%s", text);
 
-  while (input == 0)
+  while (input == '\0')
   {
-    printf("choose option: ");
-    buff = getchar();
-    if (buff >= '1' && buff <= '0' + options)
-      //save choosen option if in valid range
-      input = buff - '0';
-    else if (buff == 'm')
-      //print specific menu text again
-      //useful after many invalid inputs to see the valid options again
-      printf("%s", text);
-    else
-      printf("invalid input, try again (enter 'm' to show menu again)\n");
+    while(getString(&buff,1)){
+      printf("choose option: ");
+    }
+    if (buff > '0' && buff <= '0'+options){
+      input = buff;
+    }
+    clearInput();
   }
   clearConsole();
   return input;
