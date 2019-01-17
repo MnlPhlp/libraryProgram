@@ -4,6 +4,7 @@
 #include <errno.h>
 #include "../include/data.h"
 #include "../include/menu.h"
+#include "../include/utils.h"
 
 library lib;
 
