@@ -134,7 +134,6 @@ void printBook(book *book, int count)
 
 void printLib(library* pLib)
 {
-  printf("jap\n%d",lib.count);
   printf("Amount of different Books is %d: \n", lib.count);
   for (int i = 0; i < pLib->count; i++)
   {
@@ -144,11 +143,11 @@ void printLib(library* pLib)
   clearConsole();
 }
 
-int yesno(int def)
+int yesno(bool def)
 {
   char buff;
   char *options;
-  if (def == 1)
+  if (def)
     options = "[Y/n]";
   else
     options = "[y/N]";
@@ -161,10 +160,10 @@ int yesno(int def)
     switch (toupper(buff))
     {
     case 'Y':
-      input = 1;
+      input = true;
       break;
     case 'N':
-      input = 0;
+      input = false;
       break;
     case '\n':
       input = def;

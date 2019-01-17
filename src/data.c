@@ -19,7 +19,7 @@ FILE *openFile(char *saveFile, char *mode)
                           "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET,
            strerror(errno));
     printf("try again? ");
-    if (!yesno(1))
+    if (!yesno(true))
       break;
   }
   return save;
@@ -57,7 +57,7 @@ int loadData(char *saveFile)
     //read borrowed amount as int
     fread(&lib.books[i]->borrowed, sizeof(int), 1, save);
     //read isbn as long
-    fread(&lib.books[i]->isbn, sizeof(long), 1, save);
+    fread(&lib.books[i]->isbn, 11*sizeof(char), 1, save);
     //read title with length-value encoding
     fread(&length, sizeof(size_t), 1, save);
     lib.books[i]->title = malloc(length);
@@ -107,7 +107,7 @@ int loadData(char *saveFile)
   return 0;
 }
 
-int saveData(char *saveFile)
+bool saveData(char *saveFile)
 {
   char *backup = malloc(strlen(saveFile) + 8);
   size_t length;
@@ -116,12 +116,12 @@ int saveData(char *saveFile)
   while (rename(saveFile, backup))
   {
     printf(ANSI_COLOR_RED "backup couldn't be created" ANSI_COLOR_RESET "\ntry again?\n");
-    if (!yesno(1))
+    if (!yesno(false))
       break;
   }
   FILE *save = openFile(saveFile, "w");
   if (save == NULL)
-    return 1;
+    return true;
   fwrite(&lib.count, sizeof(int), 1, save);
   for (int i = 0; i < lib.count; i++)
   {
@@ -130,7 +130,7 @@ int saveData(char *saveFile)
     //save borrowed amount as int
     fwrite(&lib.books[i]->borrowed, sizeof(int), 1, save);
     //save isbn as long
-    fwrite(&lib.books[i]->isbn, sizeof(long), 1, save);
+    fwrite(&lib.books[i]->isbn, 11*sizeof(char), 1, save);
     //save title with length-value encoding
     length = strlen(lib.books[i]->title) + 1;
     fwrite(&length, sizeof(size_t), 1, save);
@@ -151,7 +151,7 @@ int saveData(char *saveFile)
   unsigned long checksum = hashLib();
   fwrite(&checksum, sizeof(unsigned long), 1, save);
   fclose(save);
-  return 0;
+  return false;
 }
 
 book *newBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower)
@@ -212,6 +212,7 @@ int borrowBook(book *book, char *borrower)
 library *searchISBN(char *isbn) {
   library *results = malloc(sizeof(library));
   results->count = 0;
+  printf("jap\n%d",lib.count);
   for(int i = 0,j=0;i<lib.count;i++) {
     if(strstr(lib.books[i]->isbn,isbn)){
       j++;

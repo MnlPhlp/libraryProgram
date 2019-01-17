@@ -1,6 +1,7 @@
 #ifndef DATA
 #define DATA
 
+#include <stdbool.h>
 #include "structs.h"
 
 /*
@@ -22,11 +23,11 @@ int loadData(char * saveFile);
  * lib: pointer to the library that should be safed
  * saveFile: filepath to the File that should be loaded
  *
- * returns: 0 if succesfull, 1 if an error occured
+ * returns: false if succesfull, true if an error occured
 */
 
 
-int saveData(char *saveFile);
+bool saveData(char *saveFile);
 
 /*
  * Function: addBook

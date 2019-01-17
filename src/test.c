@@ -10,7 +10,6 @@ void runTests()
   // addBook(1,0,"0000000000","Game of Thrones","Georege R. R. Martin",NULL);
   library *test = searchISBN("0000000000");
   printf("%d",test->count);
-  printLib(test);
   printf("vorbei");
   // borrowBook(lib.books[0], "Manuel Philipp");
   // saveData("bin/Test_Save");
