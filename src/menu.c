@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../include/data.h"
 #include "../include/menu.h"
 
@@ -122,7 +123,11 @@ int addMenu()
   while(isbnValidation(isbn)){
     printf("ISBN: ");
   }
-  addBook(amount,0,isbn,title,author,NULL);
+  i = 0;
+  while(i < lib.count && !strstr(lib.books[i]->isbn,isbn)){
+    i++;
+  }
+  i < lib.count ? lib.books[i]->amount++ : addBook(amount,0,isbn,title,author,NULL);
   printf("Book added\n");
   return 0;
 }
