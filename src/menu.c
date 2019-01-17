@@ -57,7 +57,7 @@ void borrowMenu(){
         break;
 
       case 'Q':
-        break
+        break;
     }
   }
 }
