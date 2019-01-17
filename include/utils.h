@@ -4,7 +4,15 @@
 #include <stdbool.h>
 #include "structs.h"
 
-//prints the whole library to the console
+#define bookText "\n Book number (%d):\n"     \
+                 "------------------------\n" \
+                 " Title: %s\n"               \
+                 " Author: %s\n"              \
+                 " ISBN: %s\n"                \
+                 " Amount: %d\n"              \
+                 " In stock: %d\n"            \
+                 " Borrower:\n"
+
 char menu(char *text, int options);
 /*
  * Function: yesno
@@ -18,7 +26,7 @@ char menu(char *text, int options);
  */
 bool yesno(bool def);
 void printLib();
-void printBook(book *book,int count);
+void printBook(book *book, int count);
 void clearConsole();
 void clearInput();
 bool isbnValidation();

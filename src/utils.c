@@ -122,19 +122,14 @@ void clearInput()
 
 void printBook(book *book, int count)
 {
-  printf("\n Book number (%d):\n"
-         "------------------------\n"
-         " Title: %s\n"
-         " Author: %s\n"
-         " ISBN: %s\n"
-         " Amount: %d\n"
-         " In stock: %d\n\n",
+  printf(bookText,
          count, book->title, book->author, book->isbn, book->amount, book->amount - book->borrowed);
   //print list of people that borrowed this book
   for(int i = 0; i < book->borrowed; i++)
   {
-    printf("   %d) %s",i+1,book->borrower[i]);
+    printf("   %d) %s\n",i+1,book->borrower[i]);
   }
+  printf("\n");
            
 }
 
