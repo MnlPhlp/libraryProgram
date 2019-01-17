@@ -11,10 +11,9 @@ void runTests(); //Was das? :D
 
 void mainMenu()
 {
-  bool status = true;
-  while (status)
+  while (true)
   {
-    switch (menu(mainMenuText, 8))
+    switch (menu(mainMenuText, 7))
     {
     case '1':
       borrowMenu();
@@ -38,7 +37,7 @@ void mainMenu()
       runTests();
       break;
     case 'Q':
-      status = false;
+      return;
       break;
     default:
       printf("Invalid input");
@@ -47,9 +46,24 @@ void mainMenu()
   }
 }
 
-void borrowMenu(){
+void borrowMenu()
+{
+  while (true)
+  {
+    switch (menu(borrowMenuText, 2))
+    {
+    case '1':
+      break;
 
-  
+    case '2':
+      borrowByIsbn();
+      break;
+
+    case 'Q':
+      return;
+      break;
+    }
+  }
 }
 
 void returnMenu()
@@ -62,8 +76,8 @@ void searchMenu()
   char *searchMenuText = "1) serch by ISBN\n"
                          "2) search by title\n"
                          "3) search by author\n"
-                         "4) quit\n\n";
-  switch (menu(searchMenuText, 4))
+                         "Q) quit\n\n";
+  switch (menu(searchMenuText, 3))
   {
   case '1':
     printf("enter ISBN: ");
@@ -77,7 +91,7 @@ void searchMenu()
   case '3':
     break;
 
-  case '4':
+  case 'Q':
   default:
     break;
   }
@@ -86,14 +100,16 @@ void searchMenu()
 int addMenu()
 {
   char title[buffSize] = "";
-  do{
+  do
+  {
     printf("Title: ");
-  }while(getString(title, buffSize));
+  } while (getString(title, buffSize));
 
   char author[buffSize] = "";
-  do{
+  do
+  {
     printf("Author: ");
-  }while(getString(author, buffSize));
+  } while (getString(author, buffSize));
 
   int amount;
   printf("Amount: ");
@@ -105,22 +121,45 @@ int addMenu()
   clearInput();
 
   char isbn[11] = "";
-  printf("ISBN: ");
-  while (isbnValidation(isbn))
+  do
   {
     printf("ISBN: ");
-  }
+  } while (isbnValidation(isbn));
   int i = 0;
-  while(i < lib.count && !strstr(lib.books[i]->isbn,isbn)){
+  while (i < lib.count && !strstr(lib.books[i]->isbn, isbn))
+  {
     i++;
   }
-  i < lib.count ? lib.books[i]->amount++ : addBook(amount,0,isbn,title,author,NULL);
+  i < lib.count ? lib.books[i]->amount++ : addBook(amount, 0, isbn, title, author, NULL);
   printf("Book added\n");
   return 0;
 }
 
-
-
 void deleteMenu()
 {
+}
+
+void borrowByIsbn()
+{
+  char isbn[11];
+  char borrower[buffSize];
+  book *book;
+  //get a valid isbn from user to clearly identify book to borrow
+  do
+  {
+    printf("ISBN: ");
+  } while (isbnValidation(isbn));
+
+  //because only a valid isbn can be entered there can only be one search result
+  book = searchISBN(isbn)->books[0];
+  //get name of borrower
+  do
+  {
+    printf("Name of borrower: ");
+  } while (getString(borrower, buffSize));
+  //check if book could be borrowed and inform the user
+  if (borrowBook(book, borrower) == 1)
+    printf("all copys of this book are borrowed at the moment");
+  else
+    printf("book %s was succesfully borrowed by %s", book->title, borrower);
 }

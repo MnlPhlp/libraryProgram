@@ -130,6 +130,12 @@ void printBook(book *book, int count)
          " Amount: %d\n"
          " In stock: %d\n\n",
          count, book->title, book->author, book->isbn, book->amount, book->amount - book->borrowed);
+  //print list of people that borrowed this book
+  for(int i = 0; i < book->borrowed; i++)
+  {
+    printf("   %d) %s",i+1,book->borrower[i]);
+  }
+           
 }
 
 void printLib(library *pLib)
