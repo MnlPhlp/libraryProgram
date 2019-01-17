@@ -56,7 +56,7 @@ int loadData(char *saveFile)
     fread(&lib.books[i]->amount, sizeof(int), 1, save);
     //read borrowed amount as int
     fread(&lib.books[i]->borrowed, sizeof(int), 1, save);
-    //read isbn as long
+    //read isbn as char
     fread(&lib.books[i]->isbn, 11*sizeof(char), 1, save);
     //read title with length-value encoding
     fread(&length, sizeof(size_t), 1, save);
@@ -129,7 +129,7 @@ bool saveData(char *saveFile)
     fwrite(&lib.books[i]->amount, sizeof(int), 1, save);
     //save borrowed amount as int
     fwrite(&lib.books[i]->borrowed, sizeof(int), 1, save);
-    //save isbn as long
+    //save isbn as char
     fwrite(&lib.books[i]->isbn, 11*sizeof(char), 1, save);
     //save title with length-value encoding
     length = strlen(lib.books[i]->title) + 1;
