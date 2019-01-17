@@ -1,6 +1,4 @@
-bin/Save*
-bin/Test*
-bin/main*
+bin
 *compiling_error.txt
 *.DS_Store
 .vscode
