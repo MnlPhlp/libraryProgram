@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../include/data.h"
 #include "../include/menu.h"
 
@@ -88,12 +89,12 @@ int addMenu()
 {
   char title[buffSize] = "";
   do{
-    printf("Title (max %d characters): ", buffSize);
+    printf("Title: ", buffSize);
   }while(getString(title, buffSize));
 
   char author[buffSize] = "";
   do{
-    printf("Author (max %d characters): ", buffSize);
+    printf("Author: ", buffSize);
   }while(getString(author, buffSize));
 
   int amount;
@@ -111,7 +112,11 @@ int addMenu()
   {
     printf("ISBN: ");
   }
-  addBook(amount, 0, isbn, title, author, NULL);
+  int i = 0;
+  while(i < lib.count && !strstr(lib.books[i]->isbn,isbn)){
+    i++;
+  }
+  i < lib.count ? lib.books[i]->amount++ : addBook(amount,0,isbn,title,author,NULL);
   printf("Book added\n");
   return 0;
 }
@@ -305,7 +310,7 @@ bool getString(char *buffer, int length)
 {
   int i = 0;
   char c;
-  while ((c = getchar()) != '\n' && c != EOF && i < buffSize) {
+  while ((c = getchar()) != '\n' && c != EOF && i < length) {
     buffer[i]=c;
     i++;
   }
