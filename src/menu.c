@@ -288,4 +288,3 @@ int yesno(int def)
   }
   return input;
 }
-
