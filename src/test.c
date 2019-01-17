@@ -2,6 +2,7 @@
 #include "../include/structs.h"
 #include "../include/data.h"
 #include "../include/menu.h"
+#include "../include/utils.h"
 
 void runTests()
 {
