@@ -313,7 +313,8 @@ void getString(char *buffer, int length)
     i++;
   }
   //if the user enters a String longer than buffSize the remaining input has to be cleared
-  if (c != '\n')
+  if (c != '\n' && c != EOF) {
     printf("input to long\n");
     clearInput();
+  }
 }
