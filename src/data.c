@@ -208,8 +208,8 @@ int borrowBook(book *book, char *borrower)
   return 0;
 }
 
-int returnBook(book *book, char *borrower)
-{
-  //return 1 if there are no books borrowed from the given borrower
-  return 1;
-}
+// int returnBook(book *book, char *borrower)
+// {
+//   //return 1 if there are no books borrowed from the given borrower
+//   return 1;
+// }
