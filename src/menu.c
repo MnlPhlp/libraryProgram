@@ -144,6 +144,7 @@ void borrowByIsbn()
   char isbn[11];
   char borrower[buffSize];
   book *book;
+  //get a valid isbn from user to clearly identify book to borrow
   do
   {
     printf("ISBN: ");
@@ -151,12 +152,12 @@ void borrowByIsbn()
 
   //because only a valid isbn can be entered there can only be one search result
   book = searchISBN(isbn)->books[0];
-
+  //get name of borrower
   do
   {
     printf("Name of borrower: ");
   } while (getString(borrower, buffSize));
-
+  //check if book could be borrowed and inform the user
   if (borrowBook(book, borrower) == 1)
     printf("all copys of this book are borrowed at the moment");
   else

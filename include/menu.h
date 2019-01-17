@@ -32,7 +32,8 @@
                      " Author: %s\n"\
                      " ISBN: %ld\n"\
                      " Amount: %d\n"\
-                     " In stock: %d\n\n"
+                     " In stock: %d\n"\
+                     " Borrower:\n"
 
 #define ANSI_COLOR_RED "\x1b[31m"
 #define ANSI_COLOR_RESET "\x1b[0m"
@@ -47,5 +48,7 @@ void borrowMenu();
 int addMenu();
 void deleteMenu();
 void searchMenu();
+
+void borrowByIsbn();
 
 #endif
