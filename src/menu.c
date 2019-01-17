@@ -37,7 +37,7 @@ void mainMenu()
     case '7':
       runTests();
       break;
-    case '8':
+    case 'Q':
       status = false;
       break;
     default:
@@ -47,8 +47,9 @@ void mainMenu()
   }
 }
 
-void borrowMenu()
-{
+void borrowMenu(){
+
+  
 }
 
 void returnMenu()

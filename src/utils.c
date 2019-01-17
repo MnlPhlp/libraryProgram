@@ -91,11 +91,12 @@ char menu(char *text, int options)
     {
       printf("choose option: ");
     } while (getString(&buff, 1));
-    if (buff > '0' && buff <= '0' + options)
+    if ((buff > '0' && buff <= '0' + options) || toupper(buff) == 'Q')
     {
-      input = buff;
+      input = toupper(buff);
     }
-    else{
+    else
+    {
       printf("invalid Input\n");
     }
   }
@@ -131,9 +132,11 @@ void printBook(book *book, int count)
          count, book->title, book->author, book->isbn, book->amount, book->amount - book->borrowed);
 }
 
-void printLib(library* pLib)
+void printLib(library *pLib)
 {
-  printf("Amount of different Books is %d: \n", pLib->count);
+  printf("\n Amount of different Books is %d: \n"
+         "----------------------------------\n",
+         pLib->count);
   for (int i = 0; i < pLib->count; i++)
   {
     printBook(pLib->books[i], i + 1);
