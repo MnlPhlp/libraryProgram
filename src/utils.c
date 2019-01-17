@@ -142,7 +142,7 @@ void printLib(library* pLib)
   clearConsole();
 }
 
-int yesno(bool def)
+bool yesno(bool def)
 {
   char buff;
   char *options;
