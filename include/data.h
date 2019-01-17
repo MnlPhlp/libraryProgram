@@ -69,6 +69,8 @@ int borrowBook(book *book, char* borrower);
 
 library *searchISBN(char*);
 
+bool returnBook();
+
 extern library lib;
 
 

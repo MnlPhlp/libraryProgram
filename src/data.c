@@ -224,8 +224,23 @@ library *searchISBN(char *isbn) {
   return results;
 }
 
-// int returnBook(book *book, char *borrower)
-// {
-//   //return 1 if there are no books borrowed from the given borrower
-//   return 1;
-// }
+bool returnBook(book *book, char *borrower)
+{
+
+  for(int i = 0; i < book->borrowed; i++)
+  {
+    if (strcmp(book->borrower[i],borrower)){
+      book->borrowed -= 1;
+      free(book->borrower[i]);
+      //if the deleted borrower was in middle of the array fill the empty space with last element
+      if (i < book->borrowed){
+        book->borrower[i] = book->borrower[book->borrowed];
+      }
+      book->borrower=realloc(book->borrower,book->borrowed*sizeof(*book));
+      return true;
+    }
+  }
+  
+  //return false if there are no books borrowed from the given borrower
+  return false;
+}
