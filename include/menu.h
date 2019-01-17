@@ -58,5 +58,8 @@ void clearConsole();
 void clearInput();
 bool isbnValidation();
 
+//takes user input of length 'length' and stores it into 'buffer'
+void getString(char *buffer, int length);
+
 
 #endif

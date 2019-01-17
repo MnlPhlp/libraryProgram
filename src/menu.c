@@ -5,14 +5,14 @@
 #include "../include/data.h"
 #include "../include/menu.h"
 
-void runTests();    //Was das? :D
+void runTests(); //Was das? :D
 
 void mainMenu()
 {
   bool status = true;
   while (status)
   {
-    switch(menu(mainMenuText, 8))
+    switch (menu(mainMenuText, 8))
     {
     case 1:
       borrowMenu();
@@ -34,7 +34,7 @@ void mainMenu()
       break;
     case 7:
       saveData("bin/Save");
-      lib.count=0;
+      lib.count = 0;
       lib.books = NULL;
       runTests();
       loadData("bin/Save");
@@ -87,31 +87,17 @@ void searchMenu()
 int addMenu()
 {
   char title[buffSize] = "";
-  printf("Title: ");
-  char c;
-  int i = 0;
-  while ((c = getchar()) != '\n' && c != EOF && i < buffSize) {
-    title[i] = c;
-    i++;
-  }
-  //if the user enters a title longer than buffSize the remaining input has to be cleared
-  if (c != '\n')
-    clearInput();
+  printf("Title (max %d characters): ", buffSize);
+  getString(title, buffSize);
 
   char author[buffSize] = "";
-  printf("Author: ");
-  i = 0;
-  while ((c = getchar()) != '\n' && c != EOF && i < buffSize) {
-    author[i]=c;
-    i++;
-  }
-  //if the user enters a title longer than buffSize the remaining input has to be cleared
-  if (c != '\n')
-    clearInput();
+  printf("Author (max %d characters): ", buffSize);
+  getString(author, buffSize);
 
   int amount;
   printf("Amount: ");
-  while(scanf("%d",&amount) == 0) {
+  while (scanf("%d", &amount) == 0)
+  {
     clearInput();
     printf("Invalid Character \n\nAmount:");
   }
@@ -119,63 +105,79 @@ int addMenu()
 
   char isbn[11] = "";
   printf("ISBN: ");
-  while(isbnValidation(isbn)){
+  while (isbnValidation(isbn))
+  {
     printf("ISBN: ");
   }
-  addBook(amount,0,isbn,title,author,NULL);
+  addBook(amount, 0, isbn, title, author, NULL);
   printf("Book added\n");
   return 0;
 }
 
-bool isbnValidation(char isbn[]) {
+bool isbnValidation(char isbn[])
+{
   char c;
   int i = 0;
-  while ((c = getchar()) != '\n' && c != EOF) {
-    if(c != ' ' && c != '-') {
-      if(i<9 && !((c >= '0') && (c <= '9'))){
+  while ((c = getchar()) != '\n' && c != EOF)
+  {
+    if (c != ' ' && c != '-')
+    {
+      if (i < 9 && !((c >= '0') && (c <= '9')))
+      {
         clearInput();
         printf("First 9 characters have to be digits:\
-                char[%d]\" %c\" is invalid\n",i,c);
+                char[%d]\" %c\" is invalid\n",
+               i, c);
         return true;
       }
-      if(i<10) {
-        if(c == 'x') {
-          isbn[i]='X';
+      if (i < 10)
+      {
+        if (c == 'x')
+        {
+          isbn[i] = 'X';
         }
-        else {
-          isbn[i]=c;
+        else
+        {
+          isbn[i] = c;
         }
         i++;
       }
-      else{
+      else
+      {
         clearInput();
         printf("to long\n");
         return true;
       }
     }
   }
-  if(i!=10) {
+  if (i != 10)
+  {
     printf("to short\n");
     return true;
   }
 
-  if(isbn[9]!='x' && isbn[9]!='X' && !(isbn[9] >= '0') && !(isbn[9] <= '9')) {
+  if (isbn[9] != 'x' && isbn[9] != 'X' && !(isbn[9] >= '0') && !(isbn[9] <= '9'))
+  {
     printf("last digit is NaN or 'X'\n");
     return true;
   }
 
   //  ISBN Checksum
   int total = 0;
-  for(int i = 0;i<9;i++) {
-    total += (isbn[i]-'0')*(10-i);
+  for (int i = 0; i < 9; i++)
+  {
+    total += (isbn[i] - '0') * (10 - i);
   }
-  if(isbn[9]=='X') {
-    total+=10;
+  if (isbn[9] == 'X')
+  {
+    total += 10;
   }
-  else {
-    total+=isbn[9]-'0';
+  else
+  {
+    total += isbn[9] - '0';
   }
-  if(total%11){
+  if (total % 11)
+  {
     printf("Not an ISBN check checksum\n");
     return true;
   }
@@ -192,7 +194,7 @@ int menu(char *text, int options)
   int input = 0;
   char buff;
   //print specific menu text
-  printf("%s",text);
+  printf("%s", text);
 
   while (input == 0)
   {
@@ -204,7 +206,7 @@ int menu(char *text, int options)
     else if (buff == 'm')
       //print specific menu text again
       //useful after many invalid inputs to see the valid options again
-      printf("%s",text);
+      printf("%s", text);
     else
       printf("invalid input, try again (enter 'm' to show menu again)\n");
   }
@@ -223,19 +225,25 @@ int menu(char *text, int options)
  *  returns: 1 for 'y', 0 for 'n', value of def for 'enter'
  */
 
-void clearConsole() {
+void clearConsole()
+{
   clearInput();
-  for(int i = 0;i<10;i++) {
+  for (int i = 0; i < 10; i++)
+  {
     printf("\n\n\n\n\n");
   }
 }
 
-void clearInput() {
+void clearInput()
+{
   int c;
-  while ((c = getchar()) != '\n' && c != EOF) { }
+  while ((c = getchar()) != '\n' && c != EOF)
+  {
+  }
 }
 
-void printBook(book *book,int count) {
+void printBook(book *book, int count)
+{
   printf("\n Book number (%d):\n"
          "------------------------\n"
          " Title: %s\n"
@@ -243,13 +251,15 @@ void printBook(book *book,int count) {
          " ISBN: %s\n"
          " Amount: %d\n"
          " In stock: %d\n\n",
-         count,book->title,book->author,book->isbn,book->amount,book->amount-book->borrowed);
+         count, book->title, book->author, book->isbn, book->amount, book->amount - book->borrowed);
 }
 
-void printLib() {
-  printf("Amount of different Books is %d: \n",lib.count);
-  for(int i = 0;i<lib.count;i++){
-    printBook(lib.books[i],i+1);
+void printLib()
+{
+  printf("Amount of different Books is %d: \n", lib.count);
+  for (int i = 0; i < lib.count; i++)
+  {
+    printBook(lib.books[i], i + 1);
   }
   printf("Hit ENTER to continue...");
   clearConsole();
@@ -283,9 +293,22 @@ int yesno(int def)
     default:
       printf("invalid input, try again\n");
       break;
-    clearInput();
+      clearInput();
     }
   }
   return input;
 }
 
+void getString(char *buffer, int length)
+{
+  int i = 0;
+  char c;
+  while ((c = getchar()) != '\n' && c != EOF && i < buffSize) {
+    buffer[i]=c;
+    i++;
+  }
+  //if the user enters a String longer than buffSize the remaining input has to be cleared
+  if (c != '\n')
+    printf("input to long\n");
+    clearInput();
+}
