@@ -87,12 +87,14 @@ void searchMenu()
 int addMenu()
 {
   char title[buffSize] = "";
-  printf("Title (max %d characters): ", buffSize);
-  getString(title, buffSize);
+  do{
+    printf("Title (max %d characters): ", buffSize);
+  }while(getString(title, buffSize));
 
   char author[buffSize] = "";
-  printf("Author (max %d characters): ", buffSize);
-  getString(author, buffSize);
+  do{
+    printf("Author (max %d characters): ", buffSize);
+  }while(getString(author, buffSize));
 
   int amount;
   printf("Amount: ");
@@ -299,7 +301,7 @@ int yesno(int def)
   return input;
 }
 
-void getString(char *buffer, int length)
+bool getString(char *buffer, int length)
 {
   int i = 0;
   char c;
@@ -308,7 +310,10 @@ void getString(char *buffer, int length)
     i++;
   }
   //if the user enters a String longer than buffSize the remaining input has to be cleared
-  if (c != '\n')
+  if (c != '\n'){
     printf("input to long\n");
     clearInput();
+    return true;
+  }
+  return false;
 }
