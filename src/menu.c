@@ -110,15 +110,11 @@ int addMenu()
   {
     printf("ISBN: ");
   }
-<<<<<<< HEAD
-  i = 0;
+  int i = 0;
   while(i < lib.count && !strstr(lib.books[i]->isbn,isbn)){
     i++;
   }
   i < lib.count ? lib.books[i]->amount++ : addBook(amount,0,isbn,title,author,NULL);
-=======
-  addBook(amount, 0, isbn, title, author, NULL);
->>>>>>> 0e2aac6becd748ac7b82c4da9a8d596d1c1dc905
   printf("Book added\n");
   return 0;
 }
