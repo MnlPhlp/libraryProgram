@@ -87,15 +87,18 @@ char menu(char *text, int options)
 
   while (input == '\0')
   {
-    while(getString(&buff,1)){
+    do
+    {
       printf("choose option: ");
-    }
-    if (buff > '0' && buff <= '0'+options){
+    } while (getString(&buff, 1));
+    if (buff > '0' && buff <= '0' + options)
+    {
       input = buff;
     }
-    clearInput();
+    else{
+      printf("invalid Input\n");
+    }
   }
-  clearConsole();
   return input;
 }
 
@@ -177,12 +180,14 @@ bool getString(char *buffer, int length)
 {
   int i = 0;
   char c;
-  while ((c = getchar()) != '\n' && c != EOF && i < length) {
-    buffer[i]=c;
+  while ((c = getchar()) != '\n' && c != EOF && i < length)
+  {
+    buffer[i] = c;
     i++;
   }
   //if the user enters a String longer than buffSize the remaining input has to be cleared
-  if (c != '\n'){
+  if (c != '\n')
+  {
     printf("input to long\n");
     clearInput();
     return true;
