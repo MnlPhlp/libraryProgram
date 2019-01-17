@@ -5,7 +5,7 @@
 #include "structs.h"
 
 //prints the whole library to the console
-int menu(char *text, int options);
+char menu(char *text, int options);
 /*
  * Function: yesno
  * ----------------------------
