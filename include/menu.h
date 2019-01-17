@@ -41,25 +41,13 @@
  *
  *  returns: 1 for 'y', 0 for 'n', <def> for 'enter'
  */
-int yesno(int def);
-int addMenu();
 
-int menu(char *text, int options);
 void mainMenu();
 void returnMenu();
 void borrowMenu();
+int addMenu();
 void deleteMenu();
 void searchMenu();
-
-//prints the whole library to the console
-void printLib();
-void printBook(book *book,int count);
-void clearConsole();
-void clearInput();
-bool isbnValidation();
-
-//takes user input of length 'length' and stores it into 'buffer'
-bool getString(char *buffer, int length);
 
 
 #endif
