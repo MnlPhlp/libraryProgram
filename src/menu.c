@@ -11,10 +11,9 @@ void runTests(); //Was das? :D
 
 void mainMenu()
 {
-  bool status = true;
-  while (status)
+  while (true)
   {
-    switch (menu(mainMenuText, 8))
+    switch (menu(mainMenuText, 7))
     {
     case '1':
       borrowMenu();
@@ -38,7 +37,7 @@ void mainMenu()
       runTests();
       break;
     case 'Q':
-      status = false;
+      return;
       break;
     default:
       printf("Invalid input");
@@ -48,8 +47,19 @@ void mainMenu()
 }
 
 void borrowMenu(){
+  while (true){
+    switch(menu(borrowMenuText,2)) 
+    {
+      case '1':
+        break;
+      
+      case '2':
+        break;
 
-  
+      case 'Q':
+        break
+    }
+  }
 }
 
 void returnMenu()
@@ -62,8 +72,8 @@ void searchMenu()
   char *searchMenuText = "1) serch by ISBN\n"
                          "2) search by title\n"
                          "3) search by author\n"
-                         "4) quit\n\n";
-  switch (menu(searchMenuText, 4))
+                         "Q) quit\n\n";
+  switch (menu(searchMenuText, 3))
   {
   case '1':
     printf("enter ISBN: ");
@@ -77,7 +87,7 @@ void searchMenu()
   case '3':
     break;
 
-  case '4':
+  case 'Q':
   default:
     break;
   }

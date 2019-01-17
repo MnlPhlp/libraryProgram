@@ -4,19 +4,28 @@
 #include <stdbool.h>
 #include "structs.h"
 
-#define mainMenuText  "\n ________________________\n"\
-                    "|What do you want to do?:|\n"\
-                    "|------------------------|\n"\
-                    "|(1) Borrow a book       |\n"\
-                    "|(2) Return a book       |\n"\
-                    "|(3) Search a book       |\n"\
-                    "|(4) Add a book          |\n"\
-                    "|(5) Delete a book       |\n"\
-                    "|(6) Show all books      |\n"\
-                    "|(7) Tests r/woosh       |\n"\
-                    "|------------------------|\n"\
-                    "|(Q) QUIT                |\n"\
-                    "'------------------------'\n"
+#define mainMenuText "\n ________________________\n"\
+                      "|What do you want to do?:|\n"\
+                      "|------------------------|\n"\
+                      "|(1) Borrow a book       |\n"\
+                      "|(2) Return a book       |\n"\
+                      "|(3) Search a book       |\n"\
+                      "|(4) Add a book          |\n"\
+                      "|(5) Delete a book       |\n"\
+                      "|(6) Show all books      |\n"\
+                      "|(7) Tests r/woosh       |\n"\
+                      "|------------------------|\n"\
+                      "|(Q) QUIT                |\n"\
+                      "'------------------------'\n"
+
+#define borrowMenuText "\n ________________________\n"\
+                        "|What do you want to do?:|\n"\
+                        "|------------------------|\n"\
+                        "|(1) Search a book       |\n"\
+                        "|(2) Borrow by ISBN      |\n"\
+                        "|------------------------|\n"\
+                        "|(Q) QUIT                |\n"\
+                        "'------------------------'\n"
 
 #define BookText     "------------------------\n"\
                      " Title: %s\n"\
