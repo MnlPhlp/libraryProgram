@@ -16,32 +16,32 @@ void mainMenu()
   {
     switch (menu(mainMenuText, 8))
     {
-    case 1:
+    case '1':
       borrowMenu();
       break;
-    case 2:
+    case '2':
       returnMenu();
       break;
-    case 3:
+    case '3':
       searchMenu();
       break;
-    case 4:
+    case '4':
       addMenu();
       break;
-    case 5:
+    case '5':
       deleteMenu();
       break;
-    case 6:
-      printLib(&lib);
+    case '6':
+      printLib();
       break;
-    case 7:
+    case '7':
       saveData("bin/Save");
       lib.count = 0;
       lib.books = NULL;
       runTests();
       loadData("bin/Save");
       break;
-    case 8:
+    case '8':
       status = false;
       break;
     default:
@@ -68,19 +68,19 @@ void searchMenu()
                          "4) quit\n\n";
   switch (menu(searchMenuText, 4))
   {
-  case 1:
+  case '1':
     printf("enter ISBN: ");
     scanf("%ld", &isbn);
     //searchBookIsbn(isbn);
     break;
 
-  case 2:
+  case '2':
     break;
 
-  case 3:
+  case '3':
     break;
 
-  case 4:
+  case '4':
   default:
     break;
   }
