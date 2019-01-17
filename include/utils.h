@@ -1,5 +1,5 @@
-#ifndef STRUCTURES
-#define STRUCTURES
+#ifndef UTILITIES
+#define UTILITIES
 
 #include <stdbool.h>
 #include "structs.h"

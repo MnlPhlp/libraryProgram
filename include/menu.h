@@ -49,5 +49,7 @@ int addMenu();
 void deleteMenu();
 void searchMenu();
 
+void printBook(book *book,int count);
+
 
 #endif
