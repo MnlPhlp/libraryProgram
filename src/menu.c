@@ -32,7 +32,7 @@ void mainMenu()
       deleteMenu();
       break;
     case 6:
-      printLib();
+      printLib(&lib);
       break;
     case 7:
       saveData("bin/Save");
