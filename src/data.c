@@ -19,7 +19,7 @@ FILE *openFile(char *saveFile, char *mode)
                           "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET,
            strerror(errno));
     printf("try again? ");
-    if (!yesno(true))
+    if (!yesno(false))
       break;
   }
   return save;
