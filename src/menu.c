@@ -217,7 +217,7 @@ bool loadMenu(char *saveFile, int bufferSize){
   switch(menu(loadMenuText,2))
   {
     case '1':
-      saveFile = "Save";
+      strcpy(saveFile,"Save");
       break;
 
     case '2':

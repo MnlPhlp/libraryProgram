@@ -15,7 +15,7 @@ FILE *openFile(char *saveFile, char *mode)
   FILE *save = fopen(saveFile, mode);
   while (save == NULL)
   {
-    printf(ANSI_COLOR_RED "standard save file could not be opened\n" ANSI_COLOR_RESET
+    printf(ANSI_COLOR_RED "Save file could not be opened\n" ANSI_COLOR_RESET
                           "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET,
            strerror(errno));
     printf("try again? ");
