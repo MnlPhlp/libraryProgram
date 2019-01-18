@@ -82,7 +82,7 @@ bool isbnValidation(char isbn[])
 
 char menu(char *text, int options)
 {
-  char buff;
+  char buff[2];
   char input = '\0';
   //print specific menu text
   printf("%s", text);
@@ -92,10 +92,10 @@ char menu(char *text, int options)
     do
     {
       printf("choose option: ");
-    } while (getString(&buff, 1));
-    if ((buff > '0' && buff <= '0' + options) || toupper(buff) == 'Q')
+    } while (getString(buff, 1));
+    if ((buff[0] > '0' && buff[0] <= '0' + options) || toupper(buff[0]) == 'Q')
     {
-      input = toupper(buff);
+      input = toupper(buff[0]);
     }
     else
     {
@@ -138,6 +138,7 @@ void printBook(book *book, int count)
 
 void printLib(library *pLib)
 {
+  clearConsole();
   printf("\n Amount of different Books is %d: \n"
          "----------------------------------\n",
          pLib->count);
@@ -146,6 +147,7 @@ void printLib(library *pLib)
     printBook(pLib->books[i], i + 1);
   }
   printf("Hit ENTER to continue...");
+  clearInput();
   clearConsole();
 }
 
