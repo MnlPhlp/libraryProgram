@@ -107,7 +107,6 @@ char menu(char *text, int options)
 
 void clearConsole()
 {
-  clearInput();
   for (int i = 0; i < 10; i++)
   {
     printf("\n\n\n\n\n");

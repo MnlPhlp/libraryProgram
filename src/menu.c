@@ -132,6 +132,7 @@ int addMenu()
   }
   //if isbn is already stored increase count of the stored book by the entered amount
   i < lib.count ? lib.books[i]->amount += amount : addBook(amount, 0, isbn, title, author, NULL);
+  clearConsole();
   printf("Book added\n");
   return 0;
 }
@@ -174,11 +175,12 @@ void borrowByIsbn()
   {
     printf("Name of borrower: ");
   } while (getString(borrower, buffSize-1));
+  clearConsole();
   //check if book could be borrowed and inform the user
   if (borrowBook(book, borrower) == 1)
-    printf("all copys of this book are borrowed at the moment");
+    printf("book '%s' is not in stock at the moment\n",book->title);
   else
-    printf("book '%s' was succesfully borrowed by '%s'", book->title, borrower);
+    printf("book '%s' was succesfully borrowed by '%s'\n", book->title, borrower);
 }
 
 void deleteByIsbn(){
@@ -195,7 +197,7 @@ void deleteByIsbn(){
   //because only a valid isbn can be entered there can only be one or none search result
   results = searchISBN(isbn);
   if (results->count == 0){
-    printf("no book with the isbn '%s' was found",isbn);
+    printf("no book with the isbn '%s' was found\n",isbn);
     return;
   }
   book = results->books[0];
@@ -227,5 +229,6 @@ void loadMenu(char *saveFile, int bufferSize){
     case 'Q':
       return;
       break;
-    }
+  }
+  clearConsole();
 }
