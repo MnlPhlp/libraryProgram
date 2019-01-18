@@ -113,8 +113,13 @@ void clearConsole()
   //}
   printf("\e[2J");
   printf("console cleared?");
+  clearInput();
   printf("\e[1;1H\e[2J");
   printf("console cleared now?");
+  clearInput();
+  system("cls");
+  printf("what about now?");
+  clearInput();
 }
 
 void clearInput()
