@@ -57,7 +57,7 @@ void borrowMenu();
 int addMenu();
 void deleteMenu();
 void searchMenu();
-void loadMenu(char *saveFile, int bufferSize);
+bool loadMenu();
 
 void borrowByIsbn();
 void deleteByIsbn();

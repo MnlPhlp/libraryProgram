@@ -9,7 +9,8 @@ int main()
 {
   char savefile[50];
   clearConsole();
-  loadMenu(savefile, 50);
+  if(loadMenu(savefile, 50)) 
+    return 1;
   printf("\nlibrary gets loaded from file '%s' ...\n", savefile);
   //load library from savefile
   if (loadData(savefile))
@@ -26,7 +27,7 @@ int main()
   printf("library gets saved into file '%s' ...\n", savefile);
   if (saveData(savefile))
   {
-    printf(ANSI_COLOR_RED"nothing saved"ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_RED"nothing saved\n"ANSI_COLOR_RESET);
   }
   else
     printf("%d book%s saved\n", lib.count,lib.count == 1 ? "":"s");

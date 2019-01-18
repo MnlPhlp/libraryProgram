@@ -213,7 +213,7 @@ void deleteByIsbn(){
     book->amount -= amount;
 }
 
-void loadMenu(char *saveFile, int bufferSize){
+bool loadMenu(char *saveFile, int bufferSize){
   switch(menu(loadMenuText,2))
   {
     case '1':
@@ -227,8 +227,9 @@ void loadMenu(char *saveFile, int bufferSize){
       break;
 
     case 'Q':
-      return;
+      return true;
       break;
   }
   clearConsole();
+  return false;
 }
