@@ -262,3 +262,15 @@ bool returnBook(book *book, char *borrower)
   //return false if there are no books borrowed from the given borrower
   return false;
 }
+
+void sortBooksIsbn(library *lib){
+
+}
+
+void sortBooksTitle(library *lib){
+  
+}
+
+void sortBooksAuthor(library *lib){
+  
+}

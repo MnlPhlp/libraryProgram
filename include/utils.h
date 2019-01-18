@@ -32,8 +32,4 @@ bool isbnValidation();
 //takes user input of length 'length' and stores it into 'buffer'
 bool getString(char *buffer, int length);
 
-void sortBooksIsbn();
-void sortBooksTitle();
-void sortBooksAuthors();
-
 #endif
