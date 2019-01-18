@@ -175,23 +175,28 @@ book *newBook(int amount, int borrowed, char isbn[11], char *title, char *author
   return newBook;
 }
 
-int addBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower)
+bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower)
 {
   lib.count += 1;
   lib.books = realloc(lib.books, lib.count * sizeof(book *));
   lib.books[lib.count - 1] = newBook(amount, borrowed, isbn, title, author, borrower);
-  return 0;
+  return false;
 }
 
-int deleteBook(int index)
+bool deleteBook(book *book)
 {
-  free(lib.books[index]);
+  free(book);  
+  for(int i = 0; i < lib.count; i++)
+  {
+    //if the deleted book was not at the last position of books array
+    if(lib.books[i] == book)
+    {
+      //move last element to the position of the deleted book
+      lib.books[i] = lib.books[lib.count-1];
+    }
+  }
   lib.count -= 1;
-  //if array is not empty and the deleted book was not last element
-  if (lib.count != 0 && lib.count != index)
-    //move last element to the position of the deleted book
-    lib.books[index] = lib.books[lib.count];
-  return 0;
+  return false;
 }
 
 int borrowBook(book *book, char *borrower)

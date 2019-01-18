@@ -137,6 +137,22 @@ int addMenu()
 
 void deleteMenu()
 {
+  while (true)
+  {
+    switch (menu(deleteMenuText, 2))
+    {
+    case '1':
+      break;
+
+    case '2':
+      deleteByIsbn();
+      break;
+
+    case 'Q':
+      return;
+      break;
+    }
+  }
 }
 
 void borrowByIsbn()
@@ -162,4 +178,18 @@ void borrowByIsbn()
     printf("all copys of this book are borrowed at the moment");
   else
     printf("book %s was succesfully borrowed by %s", book->title, borrower);
+}
+
+void deleteByIsbn(){
+  char isbn[11];
+  book *book;
+  //get a valid isbn from user to clearly identify book to borrow
+  do
+  {
+    printf("ISBN: ");
+  } while (isbnValidation(isbn));
+
+  //because only a valid isbn can be entered there can only be one search result
+  book = searchISBN(isbn)->books[0];
+  deleteBook(book);
 }
