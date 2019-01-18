@@ -4,35 +4,43 @@
 #include <stdbool.h>
 #include "structs.h"
 
-#define mainMenuText "\n _______________________\n"\
-                      "|       Main Menu       |\n"\
-                      "|-----------------------|\n"\
-                      "| (1) Borrow a book     |\n"\
-                      "| (2) Return a book     |\n"\
-                      "| (3) Search a book     |\n"\
-                      "| (4) Add a book        |\n"\
-                      "| (5) Delete a book     |\n"\
-                      "| (6) Show all books    |\n"\
-                      "| (7) Tests r/woosh     |\n"\
-                      "|-----------------------|\n"\
-                      "| (Q) QUIT              |\n"\
-                      "'-----------------------'\n"
+#define mainMenuText "\n _______________________\n" \
+                     "|       Main Menu       |\n"  \
+                     "|-----------------------|\n"  \
+                     "| (1) Borrow a book     |\n"  \
+                     "| (2) Return a book     |\n"  \
+                     "| (3) Search a book     |\n"  \
+                     "| (4) Add a book        |\n"  \
+                     "| (5) Delete a book     |\n"  \
+                     "| (6) Show all books    |\n"  \
+                     "| (7) Tests r/woosh     |\n"  \
+                     "|-----------------------|\n"  \
+                     "| (Q) QUIT              |\n"  \
+                     "'-----------------------'\n"
 
-#define borrowMenuText "\n _______________________\n"\
-                        "|      Borrow Menu      |\n"\
-                        "|-----------------------|\n"\
-                        "| (1) Search a book     |\n"\
-                        "| (2) Borrow by ISBN    |\n"\
-                        "|-----------------------|\n"\
-                        "| (Q) QUIT              |\n"\
-                        "'-----------------------'\n"
+#define borrowMenuText "\n _______________________\n" \
+                       "|      Borrow Menu      |\n"  \
+                       "|-----------------------|\n"  \
+                       "| (1) Search a book     |\n"  \
+                       "| (2) Borrow by ISBN    |\n"  \
+                       "|-----------------------|\n"  \
+                       "| (Q) QUIT              |\n"  \
+                       "'-----------------------'\n"
+
+#define deleteMenuText "\n _______________________\n" \
+                       "|      Delete Menu      |\n"  \
+                       "|-----------------------|\n"  \
+                       "| (1) Search a book     |\n"  \
+                       "| (2) Delete by ISBN    |\n"  \
+                       "|-----------------------|\n"  \
+                       "| (Q) QUIT              |\n"  \
+                       "'-----------------------'\n"
 
 #define ANSI_COLOR_RED "\x1b[31m"
 #define ANSI_COLOR_RESET "\x1b[0m"
-#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_YELLOW "\x1b[33m"
 
 #define buffSize 32
-
 
 void mainMenu();
 void returnMenu();
@@ -42,5 +50,6 @@ void deleteMenu();
 void searchMenu();
 
 void borrowByIsbn();
+void deleteByIsbn();
 
 #endif

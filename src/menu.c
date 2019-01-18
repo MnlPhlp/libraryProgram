@@ -130,13 +130,30 @@ int addMenu()
   {
     i++;
   }
-  i < lib.count ? lib.books[i]->amount++ : addBook(amount, 0, isbn, title, author, NULL);
+  //if isbn is already stored increase count of the stored book by the entered amount
+  i < lib.count ? lib.books[i]->amount += amount : addBook(amount, 0, isbn, title, author, NULL);
   printf("Book added\n");
   return 0;
 }
 
 void deleteMenu()
 {
+  while (true)
+  {
+    switch (menu(deleteMenuText, 2))
+    {
+    case '1':
+      break;
+
+    case '2':
+      deleteByIsbn();
+      break;
+
+    case 'Q':
+      return;
+      break;
+    }
+  }
 }
 
 void borrowByIsbn()
@@ -161,5 +178,29 @@ void borrowByIsbn()
   if (borrowBook(book, borrower) == 1)
     printf("all copys of this book are borrowed at the moment");
   else
-    printf("book %s was succesfully borrowed by %s", book->title, borrower);
+    printf("book '%s' was succesfully borrowed by '%s'", book->title, borrower);
+}
+
+void deleteByIsbn(){
+  char isbn[11];
+  int amount;
+  book *book;
+  //get a valid isbn from user to clearly identify book to delete
+  do
+  {
+    printf("ISBN: ");
+  } while (isbnValidation(isbn));
+
+  //because only a valid isbn can be entered there can only be one search result
+  book = searchISBN(isbn)->books[0];
+  printf("Amount of copies you want to delete (%d available): ",book->amount);
+  while(scanf("%d", &amount) != 1 && amount > book->amount){
+    printf("Invalid Input\n");
+    clearInput();
+  }
+  clearInput();
+  if (amount == book->amount)
+    deleteBook(book);
+  else
+    book->amount -= amount;
 }
