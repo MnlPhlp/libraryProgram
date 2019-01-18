@@ -107,10 +107,14 @@ char menu(char *text, int options)
 
 void clearConsole()
 {
-  for (int i = 0; i < 10; i++)
-  {
-    printf("\n\n\n\n\n");
-  }
+  #ifdef _WIN32
+  //on windows use system call
+  system("cls");
+  #else
+  //on linux and mac use escape sequence
+  printf("\033c");
+  #endif
+  
 }
 
 void clearInput()
