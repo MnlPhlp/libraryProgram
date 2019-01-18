@@ -107,19 +107,14 @@ char menu(char *text, int options)
 
 void clearConsole()
 {
-  //for (int i = 0; i < 10; i++)
-  //{
-  //  printf("\n\n\n\n\n");
-  //}
-  printf("\e[2J");
-  printf("console cleared?");
-  clearInput();
-  printf("\e[1;1H\e[2J");
-  printf("console cleared now?");
-  clearInput();
+  #ifdef _WIN32
+  //on windows use system call
   system("cls");
-  printf("what about now?");
-  clearInput();
+  #else
+  //on linux and mac use escape sequence
+  printf("\033c");
+  #endif
+  
 }
 
 void clearInput()
