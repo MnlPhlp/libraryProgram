@@ -181,6 +181,7 @@ bool yesno(bool def)
       clearInput();
     }
   }
+  clearInput();
   return input;
 }
 
