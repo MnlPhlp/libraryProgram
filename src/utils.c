@@ -43,6 +43,8 @@ bool isbnValidation(char isbn[])
       }
     }
   }
+  //add null byte to end string
+  isbn[10]='\0';
   if (i != 10)
   {
     printf("to short\n");
