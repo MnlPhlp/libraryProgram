@@ -11,9 +11,9 @@
  *
  * saveFile: filepath to the File that should be loaded
  *
- * returns: pointer to the loaded Library, NULL if an error occured
+ * returns: true if an error occured
 */
-int loadData(char * saveFile);
+bool loadData(char * saveFile);
 
 /*
  * Function: saveData
