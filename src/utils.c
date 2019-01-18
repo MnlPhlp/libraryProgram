@@ -107,10 +107,14 @@ char menu(char *text, int options)
 
 void clearConsole()
 {
-  for (int i = 0; i < 10; i++)
-  {
-    printf("\n\n\n\n\n");
-  }
+  //for (int i = 0; i < 10; i++)
+  //{
+  //  printf("\n\n\n\n\n");
+  //}
+  printf("\e[2J");
+  printf("console cleared?");
+  printf("\e[1;1H\e[2J");
+  printf("console cleared now?");
 }
 
 void clearInput()
