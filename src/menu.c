@@ -132,6 +132,7 @@ int addMenu()
   }
   //if isbn is already stored increase count of the stored book by the entered amount
   i < lib.count ? lib.books[i]->amount += amount : addBook(amount, 0, isbn, title, author, NULL);
+  clearConsole();
   printf("Book added\n");
   return 0;
 }
@@ -174,25 +175,32 @@ void borrowByIsbn()
   {
     printf("Name of borrower: ");
   } while (getString(borrower, buffSize-1));
+  clearConsole();
   //check if book could be borrowed and inform the user
   if (borrowBook(book, borrower) == 1)
-    printf("all copys of this book are borrowed at the moment");
+    printf("book '%s' is not in stock at the moment\n",book->title);
   else
-    printf("book '%s' was succesfully borrowed by '%s'", book->title, borrower);
+    printf("book '%s' was succesfully borrowed by '%s'\n", book->title, borrower);
 }
 
 void deleteByIsbn(){
   char isbn[11];
   int amount;
   book *book;
+  library *results;
   //get a valid isbn from user to clearly identify book to delete
   do
   {
     printf("ISBN: ");
   } while (isbnValidation(isbn));
 
-  //because only a valid isbn can be entered there can only be one search result
-  book = searchISBN(isbn)->books[0];
+  //because only a valid isbn can be entered there can only be one or none search result
+  results = searchISBN(isbn);
+  if (results->count == 0){
+    printf("no book with the isbn '%s' was found\n",isbn);
+    return;
+  }
+  book = results->books[0];
   printf("Amount of copies you want to delete (%d available): ",book->amount);
   while(scanf("%d", &amount) != 1 && amount > book->amount){
     printf("Invalid Input\n");
@@ -203,4 +211,24 @@ void deleteByIsbn(){
     deleteBook(book);
   else
     book->amount -= amount;
+}
+
+void loadMenu(char *saveFile, int bufferSize){
+  switch(menu(loadMenuText,2))
+  {
+    case '1':
+      saveFile = "Save";
+      break;
+
+    case '2':
+      do{
+        printf("Path: ");
+      }while(getString(saveFile, bufferSize - 1));
+      break;
+
+    case 'Q':
+      return;
+      break;
+  }
+  clearConsole();
 }
