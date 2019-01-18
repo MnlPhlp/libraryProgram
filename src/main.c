@@ -3,10 +3,13 @@
 #include "../include/menu.h"
 #include "../include/structs.h"
 #include "../include/data.h"
-#define savefile "bin/Save"
+#include "../include/utils.h"
 
 int main()
 {
+  char savefile[50];
+  loadMenu(savefile, 50);
+  clearConsole();
   printf("\nlibrary gets loaded from file '%s' ...\n", savefile);
   //load library from savefile
   if (loadData(savefile))

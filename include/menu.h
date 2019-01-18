@@ -18,7 +18,7 @@
                      "| (Q) QUIT              |\n"\
                      "'-----------------------'\n"
 
-#define borrowMenuText "\n _______________________\n" \
+#define borrowMenuText " _______________________\n" \
                        "|      Borrow Menu      |\n"  \
                        "|-----------------------|\n"  \
                        "| (1) Search a book     |\n"  \
@@ -27,7 +27,7 @@
                        "| (Q) QUIT              |\n"  \
                        "'-----------------------'\n"
 
-#define deleteMenuText "\n _______________________\n" \
+#define deleteMenuText " _______________________\n" \
                        "|      Remove Menu      |\n"  \
                        "|-----------------------|\n"  \
                        "| (1) Search a book     |\n"  \
@@ -35,6 +35,15 @@
                        "|-----------------------|\n"  \
                        "| (Q) QUIT              |\n"  \
                        "'-----------------------'\n"
+
+#define loadMenuText " _______________________\n"  \
+                     "|       Load Menu       |\n" \
+                     "|-----------------------|\n" \
+                     "| (1) Standard (./Save) |\n" \
+                     "| (2) Enter save path   |\n" \
+                     "|-----------------------|\n" \
+                     "| (Q) QUIT              |\n" \
+                     "'-----------------------'\n"                       
 
 #define ANSI_COLOR_RED "\x1b[31m"
 #define ANSI_COLOR_RESET "\x1b[0m"
@@ -48,6 +57,7 @@ void borrowMenu();
 int addMenu();
 void deleteMenu();
 void searchMenu();
+void loadMenu(char *saveFile, int bufferSize);
 
 void borrowByIsbn();
 void deleteByIsbn();

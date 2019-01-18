@@ -210,3 +210,22 @@ void deleteByIsbn(){
   else
     book->amount -= amount;
 }
+
+void loadMenu(char *saveFile, int bufferSize){
+  switch(menu(loadMenuText,2))
+  {
+    case '1':
+      saveFile = "Save";
+      break;
+
+    case '2':
+      do{
+        printf("Path: ");
+      }while(getString(saveFile, bufferSize - 1));
+      break;
+
+    case 'Q':
+      return;
+      break;
+    }
+}
