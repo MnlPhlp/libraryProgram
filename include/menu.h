@@ -4,18 +4,18 @@
 #include <stdbool.h>
 #include "structs.h"
 
-#define mainMenuText "\n _______________________\n" \
-                     "|       Main Menu       |\n"  \
-                     "|-----------------------|\n"  \
-                     "| (1) Borrow a book     |\n"  \
-                     "| (2) Return a book     |\n"  \
-                     "| (3) Search a book     |\n"  \
-                     "| (4) Add a book        |\n"  \
-                     "| (5) Delete a book     |\n"  \
-                     "| (6) Show all books    |\n"  \
-                     "| (7) Tests r/woosh     |\n"  \
-                     "|-----------------------|\n"  \
-                     "| (Q) QUIT              |\n"  \
+#define mainMenuText " _______________________\n" \
+                     "|       Main Menu       |\n"\
+                     "|-----------------------|\n"\
+                     "| (1) Borrow a book     |\n"\
+                     "| (2) Return a book     |\n"\
+                     "| (3) Search a book     |\n"\
+                     "| (4) Add a book        |\n"\
+                     "| (5) Remove a book     |\n"\
+                     "| (6) Show all books    |\n"\
+                     "| (7) Tests r/woosh     |\n"\
+                     "|-----------------------|\n"\
+                     "| (Q) QUIT              |\n"\
                      "'-----------------------'\n"
 
 #define borrowMenuText "\n _______________________\n" \
@@ -28,10 +28,10 @@
                        "'-----------------------'\n"
 
 #define deleteMenuText "\n _______________________\n" \
-                       "|      Delete Menu      |\n"  \
+                       "|      Remove Menu      |\n"  \
                        "|-----------------------|\n"  \
                        "| (1) Search a book     |\n"  \
-                       "| (2) Delete by ISBN    |\n"  \
+                       "| (2) Remove by ISBN    |\n"  \
                        "|-----------------------|\n"  \
                        "| (Q) QUIT              |\n"  \
                        "'-----------------------'\n"

@@ -168,9 +168,11 @@ bool yesno(bool def)
     {
     case 'Y':
       input = true;
+      clearInput();
       break;
     case 'N':
       input = false;
+      clearInput();
       break;
     case '\n':
       input = def;
@@ -181,7 +183,6 @@ bool yesno(bool def)
       clearInput();
     }
   }
-  clearInput();
   return input;
 }
 

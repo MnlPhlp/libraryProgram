@@ -185,14 +185,20 @@ void deleteByIsbn(){
   char isbn[11];
   int amount;
   book *book;
+  library *results;
   //get a valid isbn from user to clearly identify book to delete
   do
   {
     printf("ISBN: ");
   } while (isbnValidation(isbn));
 
-  //because only a valid isbn can be entered there can only be one search result
-  book = searchISBN(isbn)->books[0];
+  //because only a valid isbn can be entered there can only be one or none search result
+  results = searchISBN(isbn);
+  if (results->count == 0){
+    printf("no book with the isbn '%s' was found",isbn);
+    return;
+  }
+  book = results->books[0];
   printf("Amount of copies you want to delete (%d available): ",book->amount);
   while(scanf("%d", &amount) != 1 && amount > book->amount){
     printf("Invalid Input\n");

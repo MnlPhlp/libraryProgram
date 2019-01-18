@@ -14,7 +14,7 @@ int main()
     printf(ANSI_COLOR_RED "no library loaded or created" ANSI_COLOR_RESET "\nprogram closed\n");
     return 1;
   }
-  printf("%d books loaded\n", lib.count);
+  printf("%d book%s loaded\n", lib.count,lib.count == 1 ? "":"s");
 
   //show main menu
   mainMenu();
@@ -26,6 +26,6 @@ int main()
     printf(ANSI_COLOR_RED"nothing saved"ANSI_COLOR_RESET);
   }
   else
-    printf("%d books saved\n", lib.count);
+    printf("%d book%s saved\n", lib.count,lib.count == 1 ? "":"s");
   return 0;
 }
