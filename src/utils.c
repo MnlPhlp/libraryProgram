@@ -125,6 +125,8 @@ void printBook(book *book, int count)
   printf(bookText,
          count, book->title, book->author, book->isbn, book->amount, book->amount - book->borrowed);
   //print list of people that borrowed this book
+  if (book->borrowed > 0)
+   printf("  Borrower:\n");
   for(int i = 0; i < book->borrowed; i++)
   {
     printf("   %d) %s\n",i+1,book->borrower[i]);
@@ -189,6 +191,7 @@ bool getString(char *buffer, int length)
     buffer[i] = c;
     i++;
   }
+  buffer[i] = '\0';
   //if the user enters a String longer than buffSize the remaining input has to be cleared
   if (c != '\n')
   {

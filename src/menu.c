@@ -103,13 +103,13 @@ int addMenu()
   do
   {
     printf("Title: ");
-  } while (getString(title, buffSize));
+  } while (getString(title, buffSize-1));
 
   char author[buffSize] = "";
   do
   {
     printf("Author: ");
-  } while (getString(author, buffSize));
+  } while (getString(author, buffSize-1));
 
   int amount;
   printf("Amount: ");
@@ -156,7 +156,7 @@ void borrowByIsbn()
   do
   {
     printf("Name of borrower: ");
-  } while (getString(borrower, buffSize));
+  } while (getString(borrower, buffSize-1));
   //check if book could be borrowed and inform the user
   if (borrowBook(book, borrower) == 1)
     printf("all copys of this book are borrowed at the moment");

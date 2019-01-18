@@ -4,14 +4,13 @@
 #include <stdbool.h>
 #include "structs.h"
 
-#define bookText "\n Book number (%d):\n"      \
-                 "------------------------\n"  \
-                 "     _______   Title:    %s\n"    \
-                 "    /      /,  Author:   %s\n"   \
-                 "   /      //   ISBN:     %s\n"     \
-                 "  /______//    Amount:   %d\n"   \
-                 " (______(/     In stock: %d\n\n" \
-                 " Borrower:\n" 
+#define bookText "\n Book number (%d):\n"        \
+                 "------------------------\n"    \
+                 "     _______   Title:    %s\n" \
+                 "    /      /,  Author:   %s\n" \
+                 "   /      //   ISBN:     %s\n" \
+                 "  /______//    Amount:   %d\n" \
+                 " (______(/     In stock: %d\n\n"
 
 char menu(char *text, int options);
 /*
