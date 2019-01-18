@@ -177,13 +177,14 @@ void borrowByIsbn()
   if (borrowBook(book, borrower) == 1)
     printf("all copys of this book are borrowed at the moment");
   else
-    printf("book %s was succesfully borrowed by %s", book->title, borrower);
+    printf("book '%s' was succesfully borrowed by '%s'", book->title, borrower);
 }
 
 void deleteByIsbn(){
   char isbn[11];
+  int amount;
   book *book;
-  //get a valid isbn from user to clearly identify book to borrow
+  //get a valid isbn from user to clearly identify book to delete
   do
   {
     printf("ISBN: ");
@@ -191,5 +192,14 @@ void deleteByIsbn(){
 
   //because only a valid isbn can be entered there can only be one search result
   book = searchISBN(isbn)->books[0];
-  deleteBook(book);
+  printf("Amount of copies you want to delete (%d available):",book->amount);
+  while(scanf("%d", &amount) != 1 && amount > book->amount){
+    printf("Invalid Input\n");
+    clearInput();
+  }
+  clearInput();
+  if (amount == book->amount)
+    deleteBook(book);
+  else
+    book->amount -= amount;
 }
