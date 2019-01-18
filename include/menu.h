@@ -58,6 +58,7 @@ int addMenu();
 void deleteMenu();
 void searchMenu();
 bool loadMenu();
+void searchResultMenu();
 
 void borrowByIsbn();
 void deleteByIsbn();

@@ -150,9 +150,6 @@ void printLib(library *pLib)
   {
     printBook(pLib->books[i], i + 1);
   }
-  printf("Hit ENTER to continue...");
-  clearInput();
-  clearConsole();
 }
 
 bool yesno(bool def)

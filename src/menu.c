@@ -32,6 +32,9 @@ void mainMenu()
       break;
     case '6':
       printLib(&lib);
+      printf("Hit ENTER to continue...");
+      clearInput();
+      clearConsole();
       break;
     case '7':
       runTests();
@@ -72,7 +75,8 @@ void returnMenu()
 
 void searchMenu()
 {
-  long isbn;
+  char keyword[buffSize];
+  library *results;
   char *searchMenuText = "1) serch by ISBN\n"
                          "2) search by title\n"
                          "3) search by author\n"
@@ -80,9 +84,12 @@ void searchMenu()
   switch (menu(searchMenuText, 3))
   {
   case '1':
-    printf("enter ISBN: ");
-    scanf("%ld", &isbn);
-    //searchBookIsbn(isbn);
+    do
+    {
+      printf("ISBN: ");
+    } while (getString(keyword, 10));
+    results = searchISBN(keyword);
+    searchResultMenu(results);
     break;
 
   case '2':
@@ -92,7 +99,10 @@ void searchMenu()
     break;
 
   case 'Q':
+    return;
+    break;
   default:
+    printf("Invalid input\n");
     break;
   }
 }
@@ -103,13 +113,13 @@ int addMenu()
   do
   {
     printf("Title: ");
-  } while (getString(title, buffSize-1));
+  } while (getString(title, buffSize - 1));
 
   char author[buffSize] = "";
   do
   {
     printf("Author: ");
-  } while (getString(author, buffSize-1));
+  } while (getString(author, buffSize - 1));
 
   int amount;
   printf("Amount: ");
@@ -174,16 +184,17 @@ void borrowByIsbn()
   do
   {
     printf("Name of borrower: ");
-  } while (getString(borrower, buffSize-1));
+  } while (getString(borrower, buffSize - 1));
   clearConsole();
   //check if book could be borrowed and inform the user
   if (borrowBook(book, borrower) == 1)
-    printf("book '%s' is not in stock at the moment\n",book->title);
+    printf("book '%s' is not in stock at the moment\n", book->title);
   else
     printf("book '%s' was succesfully borrowed by '%s'\n", book->title, borrower);
 }
 
-void deleteByIsbn(){
+void deleteByIsbn()
+{
   char isbn[11];
   int amount;
   book *book;
@@ -196,13 +207,15 @@ void deleteByIsbn(){
 
   //because only a valid isbn can be entered there can only be one or none search result
   results = searchISBN(isbn);
-  if (results->count == 0){
-    printf("no book with the isbn '%s' was found\n",isbn);
+  if (results->count == 0)
+  {
+    printf("no book with the isbn '%s' was found\n", isbn);
     return;
   }
   book = results->books[0];
-  printf("Amount of copies you want to delete (%d available): ",book->amount);
-  while(scanf("%d", &amount) != 1 && amount > book->amount){
+  printf("Amount of copies you want to delete (%d available): ", book->amount);
+  while (scanf("%d", &amount) != 1 && amount > book->amount)
+  {
     printf("Invalid Input\n");
     clearInput();
   }
@@ -213,23 +226,41 @@ void deleteByIsbn(){
     book->amount -= amount;
 }
 
-bool loadMenu(char *saveFile, int bufferSize){
-  switch(menu(loadMenuText,2))
+bool loadMenu(char *saveFile, int bufferSize)
+{
+  switch (menu(loadMenuText, 2))
   {
-    case '1':
-      strcpy(saveFile,"Save");
-      break;
+  case '1':
+    strcpy(saveFile, "Save");
+    break;
 
-    case '2':
-      do{
-        printf("Path: ");
-      }while(getString(saveFile, bufferSize - 1));
-      break;
+  case '2':
+    do
+    {
+      printf("Path: ");
+    } while (getString(saveFile, bufferSize - 1));
+    break;
 
-    case 'Q':
-      return true;
-      break;
+  case 'Q':
+    return true;
+    break;
   }
   clearConsole();
   return false;
+}
+
+void searchResultMenu(library *results)
+{
+  char *sortMenuText = "Sort by (1)ISBN (2)Title (3)Author";
+  //print results sorted by given parameter
+  switch(menu(sortMenuText,3)){
+    case '1':
+      sortBooksIsbn(results);
+    break;
+    case '2':
+    break;
+    case '3':
+    break;
+  }
+  printLib(results);
 }
