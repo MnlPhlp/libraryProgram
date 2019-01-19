@@ -51,8 +51,8 @@ bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author,
  *
  * returns: 0 if succesfull, 1 if an error occured
 */
-bool deleteBook(book *book);
-
+bool deleteBook(book *b);
+void freeBook(book *b);
 
 /*
  * Function: borrowBook
@@ -66,10 +66,13 @@ bool deleteBook(book *book);
  * returns: 0 if succesfull, 1 if there are no copies left, 2 if memmory could not be allocated
 */
 int borrowBook(book *book, char* borrower);
+bool returnBook();
 
 library *searchISBN(char*);
 
-bool returnBook();
+int sortBooksIsbn(const void *a, const void *b);
+int sortBooksTitle(const void *a, const void *b);
+int sortBooksAuthor(const void *a, const void *b);
 
 extern library lib;
 

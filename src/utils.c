@@ -44,7 +44,7 @@ bool isbnValidation(char isbn[])
     }
   }
   //add null byte to end string
-  isbn[10]='\0';
+  isbn[10] = '\0';
   if (i != 10)
   {
     printf("to short\n");
@@ -107,14 +107,13 @@ char menu(char *text, int options)
 
 void clearConsole()
 {
-  #ifdef _WIN32
+#ifdef _WIN32
   //on windows use system call
   system("cls");
-  #else
+#else
   //on linux and mac use escape sequence
   printf("\033c");
-  #endif
-  
+#endif
 }
 
 void clearInput()
@@ -131,13 +130,12 @@ void printBook(book *book, int count)
          count, book->title, book->author, book->isbn, book->amount, book->amount - book->borrowed);
   //print list of people that borrowed this book
   if (book->borrowed > 0)
-   printf("  Borrower:\n");
-  for(int i = 0; i < book->borrowed; i++)
+    printf("  Borrower:\n");
+  for (int i = 0; i < book->borrowed; i++)
   {
-    printf("   %d) %s\n",i+1,book->borrower[i]);
+    printf("   %d) %s\n", i + 1, book->borrower[i]);
   }
   printf("\n");
-           
 }
 
 void printLib(library *pLib)
@@ -150,9 +148,6 @@ void printLib(library *pLib)
   {
     printBook(pLib->books[i], i + 1);
   }
-  printf("Hit ENTER to continue...");
-  clearInput();
-  clearConsole();
 }
 
 bool yesno(bool def)
@@ -209,4 +204,15 @@ bool getString(char *buffer, int length)
     return true;
   }
   return false;
+}
+
+void upperString(char *dest, char *src)
+{
+  while (*src)
+  {
+    *dest = toupper((unsigned char)*src);
+    src++;
+    dest++;
+  }
+  *dest = '\0';
 }

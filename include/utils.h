@@ -10,7 +10,7 @@
                  "    /      /,  Author:   %s\n" \
                  "   /      //   ISBN:     %s\n" \
                  "  /______//    Amount:   %d\n" \
-                 " (______(/     In stock: %d\n\n"
+                 " (______(/     In stock: %d\n"
 
 char menu(char *text, int options);
 /*
@@ -31,5 +31,7 @@ void clearInput();
 bool isbnValidation();
 //takes user input of length 'length' and stores it into 'buffer'
 bool getString(char *buffer, int length);
+//converts a string to uppercase
+void upperString(char *dest, char *src);
 
 #endif
