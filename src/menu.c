@@ -81,29 +81,32 @@ void searchMenu()
                          "2) search by title\n"
                          "3) search by author\n"
                          "Q) quit\n\n";
-  switch (menu(searchMenuText, 3))
+  while (true)
   {
-  case '1':
-    do
+    switch (menu(searchMenuText, 3))
     {
-      printf("ISBN: ");
-    } while (getString(keyword, 10));
-    results = searchISBN(keyword);
-    searchResultMenu(results);
-    break;
+    case '1':
+      do
+      {
+        printf("ISBN: ");
+      } while (getString(keyword, 10));
+      results = searchISBN(keyword);
+      searchResultMenu(results);
+      break;
 
-  case '2':
-    break;
+    case '2':
+      break;
 
-  case '3':
-    break;
+    case '3':
+      break;
 
-  case 'Q':
-    return;
-    break;
-  default:
-    printf("Invalid input\n");
-    break;
+    case 'Q':
+      return;
+      break;
+    default:
+      printf("Invalid input\n");
+      break;
+    }
   }
 }
 
@@ -251,16 +254,45 @@ bool loadMenu(char *saveFile, int bufferSize)
 
 void searchResultMenu(library *results)
 {
-  char *sortMenuText = "Sort by (1)ISBN (2)Title (3)Author";
+  int selection = 0;
+  char *sortMenuText = "Sort by (1)ISBN (2)Title (3)Author\n";
   //print results sorted by given parameter
-  switch(menu(sortMenuText,3)){
-    case '1':
-      sortBooksIsbn(results);
+  switch (menu(sortMenuText, 3))
+  {
+  case '1':
+    sortBooksIsbn(results);
     break;
-    case '2':
+  case '2':
+    sortBooksTitle(results);
     break;
-    case '3':
+  case '3':
+    sortBooksAuthor(results);
+    break;
+  default:
     break;
   }
+
   printLib(results);
+
+  printf("select a book to borrow, return or delete it (0 to quit)\nSelection: ");
+  while (scanf("%d", &selection) == 0 || selection > results->count || selection < 0)
+  {
+    printf("Invalid Input\nSelection: ");
+    clearInput();
+  }
+  clearInput();
+  clearConsole();
+  if (selection > 0)
+  {
+    //bookMenu(results->books[selection]);
+  }
+  else
+  {
+    //return to main menu
+    return;
+  }
 }
+
+//void bookMenu(book* b){
+//
+//}

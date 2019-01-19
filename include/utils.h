@@ -10,7 +10,7 @@
                  "    /      /,  Author:   %s\n" \
                  "   /      //   ISBN:     %s\n" \
                  "  /______//    Amount:   %d\n" \
-                 " (______(/     In stock: %d\n\n"
+                 " (______(/     In stock: %d\n"
 
 char menu(char *text, int options);
 /*

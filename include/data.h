@@ -72,7 +72,7 @@ library *searchISBN(char*);
 
 void sortBooksIsbn();
 void sortBooksTitle();
-void sortBooksAuthors();
+void sortBooksAuthor();
 
 extern library lib;
 
