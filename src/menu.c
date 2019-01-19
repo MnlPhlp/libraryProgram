@@ -100,8 +100,13 @@ void searchMenu()
       printf("Invalid input\n");
       break;
     }
-    searchResultMenu(results);
-    
+    //if there are results show them
+    if (results->count > 0)
+      searchResultMenu(results);
+    else{
+      clearConsole();
+      printf("no Books found\n");
+    }
     for(int i = 0; i < results->count; i++)
     {
       freeBook(results->books[i]);

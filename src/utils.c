@@ -206,11 +206,13 @@ bool getString(char *buffer, int length)
   return false;
 }
 
-void upperString(char *string)
+void upperString(char *dest, char *src)
 {
-  while (*string)
+  while (*src)
   {
-    *string = toupper((unsigned char)*string);
-    string++;
+    *dest = toupper((unsigned char)*src);
+    src++;
+    dest++;
   }
+  *dest = '\0';
 }

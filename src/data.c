@@ -270,19 +270,35 @@ bool returnBook(book *book, char *borrower)
 }
 
 int sortBooksIsbn(const void *a, const void *b){
-  book *book1 = *(book **)a;
-  book *book2 = *(book **)b;
-  return strcmp(book1->isbn,book2->isbn);
+  char* isbn1 = (*(book **)a)->isbn;
+  char* isbn2 = (*(book **)b)->isbn;
+  return strcmp(isbn1,isbn2);
 }
 
 int sortBooksTitle(const void *a, const void *b){
-  book *book1 = *(book **)a;
-  book *book2 = *(book **)b;
-  return strcmp(book1->title,book2->title);  
+  /*
+   * uppercase titles are compared because lowercase
+   * characters would be sorted after uppercase bei strcmp
+   */
+  //create buffer to store uppercase title
+  char *title1 = malloc(strlen((*(book **)a)->title)+1);
+  char *title2 = malloc(strlen((*(book **)b)->title)+1);
+  //coppy uppercase title into buffer
+  upperString(title1,(*(book **)a)->title);
+  upperString(title2,(*(book **)b)->title);
+  return strcmp(title1,title2);  
 }
 
 int sortBooksAuthor(const void *a, const void *b){
-  book *book1 = *(book **)a;
-  book *book2 = *(book **)b;
-  return strcmp(book1->author,book2->author);
+  /*
+   * uppercase authors are compared because lowercase
+   * characters would be sorted after uppercase bei strcmp
+   */
+  //create buffer to store uppercase author
+  char *author1 = malloc(strlen((*(book **)a)->author)+1);
+  char *author2 = malloc(strlen((*(book **)b)->author)+1);
+  //coppy uppercase title into buffer
+  upperString(author1,(*(book **)a)->author);
+  upperString(author2,(*(book **)b)->author);
+  return strcmp(author1,author2);
 }
