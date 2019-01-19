@@ -264,19 +264,19 @@ bool returnBook(book *book, char *borrower)
 }
 
 int sortBooksIsbn(const void *a, const void *b){
-  book *book1 = (book *)a;
-  book *book2 = (book *)b;
+  book *book1 = *(book **)a;
+  book *book2 = *(book **)b;
   return strcmp(book1->isbn,book2->isbn);
 }
 
 int sortBooksTitle(const void *a, const void *b){
-  book *book1 = (book *)a;
-  book *book2 = (book *)b;
+  book *book1 = *(book **)a;
+  book *book2 = *(book **)b;
   return strcmp(book1->title,book2->title);  
 }
 
 int sortBooksAuthor(const void *a, const void *b){
-  book *book1 = (book *)a;
-  book *book2 = (book *)b;
+  book *book1 = *(book **)a;
+  book *book2 = *(book **)b;
   return strcmp(book1->author,book2->author);
 }

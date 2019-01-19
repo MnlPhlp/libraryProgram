@@ -32,9 +32,6 @@ void mainMenu()
       break;
     case '6':
       searchResultMenu(&lib);
-      printf("Hit ENTER to continue...");
-      clearInput();
-      clearConsole();
       break;
     case '7':
       runTests();
@@ -260,13 +257,13 @@ void searchResultMenu(library *results)
   switch (menu(sortMenuText, 3))
   {
   case '1':
-    qsort(results->books[0],results->count,sizeof(book),sortBooksIsbn);
+    qsort(results->books,results->count,sizeof(book*),sortBooksIsbn);
     break;
   case '2':
-    qsort(results->books[0],results->count,sizeof(book),sortBooksTitle);
+    qsort(results->books,results->count,sizeof(book*),sortBooksTitle);
     break;
   case '3':
-    qsort(results->books[0],results->count,sizeof(book),sortBooksAuthor);
+    qsort(results->books,results->count,sizeof(book*),sortBooksAuthor);
     break;
   default:
     break;
