@@ -85,7 +85,6 @@ void searchMenu()
         printf("ISBN: ");
       } while (getString(keyword, 10));
       results = searchISBN(keyword);
-      searchResultMenu(results);
       break;
 
     case '2':
@@ -101,6 +100,13 @@ void searchMenu()
       printf("Invalid input\n");
       break;
     }
+    searchResultMenu(results);
+    
+    for(int i = 0; i < results->count; i++)
+    {
+      freeBook(results->books[i]);
+    }
+    free(results->books);
   }
 }
 

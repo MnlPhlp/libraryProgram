@@ -187,9 +187,9 @@ bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author,
   return false;
 }
 
-bool deleteBook(book *b)
-{ 
-  //free all the memory allocated for the book
+
+void freeBook(book *b){
+//free all the memory allocated for the book
   free(b->title);
   free(b->author);
   for(int i = 0; i < b->borrowed; i++)
@@ -198,15 +198,21 @@ bool deleteBook(book *b)
   }
   free(b->borrower);
   free(b);  
+}
+
+bool deleteBook(book *b)
+{ 
+  freeBook(b);
+  // if the deleted book was not at the last position of books array
+  // move last element to the position of the deleted book
   for(int i = 0; i < lib.count; i++)
   {
-    //if the deleted book was not at the last position of books array
     if(lib.books[i] == b)
     {
-      //move last element to the position of the deleted book
       lib.books[i] = lib.books[lib.count-1];
     }
   }
+  // lower the lib count and free the empty space on the books array
   lib.count -= 1;
   lib.books = realloc(lib.books, lib.count*sizeof(book *));
   return false;
