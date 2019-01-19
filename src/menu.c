@@ -72,12 +72,9 @@ void returnMenu()
 
 void searchMenu()
 {
+  clearConsole();
   char keyword[buffSize];
   library *results;
-  char *searchMenuText = "1) serch by ISBN\n"
-                         "2) search by title\n"
-                         "3) search by author\n"
-                         "Q) quit\n\n";
   while (true)
   {
     switch (menu(searchMenuText, 3))
@@ -228,6 +225,7 @@ void deleteByIsbn()
 
 bool loadMenu(char *saveFile, int bufferSize)
 {
+  clearConsole();
   switch (menu(loadMenuText, 2))
   {
   case '1':
