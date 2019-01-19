@@ -247,7 +247,7 @@ bool returnBook(book *book, char *borrower)
 
   for(int i = 0; i < book->borrowed; i++)
   {
-    if (strcmp(book->borrower[i],borrower)){
+    if (strcmp(book->borrower[i],borrower) == 0){
       book->borrowed -= 1;
       free(book->borrower[i]);
       //if the deleted borrower was in middle of the array fill the empty space with last element
@@ -263,14 +263,20 @@ bool returnBook(book *book, char *borrower)
   return false;
 }
 
-void sortBooksIsbn(library *lib){
-
+int sortBooksIsbn(const void *a, const void *b){
+  book *book1 = (book *)a;
+  book *book2 = (book *)b;
+  return strcmp(book1->isbn,book2->isbn);
 }
 
-void sortBooksTitle(library *lib){
-  
+int sortBooksTitle(const void *a, const void *b){
+  book *book1 = (book *)a;
+  book *book2 = (book *)b;
+  return strcmp(book1->title,book2->title);  
 }
 
-void sortBooksAuthor(library *lib){
-  
+int sortBooksAuthor(const void *a, const void *b){
+  book *book1 = (book *)a;
+  book *book2 = (book *)b;
+  return strcmp(book1->author,book2->author);
 }

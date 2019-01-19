@@ -70,9 +70,9 @@ bool returnBook();
 
 library *searchISBN(char*);
 
-void sortBooksIsbn();
-void sortBooksTitle();
-void sortBooksAuthor();
+int sortBooksIsbn();
+int sortBooksTitle();
+int sortBooksAuthor();
 
 extern library lib;
 
