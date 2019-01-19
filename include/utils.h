@@ -4,7 +4,14 @@
 #include <stdbool.h>
 #include "structs.h"
 
-//prints the whole library to the console
+#define bookText "\n Book number (%d):\n"        \
+                 "------------------------\n"    \
+                 "     _______   Title:    %s\n" \
+                 "    /      /,  Author:   %s\n" \
+                 "   /      //   ISBN:     %s\n" \
+                 "  /______//    Amount:   %d\n" \
+                 " (______(/     In stock: %d\n"
+
 char menu(char *text, int options);
 /*
  * Function: yesno
@@ -18,11 +25,13 @@ char menu(char *text, int options);
  */
 bool yesno(bool def);
 void printLib();
-void printBook(book *book,int count);
+void printBook(book *book, int count);
 void clearConsole();
 void clearInput();
 bool isbnValidation();
 //takes user input of length 'length' and stores it into 'buffer'
 bool getString(char *buffer, int length);
+//converts a string to uppercase
+void upperString(char *dest, char *src);
 
 #endif

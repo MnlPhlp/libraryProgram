@@ -3,10 +3,14 @@
 #include "../include/menu.h"
 #include "../include/structs.h"
 #include "../include/data.h"
-#define savefile "bin/Save"
+#include "../include/utils.h"
 
 int main()
 {
+  char savefile[50];
+  clearConsole();
+  if(loadMenu(savefile, 50)) 
+    return 1;
   printf("\nlibrary gets loaded from file '%s' ...\n", savefile);
   //load library from savefile
   if (loadData(savefile))
@@ -14,7 +18,7 @@ int main()
     printf(ANSI_COLOR_RED "no library loaded or created" ANSI_COLOR_RESET "\nprogram closed\n");
     return 1;
   }
-  printf("%d books loaded\n", lib.count);
+  printf("%d book%s loaded\n", lib.count,lib.count == 1 ? "":"s");
 
   //show main menu
   mainMenu();
@@ -23,9 +27,9 @@ int main()
   printf("library gets saved into file '%s' ...\n", savefile);
   if (saveData(savefile))
   {
-    printf(ANSI_COLOR_RED"nothing saved"ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_RED"nothing saved\n"ANSI_COLOR_RESET);
   }
   else
-    printf("%d books saved\n", lib.count);
+    printf("%d book%s saved\n", lib.count,lib.count == 1 ? "":"s");
   return 0;
 }

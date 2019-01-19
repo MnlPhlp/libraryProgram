@@ -15,17 +15,17 @@ FILE *openFile(char *saveFile, char *mode)
   FILE *save = fopen(saveFile, mode);
   while (save == NULL)
   {
-    printf(ANSI_COLOR_RED "standard save file could not be opened\n" ANSI_COLOR_RESET
+    printf(ANSI_COLOR_RED "Save file could not be opened\n" ANSI_COLOR_RESET
                           "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET,
            strerror(errno));
     printf("try again? ");
-    if (!yesno(true))
+    if (!yesno(false))
       break;
   }
   return save;
 }
 
-int loadData(char *saveFile)
+bool loadData(char *saveFile)
 {
   FILE *save = openFile(saveFile, "r");
   unsigned long length;
@@ -35,14 +35,14 @@ int loadData(char *saveFile)
     printf("new empty library will be used\n");
     lib.count = 0;
     lib.books = NULL;
-    return 0;
+    return false;
   }
   fread(&lib.count, sizeof(int), 1, save);
   lib.books = calloc(lib.count, sizeof(book *));
   if (lib.books == NULL)
   {
     printf("memory could not be allocated\n");
-    return 0;
+    return true;
   }
   for (int i = 0; i < lib.count; i++)
   {
@@ -50,7 +50,7 @@ int loadData(char *saveFile)
     if (lib.books[i] == NULL)
     {
       printf("memory could not be allocated\n");
-      return 0;
+      return true;
     }
     //read amount as int
     fread(&lib.books[i]->amount, sizeof(int), 1, save);
@@ -64,7 +64,7 @@ int loadData(char *saveFile)
     if (lib.books[i]->title == NULL)
     {
       printf("memory could not be allocated\n");
-      return 0;
+      return true;
     }
     fread(lib.books[i]->title, length, 1, save);
     //read author with length-value encoding
@@ -73,7 +73,7 @@ int loadData(char *saveFile)
     if (lib.books[i]->author == NULL)
     {
       printf("memory could not be allocated\n");
-      return 0;
+      return true;
     }
     fread(lib.books[i]->author, length, 1, save);
     //read each element of the borrower array
@@ -81,7 +81,7 @@ int loadData(char *saveFile)
     if (lib.books[i]->borrower == NULL)
     {
       printf("memory could not be allocated\n");
-      return 0;
+      return true;
     }
     for (int j = 0; j < lib.books[i]->borrowed; j++)
     {
@@ -91,7 +91,7 @@ int loadData(char *saveFile)
       if (lib.books[i]->borrower[j] == NULL)
       {
         printf("memory could not be allocated\n");
-        return 0;
+        return true;
       }
       fread(lib.books[i]->borrower[j], length, 1, save);
     }
@@ -99,12 +99,16 @@ int loadData(char *saveFile)
   unsigned long checksum_test = hashLib();
   unsigned long checksum_file;
   fread(&checksum_file, sizeof(unsigned long), 1, save);
+  fclose(save);
   if (checksum_test != checksum_file)
   {
-    printf(ANSI_COLOR_RED "the file was changed or damaged\n" ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_RED "The loaded library does not match the one saved last time (checksum is invalid)\n" ANSI_COLOR_RESET
+    "Do you want to continue anyway?\n");
+    if (!yesno(false)){
+      return true;
+    }
   }
-  fclose(save);
-  return 0;
+  return false;
 }
 
 bool saveData(char *saveFile)
@@ -175,23 +179,43 @@ book *newBook(int amount, int borrowed, char isbn[11], char *title, char *author
   return newBook;
 }
 
-int addBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower)
+bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower)
 {
   lib.count += 1;
   lib.books = realloc(lib.books, lib.count * sizeof(book *));
   lib.books[lib.count - 1] = newBook(amount, borrowed, isbn, title, author, borrower);
-  return 0;
+  return false;
 }
 
-int deleteBook(int index)
-{
-  free(lib.books[index]);
+
+void freeBook(book *b){
+//free all the memory allocated for the book
+  free(b->title);
+  free(b->author);
+  for(int i = 0; i < b->borrowed; i++)
+  {
+    free(b->borrower[i]);
+  }
+  free(b->borrower);
+  free(b);  
+}
+
+bool deleteBook(book *b)
+{ 
+  freeBook(b);
+  // if the deleted book was not at the last position of books array
+  // move last element to the position of the deleted book
+  for(int i = 0; i < lib.count; i++)
+  {
+    if(lib.books[i] == b)
+    {
+      lib.books[i] = lib.books[lib.count-1];
+    }
+  }
+  // lower the lib count and free the empty space on the books array
   lib.count -= 1;
-  //if array is not empty and the deleted book was not last element
-  if (lib.count != 0 && lib.count != index)
-    //move last element to the position of the deleted book
-    lib.books[index] = lib.books[lib.count];
-  return 0;
+  lib.books = realloc(lib.books, lib.count*sizeof(book *));
+  return false;
 }
 
 int borrowBook(book *book, char *borrower)
@@ -229,7 +253,7 @@ bool returnBook(book *book, char *borrower)
 
   for(int i = 0; i < book->borrowed; i++)
   {
-    if (strcmp(book->borrower[i],borrower)){
+    if (strcmp(book->borrower[i],borrower) == 0){
       book->borrowed -= 1;
       free(book->borrower[i]);
       //if the deleted borrower was in middle of the array fill the empty space with last element
@@ -243,4 +267,38 @@ bool returnBook(book *book, char *borrower)
   
   //return false if there are no books borrowed from the given borrower
   return false;
+}
+
+int sortBooksIsbn(const void *a, const void *b){
+  char* isbn1 = (*(book **)a)->isbn;
+  char* isbn2 = (*(book **)b)->isbn;
+  return strcmp(isbn1,isbn2);
+}
+
+int sortBooksTitle(const void *a, const void *b){
+  /*
+   * uppercase titles are compared because lowercase
+   * characters would be sorted after uppercase bei strcmp
+   */
+  //create buffer to store uppercase title
+  char *title1 = malloc(strlen((*(book **)a)->title)+1);
+  char *title2 = malloc(strlen((*(book **)b)->title)+1);
+  //coppy uppercase title into buffer
+  upperString(title1,(*(book **)a)->title);
+  upperString(title2,(*(book **)b)->title);
+  return strcmp(title1,title2);  
+}
+
+int sortBooksAuthor(const void *a, const void *b){
+  /*
+   * uppercase authors are compared because lowercase
+   * characters would be sorted after uppercase bei strcmp
+   */
+  //create buffer to store uppercase author
+  char *author1 = malloc(strlen((*(book **)a)->author)+1);
+  char *author2 = malloc(strlen((*(book **)b)->author)+1);
+  //coppy uppercase title into buffer
+  upperString(author1,(*(book **)a)->author);
+  upperString(author2,(*(book **)b)->author);
+  return strcmp(author1,author2);
 }

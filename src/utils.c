@@ -43,6 +43,8 @@ bool isbnValidation(char isbn[])
       }
     }
   }
+  //add null byte to end string
+  isbn[10] = '\0';
   if (i != 10)
   {
     printf("to short\n");
@@ -80,7 +82,7 @@ bool isbnValidation(char isbn[])
 
 char menu(char *text, int options)
 {
-  char buff;
+  char buff[2];
   char input = '\0';
   //print specific menu text
   printf("%s", text);
@@ -90,12 +92,13 @@ char menu(char *text, int options)
     do
     {
       printf("choose option: ");
-    } while (getString(&buff, 1));
-    if (buff > '0' && buff <= '0' + options)
+    } while (getString(buff, 1));
+    if ((buff[0] > '0' && buff[0] <= '0' + options) || toupper(buff[0]) == 'Q')
     {
-      input = buff;
+      input = toupper(buff[0]);
     }
-    else{
+    else
+    {
       printf("invalid Input\n");
     }
   }
@@ -104,11 +107,13 @@ char menu(char *text, int options)
 
 void clearConsole()
 {
-  clearInput();
-  for (int i = 0; i < 10; i++)
-  {
-    printf("\n\n\n\n\n");
-  }
+#ifdef _WIN32
+  //on windows use system call
+  system("cls");
+#else
+  //on linux and mac use escape sequence
+  printf("\033c");
+#endif
 }
 
 void clearInput()
@@ -121,25 +126,28 @@ void clearInput()
 
 void printBook(book *book, int count)
 {
-  printf("\n Book number (%d):\n"
-         "------------------------\n"
-         " Title: %s\n"
-         " Author: %s\n"
-         " ISBN: %s\n"
-         " Amount: %d\n"
-         " In stock: %d\n\n",
+  printf(bookText,
          count, book->title, book->author, book->isbn, book->amount, book->amount - book->borrowed);
+  //print list of people that borrowed this book
+  if (book->borrowed > 0)
+    printf("  Borrower:\n");
+  for (int i = 0; i < book->borrowed; i++)
+  {
+    printf("   %d) %s\n", i + 1, book->borrower[i]);
+  }
+  printf("\n");
 }
 
-void printLib(library* pLib)
+void printLib(library *pLib)
 {
-  printf("Amount of different Books is %d: \n", pLib->count);
+  clearConsole();
+  printf("\n Amount of different Books is %d: \n"
+         "----------------------------------\n",
+         pLib->count);
   for (int i = 0; i < pLib->count; i++)
   {
     printBook(pLib->books[i], i + 1);
   }
-  printf("Hit ENTER to continue...");
-  clearConsole();
 }
 
 bool yesno(bool def)
@@ -160,9 +168,11 @@ bool yesno(bool def)
     {
     case 'Y':
       input = true;
+      clearInput();
       break;
     case 'N':
       input = false;
+      clearInput();
       break;
     case '\n':
       input = def;
@@ -185,6 +195,7 @@ bool getString(char *buffer, int length)
     buffer[i] = c;
     i++;
   }
+  buffer[i] = '\0';
   //if the user enters a String longer than buffSize the remaining input has to be cleared
   if (c != '\n')
   {
@@ -193,4 +204,15 @@ bool getString(char *buffer, int length)
     return true;
   }
   return false;
+}
+
+void upperString(char *dest, char *src)
+{
+  while (*src)
+  {
+    *dest = toupper((unsigned char)*src);
+    src++;
+    dest++;
+  }
+  *dest = '\0';
 }

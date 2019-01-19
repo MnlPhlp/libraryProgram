@@ -11,9 +11,9 @@
  *
  * saveFile: filepath to the File that should be loaded
  *
- * returns: pointer to the loaded Library, NULL if an error occured
+ * returns: true if an error occured
 */
-int loadData(char * saveFile);
+bool loadData(char * saveFile);
 
 /*
  * Function: saveData
@@ -39,7 +39,7 @@ bool saveData(char *saveFile);
  *
  * returns: 0 if succesfull, 1 if an error occured
 */
-int addBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower);
+bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower);
 
 /*
  * Function: deleteBook
@@ -51,8 +51,8 @@ int addBook(int amount, int borrowed, char isbn[11], char *title, char *author, 
  *
  * returns: 0 if succesfull, 1 if an error occured
 */
-int deleteBook(int index);
-
+bool deleteBook(book *b);
+void freeBook(book *b);
 
 /*
  * Function: borrowBook
@@ -66,10 +66,13 @@ int deleteBook(int index);
  * returns: 0 if succesfull, 1 if there are no copies left, 2 if memmory could not be allocated
 */
 int borrowBook(book *book, char* borrower);
+bool returnBook();
 
 library *searchISBN(char*);
 
-bool returnBook();
+int sortBooksIsbn(const void *a, const void *b);
+int sortBooksTitle(const void *a, const void *b);
+int sortBooksAuthor(const void *a, const void *b);
 
 extern library lib;
 
