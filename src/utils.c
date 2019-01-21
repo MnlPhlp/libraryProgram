@@ -73,7 +73,7 @@ bool isbnValidation(char isbn[])
   }
   if (total % 11)
   {
-    printf("Not an ISBN check checksum\n");
+    printf("Not an ISBN, check checksum\n");
     return true;
   }
 
