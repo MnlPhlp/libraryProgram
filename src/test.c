@@ -8,8 +8,8 @@
 void runTests()
 {
   // addBook(1,0,"0000000000","Game of Thrones","Georege R. R. Martin",NULL);
-  library *test = searchISBN("0000000000");
-  printLib(test);
+  // library *test = searchISBN("0000000000");
+  // printLib(test);
   // borrowBook(lib.books[0], "Manuel Philipp");
   // saveData("bin/Test_Save");
   // free(lib.books);
@@ -18,4 +18,6 @@ void runTests()
   // addBook(2,0,"1000000001","Harry Potter", "J.K. Rowling",NULL);
   // deleteBook(0);
   // printLib();
+  printf("%ld\n",sizeof(sizeof(3)));
+  printf("%ld",sizeof(int));
 }

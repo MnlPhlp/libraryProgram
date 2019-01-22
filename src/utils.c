@@ -7,7 +7,7 @@
 #include "../include/menu.h"
 #include "../include/utils.h"
 
-bool isbnValidation(char isbn[])
+bool isbnValidation(char *isbn)
 {
   char c;
   int i = 0;

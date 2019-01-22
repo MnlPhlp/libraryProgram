@@ -6,7 +6,7 @@
 #include "../include/menu.h"
 #include "../include/utils.h"
 
-library lib;
+library lib = {};
 
 unsigned long hashLib() {return 23;}
 
@@ -33,8 +33,6 @@ bool loadData(char *saveFile)
   if (save == NULL)
   {
     printf("new empty library will be used\n");
-    lib.count = 0;
-    lib.books = NULL;
     return false;
   }
   fread(&lib.count, sizeof(int), 1, save);
@@ -158,7 +156,7 @@ bool saveData(char *saveFile)
   return false;
 }
 
-book *newBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower)
+book *newBook(int amount, int borrowed, char* isbn, char *title, char *author, char **borrower)
 {
   book *newBook = malloc(sizeof(book));
   newBook->amount = amount;
@@ -179,7 +177,7 @@ book *newBook(int amount, int borrowed, char isbn[11], char *title, char *author
   return newBook;
 }
 
-bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower)
+bool addBook(int amount, int borrowed, char *isbn, char *title, char *author, char **borrower)
 {
   lib.count += 1;
   lib.books = realloc(lib.books, lib.count * sizeof(book *));
