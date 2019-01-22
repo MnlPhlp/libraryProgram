@@ -103,11 +103,12 @@ void searchMenu()
     //if there are results show them
     if (results->count > 0)
       searchResultMenu(results);
-    else{
+    else
+    {
       clearConsole();
       printf("no Books found\n");
     }
-    for(int i = 0; i < results->count; i++)
+    for (int i = 0; i < results->count; i++)
     {
       freeBook(results->books[i]);
     }
@@ -260,19 +261,18 @@ bool loadMenu(char *saveFile, int bufferSize)
 
 void searchResultMenu(library *results)
 {
-  int selection = 0;
   char *sortMenuText = "Sort by (1)ISBN (2)Title (3)Author\n";
   //print results sorted by given parameter
   switch (menu(sortMenuText, 3))
   {
   case '1':
-    qsort(results->books,results->count,sizeof(book*),sortBooksIsbn);
+    qsort(results->books, results->count, sizeof(book *), sortBooksIsbn);
     break;
   case '2':
-    qsort(results->books,results->count,sizeof(book*),sortBooksTitle);
+    qsort(results->books, results->count, sizeof(book *), sortBooksTitle);
     break;
   case '3':
-    qsort(results->books,results->count,sizeof(book*),sortBooksAuthor);
+    qsort(results->books, results->count, sizeof(book *), sortBooksAuthor);
     break;
   default:
     break;
@@ -280,25 +280,32 @@ void searchResultMenu(library *results)
 
   printLib(results);
 
-  printf("select a book to borrow, return or delete it (0 to quit)\nSelection: ");
-  while (scanf("%d", &selection) == 0 || selection > results->count || selection < 0)
+  //calculate how much characters are needed to input the highest number shown as a result
+  int count = 1;
+  while (results->count / (10 * count) != 0)
   {
-    printf("Invalid Input\nSelection: ");
-    clearInput();
+    count++;
   }
-  clearInput();
-  clearConsole();
-  if (selection > 0)
-  {
-    //bookMenu(results->books[selection]);
-  }
-  else
-  {
-    //return to main menu
-    return;
-  }
-}
 
+  char input[count];
+  int selection;
+  printf("select a book to borrow, return or delete it (Q to quit)\nSelection: ");
+  getString(input, count);
+  if (toupper(input[0]) == 'Q')
+    return;
+  selection = atoi(input);
+  while (selection > results->count || selection < 0)
+  {
+    printf("Selected number was invalid\nSelection: ");
+    getString(input, count);
+    if (toupper(input[0]) == 'Q')
+      return;
+    selection = atoi(input);
+  }
+  clearConsole();
+  printf("selected Book %d\n", selection);
+  printBook(results->books[selection-1]);
+}
 //void bookMenu(book* b){
 //
 //}

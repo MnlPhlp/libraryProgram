@@ -124,10 +124,9 @@ void clearInput()
   }
 }
 
-void printBook(book *book, int count)
+void printBook(book *book)
 {
-  printf(bookText,
-         count, book->title, book->author, book->isbn, book->amount, book->amount - book->borrowed);
+  printf(bookText, book->title, book->author, book->isbn, book->amount, book->amount - book->borrowed);
   //print list of people that borrowed this book
   if (book->borrowed > 0)
     printf("  Borrower:\n");
@@ -146,7 +145,10 @@ void printLib(library *pLib)
          pLib->count);
   for (int i = 0; i < pLib->count; i++)
   {
-    printBook(pLib->books[i], i + 1);
+    printf("\n Book number (%d):\n"
+           "------------------------\n",
+           i + 1);
+    printBook(pLib->books[i]);
   }
 }
 
