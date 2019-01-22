@@ -287,24 +287,30 @@ void searchResultMenu(library *results)
     count++;
   }
 
-  char input[count];
+  char input[count + 1];
   int selection;
-  printf("select a book to borrow, return or delete it (Q to quit)\nSelection: ");
-  getString(input, count);
+  printf("select a book to borrow, return or delete it (Q to quit)\n");
+  do
+  {
+    printf("Selection: ");
+  } while (getString(input, count));
   if (toupper(input[0]) == 'Q')
     return;
   selection = atoi(input);
-  while (selection > results->count || selection < 0)
+  while (selection > results->count || selection < 1)
   {
     printf("Selected number was invalid\nSelection: ");
-    getString(input, count);
+    do
+    {
+      printf("Selection: ");
+    } while (getString(input, count));
     if (toupper(input[0]) == 'Q')
       return;
     selection = atoi(input);
   }
   clearConsole();
   printf("selected Book %d\n", selection);
-  printBook(results->books[selection-1]);
+  printBook(results->books[selection - 1]);
 }
 //void bookMenu(book* b){
 //
