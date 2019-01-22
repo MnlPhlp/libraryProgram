@@ -74,6 +74,10 @@ int sortBooksIsbn(const void *a, const void *b);
 int sortBooksTitle(const void *a, const void *b);
 int sortBooksAuthor(const void *a, const void *b);
 
+#ifndef _WIN32
+#define stricmp strcasecmp
+#endif
+
 extern library lib;
 
 
