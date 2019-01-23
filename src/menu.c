@@ -312,6 +312,7 @@ void searchResultMenu(library *results)
   printf("selected Book %d\n", selection);
   printBook(results->books[selection - 1]);
 }
+
 //void bookMenu(book* b){
 //
 //}
