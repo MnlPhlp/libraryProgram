@@ -295,7 +295,11 @@ void searchResultMenu(library *results)
     printf("Selection: ");
   } while (getString(input, count));
   if (toupper(input[0]) == 'Q')
+  {
+    clearConsole();
+    printf("no book selected\n");
     return;
+  }
   selection = atoi(input);
   while (selection > results->count || selection < 1)
   {
@@ -305,7 +309,11 @@ void searchResultMenu(library *results)
       printf("Selection: ");
     } while (getString(input, count));
     if (toupper(input[0]) == 'Q')
+    {
+      clearConsole();
+      printf("no books selected\n");
       return;
+    }
     selection = atoi(input);
   }
   clearConsole();
