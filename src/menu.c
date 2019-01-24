@@ -132,10 +132,10 @@ int addMenu()
 
   int amount;
   printf("Amount: ");
-  while (scanf("%d", &amount) == 0)
+  while (scanf("%d", &amount) != 1 || amount <= 0)
   {
     clearInput();
-    printf("Invalid Character \n\nAmount:");
+    printf("Invalid input\nAmount:");
   }
   clearInput();
 
@@ -223,9 +223,9 @@ void deleteByIsbn()
   }
   book = results->books[0];
   printf("Amount of copies you want to delete (%d available): ", book->amount);
-  while (scanf("%d", &amount) != 1 && amount > book->amount)
+  while (scanf("%d", &amount) != 1 || amount > book->amount || amount <= 0)
   {
-    printf("Invalid Input\n");
+    printf("Invalid Input\nAmount: ");
     clearInput();
   }
   clearInput();
