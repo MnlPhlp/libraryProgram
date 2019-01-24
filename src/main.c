@@ -9,7 +9,7 @@ int main()
 {
   char savefile[50];
   clearConsole();
-  if(loadMenu(savefile, 50)) 
+  if(loadMenu(savefile, 50))
     return 1;
   printf("\nlibrary gets loaded from file '%s' ...\n", savefile);
   //load library from savefile
