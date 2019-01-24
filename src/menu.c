@@ -237,7 +237,6 @@ void deleteByIsbn()
 
 bool loadMenu(char *saveFile, int bufferSize)
 {
-  clearConsole();
   switch (menu(loadMenuText, 2))
   {
   case '1':
