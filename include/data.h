@@ -13,7 +13,7 @@
  *
  * returns: true if an error occured
 */
-bool loadData(char * saveFile);
+bool loadData(FILE * save);
 
 /*
  * Function: saveData
@@ -27,7 +27,7 @@ bool loadData(char * saveFile);
 */
 
 
-bool saveData(char *saveFile);
+bool saveData(FILE *save);
 
 /*
  * Function: addBook
@@ -73,6 +73,9 @@ library *searchISBN(char*);
 int sortBooksIsbn(const void *a, const void *b);
 int sortBooksTitle(const void *a, const void *b);
 int sortBooksAuthor(const void *a, const void *b);
+
+FILE *openFile(char *saveFile, char *mode);
+int contentSize(FILE *file);
 
 //if not on windows stricmp has to be named strcasecmp
 #ifndef _WIN32

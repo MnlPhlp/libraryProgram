@@ -8,28 +8,46 @@
 int main()
 {
   char savefile[50];
+  FILE *save = NULL;
   clearConsole();
-  if(loadMenu(savefile, 50))
-    return 1;
-  printf("\nlibrary gets loaded from file '%s' ...\n", savefile);
-  //load library from savefile
-  if (loadData(savefile))
+  while (save == NULL)
   {
-    printf(ANSI_COLOR_RED "no library loaded or created" ANSI_COLOR_RESET "\nprogram closed\n");
-    return 1;
+    if (loadMenu(savefile, 50))
+    {
+      printf(ANSI_COLOR_RED "no library loaded or created" ANSI_COLOR_RESET "\nprogram closed\n");
+      return 1;
+    }
+    save = openFile(savefile,"r");
   }
-  printf("%d book%s loaded\n", lib.count,lib.count == 1 ? "":"s");
+
+  if(contentSize(save) == 0){
+    printf("new empty library will be used\n");
+  }
+  
+  else{
+    printf("\nlibrary gets loaded from file '%s' ...\n", savefile);
+    //load library from savefile
+    if (loadData(save))
+    {
+      printf(ANSI_COLOR_RED "no library loaded or created" ANSI_COLOR_RESET "\nprogram closed\n");
+      return 1;
+    }
+    printf("%d book%s loaded\n", lib.count, lib.count == 1 ? "" : "s");
+  }
+  fclose(save);
 
   //show main menu
   mainMenu();
 
+  save = openFile(savefile, "w+");
   //save library to savefile
+  clearConsole();
   printf("library gets saved into file '%s' ...\n", savefile);
-  if (saveData(savefile))
+  if (saveData(save))
   {
-    printf(ANSI_COLOR_RED"nothing saved\n"ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_RED "nothing saved\n" ANSI_COLOR_RESET);
   }
   else
-    printf("%d book%s saved\n", lib.count,lib.count == 1 ? "":"s");
+    printf("%d book%s saved\n", lib.count, lib.count == 1 ? "" : "s");
   return 0;
 }
