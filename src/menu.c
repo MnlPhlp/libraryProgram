@@ -132,10 +132,10 @@ int addMenu()
 
   int amount;
   printf("Amount: ");
-  while (scanf("%d", &amount) == 0)
+  while (scanf("%d", &amount) != 1 || amount <= 0)
   {
     clearInput();
-    printf("Invalid Character \n\nAmount:");
+    printf("Invalid input\nAmount:");
   }
   clearInput();
 
@@ -223,9 +223,9 @@ void deleteByIsbn()
   }
   book = results->books[0];
   printf("Amount of copies you want to delete (%d available): ", book->amount);
-  while (scanf("%d", &amount) != 1 && amount > book->amount)
+  while (scanf("%d", &amount) != 1 || amount > book->amount || amount <= 0)
   {
-    printf("Invalid Input\n");
+    printf("Invalid Input\nAmount: ");
     clearInput();
   }
   clearInput();
@@ -287,25 +287,40 @@ void searchResultMenu(library *results)
     count++;
   }
 
-  char input[count];
+  char input[count + 1];
   int selection;
-  printf("select a book to borrow, return or delete it (Q to quit)\nSelection: ");
-  getString(input, count);
+  printf("select a book to borrow, return or delete it (Q to quit)\n");
+  do
+  {
+    printf("Selection: ");
+  } while (getString(input, count));
   if (toupper(input[0]) == 'Q')
+  {
+    clearConsole();
+    printf("no book selected\n");
     return;
+  }
   selection = atoi(input);
-  while (selection > results->count || selection < 0)
+  while (selection > results->count || selection < 1)
   {
     printf("Selected number was invalid\nSelection: ");
-    getString(input, count);
+    do
+    {
+      printf("Selection: ");
+    } while (getString(input, count));
     if (toupper(input[0]) == 'Q')
+    {
+      clearConsole();
+      printf("no books selected\n");
       return;
+    }
     selection = atoi(input);
   }
   clearConsole();
   printf("selected Book %d\n", selection);
-  printBook(results->books[selection-1]);
+  printBook(results->books[selection - 1]);
 }
+
 //void bookMenu(book* b){
 //
 //}

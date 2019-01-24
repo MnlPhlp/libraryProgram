@@ -208,7 +208,7 @@ bool getString(char *buffer, int length)
   return false;
 }
 
-void upperString(char *dest, char *src)
+/*void upperString(char *dest, char *src)
 {
   while (*src)
   {
@@ -217,4 +217,4 @@ void upperString(char *dest, char *src)
     dest++;
   }
   *dest = '\0';
-}
+}*/
