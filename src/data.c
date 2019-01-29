@@ -239,6 +239,14 @@ bool deleteBook(book *b)
   return false;
 }
 
+deleteLib(library *lib){
+  for(int i = 0; i < lib->count; i++)
+  {
+    freeBook(lib->books[i]);
+  }
+  free(lib);
+}
+
 int borrowBook(book *book, char *borrower)
 {
   //return 1 if there are no books available
