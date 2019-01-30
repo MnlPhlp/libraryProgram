@@ -188,23 +188,23 @@ bool yesno(bool def)
   return input;
 }
 
-bool getString(char *buffer, int length)
+bool getString(char *str, int length)
 {
-  int i = 0;
-  char c;
-  while ((c = getchar()) != '\n' && c != EOF && i < length)
-  {
-    buffer[i] = c;
-    i++;
-  }
-  buffer[i] = '\0';
-  //if the user enters a String longer than buffSize the remaining input has to be cleared
-  if (c != '\n')
+  // 2 extra spaces are needed for newline an null termination
+  char buffer[length+2];
+  // read String from standard input
+  fgets(buffer,length+2,stdin);
+  //if the user enters a String longer than length the remaining input has to be cleared
+  if (buffer[strlen(buffer)-1]!='\n')
   {
     printf("input to long\n");
     clearInput();
     return true;
-  }
+  }  
+  // remove newline at end of string
+  buffer[strlen(buffer)-1]='\0';
+  // coppy string to buffer of calling function
+  strncpy(str,buffer,length+1);
   return false;
 }
 

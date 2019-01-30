@@ -287,22 +287,13 @@ void searchResultMenu(library *results)
   }
 
   char input[count + 1];
-  int selection;
+  int selection = 0;
+  bool firstTry = true;
   printf("select a book to borrow, return or delete it (Q to quit)\n");
-  do
-  {
-    printf("Selection: ");
-  } while (getString(input, count));
-  if (toupper(input[0]) == 'Q')
-  {
-    clearConsole();
-    printf("no book selected\n");
-    return;
-  }
-  selection = atoi(input);
   while (selection > results->count || selection < 1)
   {
-    printf("Selected number was invalid\nSelection: ");
+    if (!firstTry)
+      printf("Selection was invalid\n");
     do
     {
       printf("Selection: ");
@@ -314,12 +305,15 @@ void searchResultMenu(library *results)
       return;
     }
     selection = atoi(input);
+    // set firstTry false to give error message if user entered invalid input
+    firstTry = false;
   }
   clearConsole();
   printf("selected Book %d\n", selection);
-  printBook(results->books[selection - 1]);
+  bookMenu(results->books[selection - 1]);
 }
 
-//void bookMenu(book* b){
-//
-//}
+void bookMenu(book *b)
+{
+  printBook(b);
+}

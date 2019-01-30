@@ -239,7 +239,7 @@ bool deleteBook(book *b)
   return false;
 }
 
-deleteLib(library *lib){
+void deleteLib(library *lib){
   for(int i = 0; i < lib->count; i++)
   {
     freeBook(lib->books[i]);
