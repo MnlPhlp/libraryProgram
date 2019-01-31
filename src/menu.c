@@ -279,38 +279,40 @@ void searchResultMenu(library *results)
 
   printLib(results);
 
-  //calculate how much characters are needed to input the highest number shown as a result
-  int count = 1;
-  while (results->count / (10 * count) != 0)
-  {
-    count++;
-  }
-
-  char input[count + 1];
-  int selection = 0;
-  bool firstTry = true;
-  printf("select a book to borrow, return or delete it (Q to quit)\n");
-  while (selection > results->count || selection < 1)
-  {
-    if (!firstTry)
-      printf("Selection was invalid\n");
-    do
+  if (results->count > 0){
+    //calculate how much characters are needed to input the highest number shown as a result
+    int count = 1;
+    while (results->count / (10 * count) != 0)
     {
-      printf("Selection: ");
-    } while (getString(input, count));
-    if (toupper(input[0]) == 'Q')
-    {
-      clearConsole();
-      printf("no books selected\n");
-      return;
+      count++;
     }
-    selection = atoi(input);
-    // set firstTry false to give error message if user entered invalid input
-    firstTry = false;
+
+    char input[count + 1];
+    int selection = 0;
+    bool firstTry = true;
+    printf("select a book to borrow, return or delete it (Q to quit)\n");
+    while (selection > results->count || selection < 1)
+    {
+      if (!firstTry)
+        printf("Selection was invalid\n");
+      do
+      {
+        printf("Selection: ");
+      } while (getString(input, count));
+      if (toupper(input[0]) == 'Q')
+      {
+        clearConsole();
+        printf("no books selected\n");
+        return;
+      }
+      selection = atoi(input);
+      // set firstTry false to give error message if user entered invalid input
+      firstTry = false;
+    }
+    clearConsole();
+    printf("selected Book %d\n", selection);
+    bookMenu(results->books[selection - 1]);
   }
-  clearConsole();
-  printf("selected Book %d\n", selection);
-  bookMenu(results->books[selection - 1]);
 }
 
 void bookMenu(book *b)
