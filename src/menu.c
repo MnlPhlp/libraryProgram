@@ -221,10 +221,8 @@ void borrowByIsbn()
 void deleteByIsbn()
 {
   char isbn[11];
-  int amount;
-  book *book;
   library *results;
-  //get a valid isbn from user to clearly identify book to delete
+  //get a valid isbn from user to clearly identify book to remove
   do
   {
     printf("ISBN: ");
@@ -237,18 +235,22 @@ void deleteByIsbn()
     printf("no book with the isbn '%s' was found\n", isbn);
     return;
   }
-  book = results->books[0];
-  printf("Amount of copies you want to delete (%d available): ", book->amount);
-  while (scanf("%d", &amount) != 1 || amount > book->amount || amount <= 0)
+  deleteBookMenu(results->books[0]);
+}
+
+void deleteBookMenu(book* b){
+  int amount;
+  printf("Amount of copies you want to remove (%d available): ", b->amount);
+  while (scanf("%d", &amount) != 1 || amount > b->amount || amount <= 0)
   {
     printf("Invalid Input\nAmount: ");
     clearInput();
   }
   clearInput();
-  if (amount == book->amount)
-    deleteBook(book);
+  if (amount == b->amount)
+    deleteBook(b);
   else
-    book->amount -= amount;
+    b->amount -= amount;
 }
 
 bool loadMenu(char *saveFile, int bufferSize)
@@ -308,7 +310,7 @@ void searchResultMenu(library *results)
   char input[count + 1];
   int selection = 0;
   bool firstTry = true;
-  printf("select a book to borrow, return or delete it (Q to quit)\n");
+  printf("select a book to borrow, return or remove it (Q to quit)\n");
   while (selection > results->count || selection < 1)
   {
     if (!firstTry)
