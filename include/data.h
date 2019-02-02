@@ -68,7 +68,7 @@ void freeBook(book *b);
 int borrowBook(book *book, char* borrower);
 bool returnBook();
 
-library *searchISBN(char*);
+library *searchBook(char mode, char*);
 
 int sortBooksIsbn(const void *a, const void *b);
 int sortBooksTitle(const void *a, const void *b);

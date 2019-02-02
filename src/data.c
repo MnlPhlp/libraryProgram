@@ -239,13 +239,6 @@ bool deleteBook(book *b)
   return false;
 }
 
-void deleteLib(library *lib){
-  for(int i = 0; i < lib->count; i++)
-  {
-    freeBook(lib->books[i]);
-  }
-  free(lib);
-}
 
 int borrowBook(book *book, char *borrower)
 {
@@ -262,14 +255,31 @@ int borrowBook(book *book, char *borrower)
   return 0;
 }
 
-library *searchISBN(char *isbn)
+library *searchBook(char mode, char *keyword)
 {
   library *results = malloc(sizeof(library));
   results->count = 0;
   results->books = NULL;
+  int offset;
+  // calculate the offset fromm book* to the wanted parameter
+  switch (mode)
+  {
+    case 'i':
+      offset = (void *) lib.books[0]->isbn - (void *) lib.books[0];
+      break;
+    case 't':
+      offset = (void *) lib.books[0]->title - (void *) lib.books[0];
+      break;
+    case 'a':
+      offset = (void *) lib.books[0]->author - (void *) lib.books[0];
+      break;
+    default:
+      break;
+  }
   for (int i = 0, j = 0; i < lib.count; i++)
   {
-    if (strstr(lib.books[i]->isbn, isbn))
+    // access wanted parameter by adding the offset to the book*
+    if (strstr((char *) lib.books[i]+offset, keyword))
     {
       j++;
       results->books = realloc(results->books, j * sizeof(book *));
