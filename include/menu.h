@@ -67,6 +67,7 @@ void returnMenu();
 void borrowMenu();
 int addMenu();
 void deleteMenu();
+void deleteBookMenu(book* b);
 void searchMenu();
 bool loadMenu();
 void searchResultMenu();
