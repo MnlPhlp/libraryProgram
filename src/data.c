@@ -87,7 +87,7 @@ bool loadData(FILE *save)
     //read borrowed amount as int
     fread(&lib.books[i]->borrowed, sizeof(int), 1, save);
     //read isbn as char
-    fread(&lib.books[i]->isbn, 11 * sizeof(char), 1, save);
+    fread(&lib.books[i]->isbn, 11, 1, save);
     //read title with length-value encoding
     fread(&length, sizeof(size_t), 1, save);
     lib.books[i]->title = malloc(length);
@@ -155,7 +155,7 @@ bool saveData(FILE *save)
     //save borrowed amount as int
     fwrite(&lib.books[i]->borrowed, sizeof(int), 1, save);
     //save isbn as char
-    fwrite(&lib.books[i]->isbn, 11 * sizeof(char), 1, save);
+    fwrite(&lib.books[i]->isbn, 11, 1, save);
     //save title with length-value encoding
     length = strlen(lib.books[i]->title) + 1;
     fwrite(&length, sizeof(size_t), 1, save);
@@ -274,6 +274,8 @@ library *searchBook(char mode, char *keyword)
       offset = (void *) lib.books[0]->author - (void *) lib.books[0];
       break;
     default:
+      printf("%c is no valid mode",mode);
+      return NULL;
       break;
   }
   for (int i = 0, j = 0; i < lib.count; i++)
@@ -289,7 +291,7 @@ library *searchBook(char mode, char *keyword)
   }
   return results;
 }
-
+ 
 bool returnBook(book *book, char *borrower)
 {
 
