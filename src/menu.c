@@ -112,6 +112,7 @@ void searchMenu()
       break;
 
     case 'Q':
+      clearConsole();
       return;
       break;
     default:

@@ -255,23 +255,33 @@ int borrowBook(book *book, char *borrower)
   return 0;
 }
 
+char *cmpIsbn(int i, char * keyword){
+  return strstr(lib.books[i]->isbn,keyword);
+}
+
+char *cmpTitle(int i, char * keyword){
+  return strstr(lib.books[i]->title,keyword);
+}
+
+char *cmpAuthor(int i, char * keyword){
+  return strstr(lib.books[i]->author,keyword);
+}
+
 library *searchBook(char mode, char *keyword)
 {
-  library *results = malloc(sizeof(library));
-  results->count = 0;
-  results->books = NULL;
-  int offset;
-  // calculate the offset fromm book* to the wanted parameter
+  library *results = calloc(1,sizeof(library));
+  char *(*compare)(int,char*);
+  // select the compare function according to search mode
   switch (mode)
   {
     case 'i':
-      offset = (void *) lib.books[0]->isbn - (void *) lib.books[0];
+      compare = cmpIsbn;
       break;
     case 't':
-      offset = (void *) lib.books[0]->title - (void *) lib.books[0];
+      compare = cmpTitle;
       break;
     case 'a':
-      offset = (void *) lib.books[0]->author - (void *) lib.books[0];
+      compare = cmpAuthor;
       break;
     default:
       printf("%c is no valid mode",mode);
@@ -281,7 +291,7 @@ library *searchBook(char mode, char *keyword)
   for (int i = 0, j = 0; i < lib.count; i++)
   {
     // access wanted parameter by adding the offset to the book*
-    if (strstr((char *) lib.books[i]+offset, keyword))
+    if (compare(i,keyword))
     {
       j++;
       results->books = realloc(results->books, j * sizeof(book *));
