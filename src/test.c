@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "../include/structs.h"
 #include "../include/data.h"
 #include "../include/menu.h"
@@ -18,6 +19,14 @@ void runTests()
   // addBook(2,0,"1000000001","Harry Potter", "J.K. Rowling",NULL);
   // deleteBook(0);
   // printLib();
-  printf("%ld\n",sizeof(sizeof(3)));
-  printf("%ld",sizeof(int));
+  char buffer[50];
+  while (strcmp(buffer,"quit") != 0){
+    getString(buffer,50);
+    printf("'%s'\n",buffer);
+  }
+  buffer[0]='\0';
+  while (strcmp(buffer,"q") != 0){
+    getString(buffer,1);
+    printf("'%s'\n",buffer);
+  }
 }

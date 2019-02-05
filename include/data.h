@@ -13,7 +13,7 @@
  *
  * returns: true if an error occured
 */
-bool loadData(char * saveFile);
+bool loadData(FILE * save);
 
 /*
  * Function: saveData
@@ -27,7 +27,7 @@ bool loadData(char * saveFile);
 */
 
 
-bool saveData(char *saveFile);
+bool saveData(FILE *save);
 
 /*
  * Function: addBook
@@ -47,7 +47,7 @@ bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author,
  * removes a Book from the library
  * the last Book in the array is moved to the free position
  *
- * index: index of the book that should be deleted
+ * b: pointer to the book that should be removed 
  *
  * returns: 0 if succesfull, 1 if an error occured
 */
@@ -68,12 +68,16 @@ void freeBook(book *b);
 int borrowBook(book *book, char* borrower);
 bool returnBook();
 
-library *searchISBN(char*);
+library *searchBook(char mode, char*);
 
 int sortBooksIsbn(const void *a, const void *b);
 int sortBooksTitle(const void *a, const void *b);
 int sortBooksAuthor(const void *a, const void *b);
 
+FILE *openFile(char *saveFile, char *mode);
+int contentSize(FILE *file);
+
+//if not on windows stricmp has to be named strcasecmp
 #ifndef _WIN32
 #define stricmp strcasecmp
 #endif

@@ -31,7 +31,15 @@ void mainMenu()
       deleteMenu();
       break;
     case '6':
-      searchResultMenu(&lib);
+      if (lib.count > 0)
+        searchResultMenu(&lib);
+      else
+      {
+        clearConsole();
+        printf("library contains no Books\nhit enter to continue..");
+        clearInput();
+      }
+
       break;
     case '7':
       runTests();
@@ -73,7 +81,7 @@ void returnMenu()
 void searchMenu()
 {
   clearConsole();
-  char keyword[buffSize];
+  char keyword[buffSize + 1];
   library *results;
   while (true)
   {
@@ -84,13 +92,23 @@ void searchMenu()
       {
         printf("ISBN: ");
       } while (getString(keyword, 10));
-      results = searchISBN(keyword);
+      results = searchBook('i', keyword);
       break;
 
     case '2':
+      do
+      {
+        printf("Title: ");
+      } while (getString(keyword, buffSize));
+      results = searchBook('t', keyword);
       break;
 
     case '3':
+      do
+      {
+        printf("Author: ");
+      } while (getString(keyword, buffSize));
+      results = searchBook('a', keyword);
       break;
 
     case 'Q':
@@ -108,11 +126,9 @@ void searchMenu()
       clearConsole();
       printf("no Books found\n");
     }
-    for (int i = 0; i < results->count; i++)
-    {
-      freeBook(results->books[i]);
-    }
+    // free the memmeory allocated for the results
     free(results->books);
+    free(results);
   }
 }
 
@@ -188,7 +204,7 @@ void borrowByIsbn()
   } while (isbnValidation(isbn));
 
   //because only a valid isbn can be entered there can only be one search result
-  book = searchISBN(isbn)->books[0];
+  book = searchBook('i', isbn)->books[0];
   //get name of borrower
   do
   {
@@ -205,39 +221,40 @@ void borrowByIsbn()
 void deleteByIsbn()
 {
   char isbn[11];
-  int amount;
-  book *book;
   library *results;
-  //get a valid isbn from user to clearly identify book to delete
+  //get a valid isbn from user to clearly identify book to remove
   do
   {
     printf("ISBN: ");
   } while (isbnValidation(isbn));
 
   //because only a valid isbn can be entered there can only be one or none search result
-  results = searchISBN(isbn);
+  results = searchBook('i', isbn);
   if (results->count == 0)
   {
     printf("no book with the isbn '%s' was found\n", isbn);
     return;
   }
-  book = results->books[0];
-  printf("Amount of copies you want to delete (%d available): ", book->amount);
-  while (scanf("%d", &amount) != 1 || amount > book->amount || amount <= 0)
+  deleteBookMenu(results->books[0]);
+}
+
+void deleteBookMenu(book* b){
+  int amount;
+  printf("Amount of copies you want to remove (%d available): ", b->amount);
+  while (scanf("%d", &amount) != 1 || amount > b->amount || amount <= 0)
   {
     printf("Invalid Input\nAmount: ");
     clearInput();
   }
   clearInput();
-  if (amount == book->amount)
-    deleteBook(book);
+  if (amount == b->amount)
+    deleteBook(b);
   else
-    book->amount -= amount;
+    b->amount -= amount;
 }
 
 bool loadMenu(char *saveFile, int bufferSize)
 {
-  clearConsole();
   switch (menu(loadMenuText, 2))
   {
   case '1':
@@ -261,23 +278,26 @@ bool loadMenu(char *saveFile, int bufferSize)
 
 void searchResultMenu(library *results)
 {
-  char *sortMenuText = "Sort by (1)ISBN (2)Title (3)Author\n";
-  //print results sorted by given parameter
-  switch (menu(sortMenuText, 3))
+  // only sort if there is more than one result
+  if (results->count > 1)
   {
-  case '1':
-    qsort(results->books, results->count, sizeof(book *), sortBooksIsbn);
-    break;
-  case '2':
-    qsort(results->books, results->count, sizeof(book *), sortBooksTitle);
-    break;
-  case '3':
-    qsort(results->books, results->count, sizeof(book *), sortBooksAuthor);
-    break;
-  default:
-    break;
+    char *sortMenuText = "Sort by (1)ISBN (2)Title (3)Author\n";
+    //print results sorted by given parameter
+    switch (menu(sortMenuText, 3))
+    {
+    case '1':
+      qsort(results->books, results->count, sizeof(book *), sortBooksIsbn);
+      break;
+    case '2':
+      qsort(results->books, results->count, sizeof(book *), sortBooksTitle);
+      break;
+    case '3':
+      qsort(results->books, results->count, sizeof(book *), sortBooksAuthor);
+      break;
+    default:
+      break;
+    }
   }
-
   printLib(results);
 
   //calculate how much characters are needed to input the highest number shown as a result
@@ -288,22 +308,13 @@ void searchResultMenu(library *results)
   }
 
   char input[count + 1];
-  int selection;
-  printf("select a book to borrow, return or delete it (Q to quit)\n");
-  do
-  {
-    printf("Selection: ");
-  } while (getString(input, count));
-  if (toupper(input[0]) == 'Q')
-  {
-    clearConsole();
-    printf("no book selected\n");
-    return;
-  }
-  selection = atoi(input);
+  int selection = 0;
+  bool firstTry = true;
+  printf("select a book to borrow, return or remove it (Q to quit)\n");
   while (selection > results->count || selection < 1)
   {
-    printf("Selected number was invalid\nSelection: ");
+    if (!firstTry)
+      printf("Selection was invalid\n");
     do
     {
       printf("Selection: ");
@@ -315,12 +326,15 @@ void searchResultMenu(library *results)
       return;
     }
     selection = atoi(input);
+    // set firstTry false to give error message if user entered invalid input
+    firstTry = false;
   }
   clearConsole();
   printf("selected Book %d\n", selection);
-  printBook(results->books[selection - 1]);
+  bookMenu(results->books[selection - 1]);
 }
 
-//void bookMenu(book* b){
-//
-//}
+void bookMenu(book *b)
+{
+  printBook(b);
+}
