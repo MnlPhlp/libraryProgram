@@ -89,7 +89,7 @@ FILE *openFile(char *saveFile, char *mode)
 bool loadData(FILE *save)
 {
   unsigned long length;
-  fread(&lib.count, sizeof(uint8), 1, save);
+  fread(&lib.count, sizeof(int), 1, save);
   lib.books = calloc(lib.count, sizeof(book *));
   if (lib.books == NULL)
   {
@@ -169,7 +169,7 @@ bool saveData(FILE *save)
   size_t length;
   if (save == NULL)
     return true;
-  fwrite(&lib.count, sizeof(uint8), 1, save);
+  fwrite(&lib.count, sizeof(int), 1, save);
   for (int i = 0; i < lib.count; i++)
   {
     //save amount as int

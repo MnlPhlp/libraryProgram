@@ -14,7 +14,7 @@ typedef struct book
 
 typedef struct library
 {
-  uint8 count;
+  int count;
   book **books;
 }library;
 
