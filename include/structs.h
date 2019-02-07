@@ -1,10 +1,11 @@
 #ifndef STRUCTURES
 #define STRUCTURES
 
+typedef unsigned char uint8;
 typedef struct book
 {
-  int amount;
-  int borrowed;
+  uint8 amount;
+  uint8 borrowed;
   char isbn[11];
   char *title;
   char *author;
@@ -13,7 +14,7 @@ typedef struct book
 
 typedef struct library
 {
-  int count;
+  uint8 count;
   book **books;
 }library;
 

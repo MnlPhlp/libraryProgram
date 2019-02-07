@@ -77,6 +77,8 @@ int sortBooksAuthor(const void *a, const void *b);
 FILE *openFile(char *saveFile, char *mode);
 int contentSize(FILE *file);
 
+unsigned long hashLib();
+
 //if not on windows stricmp has to be named strcasecmp
 #ifndef _WIN32
 #define stricmp strcasecmp
