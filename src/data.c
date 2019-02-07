@@ -6,9 +6,31 @@
 #include "../include/menu.h"
 #include "../include/utils.h"
 
-library lib = {};
+library lib = {0, NULL};
 
-unsigned long hashLib() { return 23; }
+unsigned long hashStr(char * str){
+  unsigned long hash = *str;
+  while (*str != '\00')
+    hash += *str++ ;
+  return hash;
+}
+
+unsigned long hashLib() 
+{ 
+  unsigned long hash = lib.count;
+  for(int i = 0; i < lib.count; i++)
+  {
+    hash += lib.books[i]->amount;
+    hash += lib.books[i]->borrowed;
+    hash += hashStr(lib.books[i]->author);
+    hash += hashStr(lib.books[i]->isbn);
+    hash += hashStr(lib.books[i]->title);
+    for (int j = 0; j<lib.books[i]->borrowed; j++){
+      hash += hashStr(lib.books[i]->borrower[j]);
+    }
+  }
+  return hash; 
+}
 
 int contentSize(FILE *file)
 {
@@ -53,7 +75,7 @@ FILE *openFile(char *saveFile, char *mode)
     default:
       printf("try again?");
       printf(ANSI_COLOR_RED "Save file could not be opened\n" ANSI_COLOR_RESET
-                            "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET,
+             "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET,
              strerror(errno));
       printf("try again? ");
       if (!yesno(false))
@@ -67,7 +89,7 @@ FILE *openFile(char *saveFile, char *mode)
 bool loadData(FILE *save)
 {
   unsigned long length;
-  fread(&lib.count, sizeof(int), 1, save);
+  fread(&lib.count, sizeof(uint8), 1, save);
   lib.books = calloc(lib.count, sizeof(book *));
   if (lib.books == NULL)
   {
@@ -83,9 +105,9 @@ bool loadData(FILE *save)
       return true;
     }
     //read amount as int
-    fread(&lib.books[i]->amount, sizeof(int), 1, save);
+    fread(&lib.books[i]->amount, sizeof(uint8), 1, save);
     //read borrowed amount as int
-    fread(&lib.books[i]->borrowed, sizeof(int), 1, save);
+    fread(&lib.books[i]->borrowed, sizeof(uint8), 1, save);
     //read isbn as char
     fread(&lib.books[i]->isbn, 11, 1, save);
     //read title with length-value encoding
@@ -132,7 +154,7 @@ bool loadData(FILE *save)
   fclose(save);
   if (checksum_test != checksum_file)
   {
-    printf(ANSI_COLOR_RED "The loaded library does not match the one saved last time (checksum is invalid)\n" ANSI_COLOR_RESET
+    printf(ANSI_COLOR_RED "The loaded library does not match the one saved to the file (checksum is invalid)\n" ANSI_COLOR_RESET
                           "Do you want to continue anyway?\n");
     if (!yesno(false))
     {
@@ -147,13 +169,13 @@ bool saveData(FILE *save)
   size_t length;
   if (save == NULL)
     return true;
-  fwrite(&lib.count, sizeof(int), 1, save);
+  fwrite(&lib.count, sizeof(uint8), 1, save);
   for (int i = 0; i < lib.count; i++)
   {
     //save amount as int
-    fwrite(&lib.books[i]->amount, sizeof(int), 1, save);
+    fwrite(&lib.books[i]->amount, sizeof(uint8), 1, save);
     //save borrowed amount as int
-    fwrite(&lib.books[i]->borrowed, sizeof(int), 1, save);
+    fwrite(&lib.books[i]->borrowed, sizeof(uint8), 1, save);
     //save isbn as char
     fwrite(&lib.books[i]->isbn, 11, 1, save);
     //save title with length-value encoding
