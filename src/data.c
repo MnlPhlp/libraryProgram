@@ -10,8 +10,12 @@ library lib = {0, NULL};
 
 unsigned long hashStr(char * str){
   unsigned long hash = *str;
-  while (*str != '\00')
-    hash += *str++ ;
+  int count = 0;
+  while (*str != '\00'){
+    hash += *str * count  ;
+    count ++;
+    str ++;
+  }
   return hash;
 }
 
@@ -312,7 +316,7 @@ library *searchBook(char mode, char *keyword)
   }
   for (int i = 0, j = 0; i < lib.count; i++)
   {
-    // access wanted parameter by adding the offset to the book*
+    // check if the choosen parameter contains the keyword
     if (compare(i,keyword))
     {
       j++;
