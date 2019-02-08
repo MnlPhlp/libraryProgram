@@ -35,6 +35,8 @@ void runTests()
       freeBook(lib.books[i]);
     }
     free (lib.books);
+    lib.books=NULL;
+    lib.count=0;
     printf("Amount to generate: ");
     scanf("%d",&generatedAmount);
     clearInput();
