@@ -68,12 +68,14 @@ void borrowMenu();
 int addMenu();
 void deleteMenu();
 void deleteBookMenu(book* b);
-void searchMenu();
+book *searchMenu();
 bool loadMenu();
-void searchResultMenu();
+void searchResults( library *results);
 void bookMenu();
 
 void borrowByIsbn();
 void deleteByIsbn();
+
+book* selectBook(library *results);
 
 #endif
