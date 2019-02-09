@@ -66,7 +66,7 @@ void freeBook(book *b);
  * returns: 0 if succesfull, 1 if there are no copies left, 2 if memmory could not be allocated
 */
 int borrowBook(book *book, char* borrower);
-bool returnBook();
+void returnBook(book *book, int returner);
 
 library *searchBook(char mode, char*);
 

@@ -27,6 +27,15 @@
                        " | (Q) QUIT              |\n" \
                        " '-----------------------'\n"
 
+#define returnMenuText "  _______________________\n"  \
+                       " |      Return Menu      |\n" \
+                       " |-----------------------|\n" \
+                       " | (1) Search a book     |\n" \
+                       " | (2) Return by ISBN    |\n" \
+                       " |-----------------------|\n" \
+                       " | (Q) QUIT              |\n" \
+                       " '-----------------------'\n"                       
+
 #define deleteMenuText "  _______________________\n"  \
                        " |      Remove Menu      |\n" \
                        " |-----------------------|\n" \
@@ -73,7 +82,7 @@ bool loadMenu();
 void searchResults( library *results);
 void bookMenu();
 
-void borrowByIsbn();
+book *selectByIsbn();
 void deleteByIsbn();
 
 book* selectBook(library *results);

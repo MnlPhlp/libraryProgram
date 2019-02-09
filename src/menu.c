@@ -11,6 +11,7 @@ void runTests(); //Was das? :D
 
 void mainMenu()
 {
+  book *b;
   while (true)
   {
     switch (menu(mainMenuText, 7))
@@ -22,7 +23,11 @@ void mainMenu()
       returnMenu();
       break;
     case '3':
-      searchMenu();
+      b = searchMenu();
+      if (b != NULL){
+        bookMenu(b);
+      }
+
       break;
     case '4':
       addMenu();
@@ -57,40 +62,110 @@ void mainMenu()
   }
 }
 
+void borrowInput(book* b){
+  char borrower[buffSize];
+  do{
+    printf("Name of borrower: ");
+  } while (getString(borrower, buffSize - 1));
+  switch(borrowBook(b,borrower))
+  {
+    case 0:
+      printf("book '%s' succesfully borrowed by %s\n",b->title,borrower);
+      break;
+    case 1:
+      printf("the book '%s' is currently not in stock\n",b->title);
+      break;
+    case 2:
+      printf("book could not be borrowed because of an error\n");
+      break;
+  }
+}
+
+void returnInput(book* b){
+  //calculate how much characters are needed to input the highest number shown as a borrower
+  int count = 1;
+  while (b->borrowed / (10 * count) != 0)
+  {
+    count++;
+  }
+  char input[count+1];
+  int selection = 0;
+  bool firstTry = true;
+  printBook(b);
+  printf("choose the borrower who is returning the book (Q to quit)\n");
+  while (selection > b->borrowed || selection < 1)
+  {
+    if (!firstTry)
+      printf("Selection was invalid\n");
+    do
+    {
+      printf("Selection: ");
+    } while (getString(input, count));
+    if (toupper(input[0]) == 'Q')
+    {
+      clearConsole();
+      printf("no borrower selected\n");
+      return;
+    }
+    selection = atoi(input);
+    // set firstTry false to give error message if user entered invalid input
+    firstTry = false;
+  }
+  returnBook(b,selection-1);
+}
+
 void borrowMenu()
 {
   book *b;
-  char borrower[buffSize];
   while (true)
   {
     switch (menu(borrowMenuText, 2))
     {
     case '1':
-      b = searchMenu();
-      if (b != NULL){
-      do
-      {
-        printf("Name of borrower: ");
-      } while (getString(borrower, buffSize - 1));
-      borrowBook(b,borrower);}
+      b = searchMenu();      
       break;
 
     case '2':
-      borrowByIsbn();
+      b = selectByIsbn();
       break;
 
     case 'Q':
       return;
       break;
     }
+    if (b != NULL){
+      borrowInput(b);
+    }    
   }
 }
 
 void returnMenu()
 {
+
+  book *b;
+  while (true)
+  {
+    switch (menu(returnMenuText, 2))
+    {
+    case '1':
+      b = searchMenu();      
+      break;
+
+    case '2':
+      b = selectByIsbn();
+      break;
+
+    case 'Q':
+      return;
+      break;
+    }
+    if (b != NULL){
+      returnInput(b);
+    }    
+  }
 }
 
-library *searchInput(){
+library *search(){
   char keyword[buffSize + 1];
   library *results;
   while (true)
@@ -135,12 +210,15 @@ library *searchInput(){
 
 book* searchMenu(){
   clearConsole();
-  library *results = searchInput();
+  library *results = search();
+   if (results == NULL){
+     return NULL;
+   }
    book *b = NULL;
     //if there are results show them
-    if (results != NULL && results->count > 0){
+    if (results->count > 0){
       searchResults(results);
-      printf("select a book to borrow, return or remove it (Q to quit)\n");
+      printf("select a book to continue with (Q to quit)\n");
      b = selectBook(results);
     }
     else
@@ -214,11 +292,10 @@ void deleteMenu()
   }
 }
 
-void borrowByIsbn()
+book *selectByIsbn()
 {
   char isbn[11];
-  char borrower[buffSize];
-  book *book;
+  book *b;
   //get a valid isbn from user to clearly identify book to borrow
   do
   {
@@ -226,8 +303,13 @@ void borrowByIsbn()
   } while (isbnValidation(isbn));
 
   //because only a valid isbn can be entered there can only be one search result
-  book = searchBook('i', isbn)->books[0];
-  //get name of borrower
+  b = (book *) searchBook('i', isbn)->books;
+  if (b==NULL){
+    clearConsole();
+    printf("the library contains no book with isbn '%s'\n",isbn);
+  }
+  return b;
+  /*//get name of borrower
   do
   {
     printf("Name of borrower: ");
@@ -238,6 +320,7 @@ void borrowByIsbn()
     printf("book '%s' is not in stock at the moment\n", book->title);
   else
     printf("book '%s' was succesfully borrowed by '%s'\n", book->title, borrower);
+  */
 }
 
 void deleteByIsbn()
@@ -354,7 +437,7 @@ book* selectBook(library *results){
   }
   clearConsole();
   printf("selected Book %d\n", selection);
-  return lib.books[selection];
+  return results->books[selection-1];
 }
 
 void bookMenu(book *b)
