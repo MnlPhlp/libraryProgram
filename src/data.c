@@ -328,27 +328,17 @@ library *searchBook(char mode, char *keyword)
   return results;
 }
  
-bool returnBook(book *book, char *borrower)
+void returnBook(book *b, int selection)
 {
-
-  for (int i = 0; i < book->borrowed; i++)
-  {
-    if (strcmp(book->borrower[i], borrower) == 0)
-    {
-      book->borrowed -= 1;
-      free(book->borrower[i]);
-      //if the deleted borrower was in middle of the array fill the empty space with last element
-      if (i < book->borrowed)
-      {
-        book->borrower[i] = book->borrower[book->borrowed];
-      }
-      book->borrower = realloc(book->borrower, book->borrowed * sizeof(*book));
-      return true;
-    }
+  // decrease number of borrowers
+  b->borrowed--;
+  // free space used to store the name of the borrower
+  free(b->borrower[selection]);
+  // if the borrower was not last element of the array move last element to free space
+  if (selection != b->borrowed){
+    b->borrower[selection]=b->borrower[b->borrowed];
   }
-
-  //return false if there are no books borrowed from the given borrower
-  return false;
+  b->borrower = realloc(b->borrower,b->borrowed*sizeof(book*));
 }
 
 int sortBooksIsbn(const void *a, const void *b)
