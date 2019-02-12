@@ -17,7 +17,7 @@ int main()
       printf(ANSI_COLOR_RED "no library loaded or created" ANSI_COLOR_RESET "\nprogram closed\n");
       return 1;
     }
-    save = openFile(savefile,"r");
+    save = openFile(savefile,"rb");
   }
 
   if(contentSize(save) == 0){
@@ -39,7 +39,7 @@ int main()
   //show main menu
   mainMenu();
 
-  save = openFile(savefile, "w+");
+  save = openFile(savefile, "wb");
   //save library to savefile
   clearConsole();
   printf("library gets saved into file '%s' ...\n", savefile);
@@ -47,7 +47,10 @@ int main()
   {
     printf(ANSI_COLOR_RED "nothing saved\n" ANSI_COLOR_RESET);
   }
-  else
+  else{
     printf("%d book%s saved\n", lib.count, lib.count == 1 ? "" : "s");
+  }
+  fclose(save);
   return 0;
+
 }
