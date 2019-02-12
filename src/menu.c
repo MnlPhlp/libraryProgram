@@ -11,7 +11,6 @@ void runTests(); //Was das? :D
 
 void mainMenu()
 {
-  book *b;
   while (true)
   {
     switch (menu(mainMenuText, 7))
@@ -23,10 +22,7 @@ void mainMenu()
       returnMenu();
       break;
     case '3':
-        b = searchSelect();
-        if (b != NULL){
-          bookMenu(b);
-        }
+        searchMenu();
       break;
     case '4':
       addMenu();
@@ -121,7 +117,7 @@ void borrowMenu()
     switch (menu(borrowMenuText, 2))
     {
     case '1':
-      b = searchSelect();
+      b = searchSelect(search());
       break;
 
     case '2':
@@ -147,7 +143,7 @@ void returnMenu()
     switch (menu(returnMenuText, 2))
     {
     case '1':
-      b = searchSelect();
+      b = searchSelect(search());
       break;
 
     case '2':
@@ -204,9 +200,8 @@ library *search(){
   return results;
 }
 
-book* searchSelect(){
+book* searchSelect(library *results){
   clearConsole();
-  library *results = search();
   book *b = NULL;
   //if there are results show them
   if (results->count > 0){
@@ -436,4 +431,19 @@ book* selectBook(library *results){
 void bookMenu(book *b)
 {
   printBook(b);
+}
+
+void searchMenu(){
+  library *results;
+  while(true){
+    results = search();
+    if (results == NULL){
+      break;
+    }
+    book *b = NULL;
+    b = searchSelect(results);
+    if (b != NULL){
+      bookMenu(b);
+    }
+  }
 }
