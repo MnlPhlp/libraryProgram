@@ -1,32 +1,78 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stddef.h>
+#include <time.h>
 #include "../include/structs.h"
 #include "../include/data.h"
 #include "../include/menu.h"
 #include "../include/utils.h"
 
+void randomString(char * str, int len){
+  for(int i = 0; i < len; i++)
+  {
+    *str++ = (char) (97+rand()%26);
+  }
+  *str = '\00';
+}
+
 void runTests()
 {
-  // addBook(1,0,"0000000000","Game of Thrones","Georege R. R. Martin",NULL);
-  // library *test = searchISBN("0000000000");
-  // printLib(test);
-  // borrowBook(lib.books[0], "Manuel Philipp");
-  // saveData("bin/Test_Save");
-  // free(lib.books);
-  // lib.books = NULL;
-  // loadData("bin/Test_Save");
-  // addBook(2,0,"1000000001","Harry Potter", "J.K. Rowling",NULL);
-  // deleteBook(0);
-  // printLib();
-  char buffer[50];
-  while (strcmp(buffer,"quit") != 0){
-    getString(buffer,50);
-    printf("'%s'\n",buffer);
+  //generate random books
+  library oldLib = lib;
+  int amount;
+  int borrowed;
+  char isbn[11];
+  char title[32];
+  char author[32];
+  char **borrower ;
+  int generatedAmount;
+  bool stopTests = false;
+  while (!stopTests)
+  {
+    for(int i = 0; i < lib.count; i++)
+    {
+      freeBook(lib.books[i]);
+    }
+    free (lib.books);
+    lib.books=NULL;
+    lib.count=0;
+    printf("Amount to generate: ");
+    scanf("%d",&generatedAmount);
+    clearInput();
+    printf("start library generation\ngenerating %d books..\n",generatedAmount);
+    time_t start,stop;
+    start = clock();
+    for(int i = 0; i < generatedAmount; i++)
+    {
+      amount = 1+rand()%20;
+      borrowed = amount - rand()%(amount+1);
+      randomString(isbn,10);
+      randomString(title,31);
+      randomString(author,31);
+      borrower= malloc(borrowed*sizeof(char*));
+      for(int j = 0; j < borrowed; j++)
+      {
+        borrower[j] = malloc(32);
+        randomString(borrower[j],31);
+      }
+      addBook(amount,borrowed,isbn,title,author,borrower);
+    }
+    stop = clock();
+    printf("generating library took %.2f milliseconds\n",(float)(stop-start)/(CLOCKS_PER_SEC/1000));
+    start = clock();
+    hashLib();
+    stop = clock();
+    printf("hash took %.2f milliseconds\n",(float)(stop-start)/(CLOCKS_PER_SEC/1000));
+    printf("print lib?");
+    if (yesno(false))
+      printLib(&lib);
+
+    printf("stop tests?");
+    stopTests = yesno(false);
   }
-  buffer[0]='\0';
-  while (strcmp(buffer,"q") != 0){
-    getString(buffer,1);
-    printf("'%s'\n",buffer);
-  }
+  printf("Reload old Library?");
+  if (yesno(true))
+    lib = oldLib;
+
 }

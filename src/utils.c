@@ -129,7 +129,7 @@ void printBook(book *book)
   printf(bookText, book->title, book->author, book->isbn, book->amount, book->amount - book->borrowed);
   //print list of people that borrowed this book
   if (book->borrowed > 0)
-    printf("  Borrower:\n");
+    printf("\n  Borrower:\n");
   for (int i = 0; i < book->borrowed; i++)
   {
     printf("   %d) %s\n", i + 1, book->borrower[i]);

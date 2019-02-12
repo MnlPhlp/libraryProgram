@@ -6,9 +6,35 @@
 #include "../include/menu.h"
 #include "../include/utils.h"
 
-library lib = {};
+library lib = {0, NULL};
 
-unsigned long hashLib() { return 23; }
+unsigned long hashStr(char * str){
+  unsigned long hash = *str;
+  int count = 0;
+  while (*str != '\00'){
+    hash += *str * count  ;
+    count ++;
+    str ++;
+  }
+  return hash;
+}
+
+unsigned long hashLib() 
+{ 
+  unsigned long hash = lib.count;
+  for(int i = 0; i < lib.count; i++)
+  {
+    hash += lib.books[i]->amount;
+    hash += lib.books[i]->borrowed;
+    hash += hashStr(lib.books[i]->author);
+    hash += hashStr(lib.books[i]->isbn);
+    hash += hashStr(lib.books[i]->title);
+    for (int j = 0; j<lib.books[i]->borrowed; j++){
+      hash += hashStr(lib.books[i]->borrower[j]);
+    }
+  }
+  return hash; 
+}
 
 int contentSize(FILE *file)
 {
@@ -53,7 +79,7 @@ FILE *openFile(char *saveFile, char *mode)
     default:
       printf("try again?");
       printf(ANSI_COLOR_RED "Save file could not be opened\n" ANSI_COLOR_RESET
-                            "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET,
+             "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET,
              strerror(errno));
       printf("try again? ");
       if (!yesno(false))
@@ -83,9 +109,9 @@ bool loadData(FILE *save)
       return true;
     }
     //read amount as int
-    fread(&lib.books[i]->amount, sizeof(int), 1, save);
+    fread(&lib.books[i]->amount, sizeof(uint8), 1, save);
     //read borrowed amount as int
-    fread(&lib.books[i]->borrowed, sizeof(int), 1, save);
+    fread(&lib.books[i]->borrowed, sizeof(uint8), 1, save);
     //read isbn as char
     fread(&lib.books[i]->isbn, 11, 1, save);
     //read title with length-value encoding
@@ -132,7 +158,7 @@ bool loadData(FILE *save)
   fclose(save);
   if (checksum_test != checksum_file)
   {
-    printf(ANSI_COLOR_RED "The loaded library does not match the one saved last time (checksum is invalid)\n" ANSI_COLOR_RESET
+    printf(ANSI_COLOR_RED "The loaded library does not match the one saved to the file (checksum is invalid)\n" ANSI_COLOR_RESET
                           "Do you want to continue anyway?\n");
     if (!yesno(false))
     {
@@ -151,9 +177,9 @@ bool saveData(FILE *save)
   for (int i = 0; i < lib.count; i++)
   {
     //save amount as int
-    fwrite(&lib.books[i]->amount, sizeof(int), 1, save);
+    fwrite(&lib.books[i]->amount, sizeof(uint8), 1, save);
     //save borrowed amount as int
-    fwrite(&lib.books[i]->borrowed, sizeof(int), 1, save);
+    fwrite(&lib.books[i]->borrowed, sizeof(uint8), 1, save);
     //save isbn as char
     fwrite(&lib.books[i]->isbn, 11, 1, save);
     //save title with length-value encoding
@@ -255,23 +281,33 @@ int borrowBook(book *book, char *borrower)
   return 0;
 }
 
+char *cmpIsbn(int i, char * keyword){
+  return strstr(lib.books[i]->isbn,keyword);
+}
+
+char *cmpTitle(int i, char * keyword){
+  return strstr(lib.books[i]->title,keyword);
+}
+
+char *cmpAuthor(int i, char * keyword){
+  return strstr(lib.books[i]->author,keyword);
+}
+
 library *searchBook(char mode, char *keyword)
 {
-  library *results = malloc(sizeof(library));
-  results->count = 0;
-  results->books = NULL;
-  int offset;
-  // calculate the offset fromm book* to the wanted parameter
+  library *results = calloc(1,sizeof(library));
+  char *(*compare)(int,char*);
+  // select the compare function according to search mode
   switch (mode)
   {
     case 'i':
-      offset = (void *) lib.books[0]->isbn - (void *) lib.books[0];
+      compare = cmpIsbn;
       break;
     case 't':
-      offset = (void *) lib.books[0]->title - (void *) lib.books[0];
+      compare = cmpTitle;
       break;
     case 'a':
-      offset = (void *) lib.books[0]->author - (void *) lib.books[0];
+      compare = cmpAuthor;
       break;
     default:
       printf("%c is no valid mode",mode);
@@ -280,8 +316,8 @@ library *searchBook(char mode, char *keyword)
   }
   for (int i = 0, j = 0; i < lib.count; i++)
   {
-    // access wanted parameter by adding the offset to the book*
-    if (strstr((char *) lib.books[i]+offset, keyword))
+    // check if the choosen parameter contains the keyword
+    if (compare(i,keyword))
     {
       j++;
       results->books = realloc(results->books, j * sizeof(book *));
@@ -292,27 +328,17 @@ library *searchBook(char mode, char *keyword)
   return results;
 }
  
-bool returnBook(book *book, char *borrower)
+void returnBook(book *b, int selection)
 {
-
-  for (int i = 0; i < book->borrowed; i++)
-  {
-    if (strcmp(book->borrower[i], borrower) == 0)
-    {
-      book->borrowed -= 1;
-      free(book->borrower[i]);
-      //if the deleted borrower was in middle of the array fill the empty space with last element
-      if (i < book->borrowed)
-      {
-        book->borrower[i] = book->borrower[book->borrowed];
-      }
-      book->borrower = realloc(book->borrower, book->borrowed * sizeof(*book));
-      return true;
-    }
+  // decrease number of borrowers
+  b->borrowed--;
+  // free space used to store the name of the borrower
+  free(b->borrower[selection]);
+  // if the borrower was not last element of the array move last element to free space
+  if (selection != b->borrowed){
+    b->borrower[selection]=b->borrower[b->borrowed];
   }
-
-  //return false if there are no books borrowed from the given borrower
-  return false;
+  b->borrower = realloc(b->borrower,b->borrowed*sizeof(book*));
 }
 
 int sortBooksIsbn(const void *a, const void *b)

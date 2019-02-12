@@ -66,7 +66,7 @@ void freeBook(book *b);
  * returns: 0 if succesfull, 1 if there are no copies left, 2 if memmory could not be allocated
 */
 int borrowBook(book *book, char* borrower);
-bool returnBook();
+void returnBook(book *book, int returner);
 
 library *searchBook(char mode, char*);
 
@@ -76,6 +76,8 @@ int sortBooksAuthor(const void *a, const void *b);
 
 FILE *openFile(char *saveFile, char *mode);
 int contentSize(FILE *file);
+
+unsigned long hashLib();
 
 //if not on windows stricmp has to be named strcasecmp
 #ifndef _WIN32
