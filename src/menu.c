@@ -122,7 +122,7 @@ void borrowMenu()
     switch (menu(borrowMenuText, 2))
     {
     case '1':
-      b = searchMenu();      
+      b = searchMenu();
       break;
 
     case '2':
@@ -135,7 +135,7 @@ void borrowMenu()
     }
     if (b != NULL){
       borrowInput(b);
-    }    
+    }
   }
 }
 
@@ -148,7 +148,7 @@ void returnMenu()
     switch (menu(returnMenuText, 2))
     {
     case '1':
-      b = searchMenu();      
+      b = searchMenu();
       break;
 
     case '2':
@@ -161,7 +161,7 @@ void returnMenu()
     }
     if (b != NULL){
       returnInput(b);
-    }    
+    }
   }
 }
 
@@ -204,8 +204,8 @@ library *search(){
       printf("Invalid input\n");
       break;
     }
-    return results;
   }
+  return results;
 }
 
 book* searchMenu(){
