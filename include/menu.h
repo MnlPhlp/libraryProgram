@@ -54,7 +54,7 @@
                      " | (Q) QUIT              |\n" \
                      " '-----------------------'\n"
 
-#define searchMenuText "  _______________________\n"  \
+#define searchSelectText "  _______________________\n"  \
                        " |      Search Menu      |\n" \
                        " |-----------------------|\n" \
                        " | Search by...          |\n" \
@@ -77,7 +77,7 @@ void borrowMenu();
 int addMenu();
 void deleteMenu();
 void deleteBookMenu(book* b);
-book *searchMenu();
+book *searchSelect();
 bool loadMenu();
 void searchResults( library *results);
 void bookMenu();

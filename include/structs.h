@@ -2,6 +2,7 @@
 #define STRUCTURES
 
 typedef unsigned char uint8;
+
 typedef struct book
 {
   uint8 amount;

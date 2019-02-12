@@ -23,11 +23,10 @@ void mainMenu()
       returnMenu();
       break;
     case '3':
-      b = searchMenu();
-      if (b != NULL){
-        bookMenu(b);
-      }
-
+        b = searchSelect();
+        if (b != NULL){
+          bookMenu(b);
+        }
       break;
     case '4':
       addMenu();
@@ -122,7 +121,7 @@ void borrowMenu()
     switch (menu(borrowMenuText, 2))
     {
     case '1':
-      b = searchMenu();
+      b = searchSelect();
       break;
 
     case '2':
@@ -148,7 +147,7 @@ void returnMenu()
     switch (menu(returnMenuText, 2))
     {
     case '1':
-      b = searchMenu();
+      b = searchSelect();
       break;
 
     case '2':
@@ -168,9 +167,7 @@ void returnMenu()
 library *search(){
   char keyword[buffSize + 1];
   library *results;
-  while (true)
-  {
-    switch (menu(searchMenuText, 3))
+    switch (menu(searchSelectText, 3))
     {
     case '1':
       do
@@ -204,32 +201,28 @@ library *search(){
       printf("Invalid input\n");
       break;
     }
-  }
   return results;
 }
 
-book* searchMenu(){
+book* searchSelect(){
   clearConsole();
   library *results = search();
-   if (results == NULL){
-     return NULL;
-   }
-   book *b = NULL;
-    //if there are results show them
-    if (results->count > 0){
-      searchResults(results);
-      printf("select a book to continue with (Q to quit)\n");
-     b = selectBook(results);
-    }
-    else
-    {
-      clearConsole();
-      printf("no Books found\n");
-    }
-    // free the memmeory allocated for the results
-    free(results->books);
-    free(results);
-    return b;
+  book *b = NULL;
+  //if there are results show them
+  if (results->count > 0){
+    searchResults(results);
+    printf("select a book to continue with (Q to quit)\n");
+    b = selectBook(results);
+  }
+  else
+  {
+    clearConsole();
+    printf("no Books found\n");
+  }
+  // free the memmeory allocated for the results
+  free(results->books);
+  free(results);
+  return b;
 }
 
 int addMenu()
