@@ -58,8 +58,8 @@ FILE *openFile(char *saveFile, char *mode)
       //try to create the file. This only works if the folder already exists
       if (yesno(true))
       {
-        // use fopen with mode w+ to create the file
-        save = fopen(saveFile, "w+");
+        // use fopen with mode w to create the file
+        save = fopen(saveFile, "wb");
         if (save != NULL)
         {
           clearConsole();
@@ -201,7 +201,6 @@ bool saveData(FILE *save)
   }
   unsigned long checksum = hashLib();
   fwrite(&checksum, sizeof(unsigned long), 1, save);
-  fclose(save);
   return false;
 }
 
