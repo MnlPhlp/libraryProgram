@@ -38,8 +38,11 @@ unsigned long hashLib()
 
 int contentSize(FILE *file)
 {
+  // move file pointer to end of File
   fseek(file, 0, SEEK_END);
+  // store position of file pointer to size
   int size = ftell(file);
+  // move file pointer back to the start of the file
   rewind(file);
   return size;
 }
@@ -227,8 +230,11 @@ book *newBook(int amount, int borrowed, char *isbn, char *title, char *author, c
 
 bool addBook(int amount, int borrowed, char *isbn, char *title, char *author, char **borrower)
 {
+  // increase count of books in library
   lib.count += 1;
+  // allocate more space in book array
   lib.books = realloc(lib.books, lib.count * sizeof(book *));
+  // store pointer to the new book at last position of book array
   lib.books[lib.count - 1] = newBook(amount, borrowed, isbn, title, author, borrower);
   return false;
 }
@@ -294,8 +300,12 @@ char *cmpAuthor(int i, char * keyword){
 
 library *searchBook(char mode, char *keyword)
 {
+  // create empty library
   library *results = calloc(1,sizeof(library));
+  // create function pointer
   char *(*compare)(int,char*);
+  // store upper version of keyword to make search case insensitive
+  upperString(keyword,keyword);
   // select the compare function according to search mode
   switch (mode)
   {

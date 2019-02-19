@@ -194,7 +194,7 @@ bool getString(char *str, int length)
   char buffer[length+2];
   // read String from standard input
   fgets(buffer,length+2,stdin);
-  //if the user enters a String longer than length the remaining input has to be cleared
+  //if the user enters a String longer than 'length' the remaining input has to be cleared
   if (buffer[strlen(buffer)-1]!='\n')
   {
     printf("input to long\n");
@@ -208,13 +208,14 @@ bool getString(char *str, int length)
   return false;
 }
 
-/*void upperString(char *dest, char *src)
+void upperString(char *dest, char *src)
 {
   while (*src)
   {
+    // store upper character of src in dest
     *dest = toupper((unsigned char)*src);
     src++;
     dest++;
   }
   *dest = '\0';
-}*/
+}

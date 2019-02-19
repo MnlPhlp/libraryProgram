@@ -52,6 +52,7 @@ bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author,
  * returns: 0 if succesfull, 1 if an error occured
 */
 bool deleteBook(book *b);
+
 void freeBook(book *b);
 
 /*
