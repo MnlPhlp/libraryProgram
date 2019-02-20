@@ -15,7 +15,7 @@ int main()
     if (loadMenu(savefile, 50))
     {
       printf(ANSI_COLOR_RED "no library loaded or created" ANSI_COLOR_RESET "\nprogram closed\n");
-      return 1;
+      return 0;
     }
     save = openFile(savefile,"rb");
   }
@@ -23,7 +23,7 @@ int main()
   if(contentSize(save) == 0){
     printf("new empty library will be used\n");
   }
-  
+
   else{
     printf("\nlibrary gets loaded from file '%s' ...\n", savefile);
     //load library from savefile
