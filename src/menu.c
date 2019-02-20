@@ -162,7 +162,7 @@ void returnMenu()
 
 library *search(){
   char keyword[buffSize + 1];
-  library *results;
+  library *results = NULL;
     switch (menu(searchSelectText, 3))
     {
     case '1':
@@ -191,7 +191,6 @@ library *search(){
 
     case 'Q':
       clearConsole();
-      return NULL;
       break;
     default:
       printf("Invalid input\n");
@@ -431,6 +430,7 @@ book* selectBook(library *results){
 void bookMenu(book *b)
 {
   printBook(b);
+
 }
 
 void searchMenu(){
