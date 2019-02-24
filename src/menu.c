@@ -111,7 +111,7 @@ void returnInput(book* b){
 
 void borrowMenu()
 {
-  book *b;
+  book *b = NULL;
   while (true)
   {
     switch (menu(borrowMenuText, 2))
@@ -137,7 +137,7 @@ void borrowMenu()
 void returnMenu()
 {
 
-  book *b;
+  book *b = NULL;
   while (true)
   {
     switch (menu(returnMenuText, 2))
