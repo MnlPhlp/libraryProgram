@@ -42,7 +42,7 @@ void runTests()
     clearInput();
     printf("start library generation\ngenerating %d books..\n",generatedAmount);
     time_t start,stop;
-    start = clock();
+    float overallTime = 0;
     for(int i = 0; i < generatedAmount; i++)
     {
       amount = 1+rand()%20;
@@ -56,10 +56,14 @@ void runTests()
         borrower[j] = malloc(32);
         randomString(borrower[j],31);
       }
+      start = clock();
       addBook(amount,borrowed,isbn,title,author,borrower);
+      stop = clock();
+      overallTime	+= (float)(stop - start)/CLOCKS_PER_SEC;
     }
-    stop = clock();
-    printf("generating library took %.2f milliseconds\n",(float)(stop-start)/(CLOCKS_PER_SEC/1000));
+    
+    float average = (overallTime*1000000)/generatedAmount;
+    printf("adding books took %.2f seconds\nthat is %.2f microseconds per book\n",overallTime,average);
     start = clock();
     hashLib();
     stop = clock();

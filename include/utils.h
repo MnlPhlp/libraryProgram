@@ -4,11 +4,11 @@
 #include <stdbool.h>
 #include "structs.h"
 
-#define bookText "     _______   Title:    %s\n" \
-                 "    /      /,  Author:   %s\n" \
-                 "   /      //   ISBN:     %s\n" \
-                 "  /______//    Amount:   %d\n" \
-                 " (______(/     In stock: %d\n"
+#define bookText ANSI_COLOR_YELLOW"     _______   "ANSI_COLOR_RESET"Title:    %s\n" \
+                 ANSI_COLOR_YELLOW"    /      /,  "ANSI_COLOR_RESET"Author:   %s\n" \
+                 ANSI_COLOR_YELLOW"   /      //   "ANSI_COLOR_RESET"ISBN:     %s\n" \
+                 ANSI_COLOR_YELLOW"  /______//    "ANSI_COLOR_RESET"Amount:   %d\n" \
+                 ANSI_COLOR_YELLOW" (______(/     "ANSI_COLOR_RESET"In stock: %d\n"
 
 char menu(char *text, int options);
 /*

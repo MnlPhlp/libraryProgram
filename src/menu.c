@@ -111,7 +111,7 @@ void returnInput(book* b){
 
 void borrowMenu()
 {
-  book *b;
+  book *b = NULL;
   while (true)
   {
     switch (menu(borrowMenuText, 2))
@@ -137,7 +137,7 @@ void borrowMenu()
 void returnMenu()
 {
 
-  book *b;
+  book *b = NULL;
   while (true)
   {
     switch (menu(returnMenuText, 2))
@@ -162,7 +162,7 @@ void returnMenu()
 
 library *search(){
   char keyword[buffSize + 1];
-  library *results;
+  library *results = NULL;
     switch (menu(searchSelectText, 3))
     {
     case '1':
@@ -191,7 +191,6 @@ library *search(){
 
     case 'Q':
       clearConsole();
-      return NULL;
       break;
     default:
       printf("Invalid input\n");
