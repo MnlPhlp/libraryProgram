@@ -431,6 +431,23 @@ book* selectBook(library *results){
 void bookMenu(book *b)
 {
   printBook(b);
+  switch (menu("1) Borrow  2) Return  3) Delete\n",3))
+  {
+    case '1':
+      borrowInput(b);
+      break;
+
+    case '2':
+      returnInput(b);
+      break;
+
+    case '3':
+      deleteBookMenu(b);
+      break;
+  
+    default:
+      break;
+  }
 }
 
 void searchMenu(){
