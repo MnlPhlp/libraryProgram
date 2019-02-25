@@ -287,15 +287,21 @@ int borrowBook(book *book, char *borrower)
 }
 
 char *cmpIsbn(int i, char * keyword){
-  return strstr(lib.books[i]->isbn,keyword);
+  char buffer[strlen(lib.books[i]->isbn)+1];
+  upperString(buffer, lib.books[i]->isbn);
+  return strstr(buffer,keyword);
 }
 
 char *cmpTitle(int i, char * keyword){
-  return strstr(lib.books[i]->title,keyword);
+  char buffer[strlen(lib.books[i]->title)+1];
+  upperString(buffer, lib.books[i]->title);
+  return strstr(buffer,keyword);
 }
 
 char *cmpAuthor(int i, char * keyword){
-  return strstr(lib.books[i]->author,keyword);
+  char buffer[strlen(lib.books[i]->author)+1];
+  upperString(buffer, lib.books[i]->author);
+  return strstr(buffer,keyword);
 }
 
 library *searchBook(char mode, char *keyword)
