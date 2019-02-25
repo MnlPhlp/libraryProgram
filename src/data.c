@@ -286,16 +286,35 @@ int borrowBook(book *book, char *borrower)
   return 0;
 }
 
-char *cmpIsbn(int i, char * keyword){
-  return strstr(lib.books[i]->isbn,keyword);
+bool cmpIsbn(book *b, char * keyword){
+  char buffer[strlen(b->isbn)+1];
+  upperString(buffer, b->isbn);
+  return strstr(buffer,keyword) != NULL;
 }
 
-char *cmpTitle(int i, char * keyword){
-  return strstr(lib.books[i]->title,keyword);
+bool cmpTitle(book *b, char * keyword){
+  char buffer[strlen(b->title)+1];
+  upperString(buffer, b->title);
+  return strstr(buffer,keyword) != NULL;
 }
 
-char *cmpAuthor(int i, char * keyword){
-  return strstr(lib.books[i]->author,keyword);
+bool cmpAuthor(book *b, char * keyword){
+  char buffer[strlen(b->author)+1];
+  upperString(buffer, b->author);
+  return strstr(buffer,keyword) != NULL;
+}
+
+bool cmpBorrower(book *b, char *keyword){
+  bool result = false;
+  for (int j = 0; j < b->borrowed; j++){
+    char buffer[strlen(b->borrower[j])+1];
+    upperString(buffer,b->borrower[j]);
+    if(strstr(buffer,keyword) != 0){
+      result = true;
+      break;
+    };
+  }
+  return result;
 }
 
 library *searchBook(char mode, char *keyword)
@@ -303,7 +322,7 @@ library *searchBook(char mode, char *keyword)
   // create empty library
   library *results = calloc(1,sizeof(library));
   // create function pointer
-  char *(*compare)(int,char*);
+  bool (*compare)(book *,char*);
   // store upper version of keyword to make search case insensitive
   upperString(keyword,keyword);
   // select the compare function according to search mode
@@ -318,6 +337,9 @@ library *searchBook(char mode, char *keyword)
     case 'a':
       compare = cmpAuthor;
       break;
+    case 'b':
+      compare = cmpBorrower;
+      break;
     default:
       printf("%c is no valid mode",mode);
       return NULL;
@@ -326,7 +348,7 @@ library *searchBook(char mode, char *keyword)
   for (int i = 0, j = 0; i < lib.count; i++)
   {
     // check if the choosen parameter contains the keyword
-    if (compare(i,keyword))
+    if (compare(lib.books[i],keyword))
     {
       j++;
       results->books = realloc(results->books, j * sizeof(book *));
