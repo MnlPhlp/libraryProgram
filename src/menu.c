@@ -163,7 +163,7 @@ void returnMenu()
 library *search(){
   char keyword[buffSize + 1];
   library *results = NULL;
-    switch (menu(searchSelectText, 3))
+    switch (menu(searchSelectText, 4))
     {
     case '1':
       do
@@ -187,6 +187,14 @@ library *search(){
         printf("Author: ");
       } while (getString(keyword, buffSize));
       results = searchBook('a', keyword);
+      break;
+
+    case '4':
+      do
+      {
+        printf("Borrower: ");
+      } while (getString(keyword, buffSize));
+      results = searchBook('b', keyword);
       break;
 
     case 'Q':
@@ -296,18 +304,6 @@ book *selectByIsbn()
     printf("the library contains no book with isbn '%s'\n",isbn);
   }
   return b;
-  /*//get name of borrower
-  do
-  {
-    printf("Name of borrower: ");
-  } while (getString(borrower, buffSize - 1));
-  clearConsole();
-  //check if book could be borrowed and inform the user
-  if (borrowBook(book, borrower))
-    printf("book '%s' is not in stock at the moment\n", book->title);
-  else
-    printf("book '%s' was succesfully borrowed by '%s'\n", book->title, borrower);
-  */
 }
 
 void deleteByIsbn()
