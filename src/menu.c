@@ -32,7 +32,7 @@ void mainMenu()
       break;
     case '6':
       if (lib.count > 0){
-        printLib(&lib);
+        searchResults(&lib);
         printf("Enter to continue..");
         clearInput();
       }
@@ -243,7 +243,7 @@ void addMenu()
   
   if(i < lib.count){
     // if isbn is already stored just increase the count
-    printf("A Book with the enetered ISBN already exists\nhow many copys do you want to add");
+    printf("A Book with the enetered ISBN already exists\nhow many copys do you want to add\n");
     int amount;
     // ask for the added amount
     printf("Amount: ");
@@ -252,6 +252,7 @@ void addMenu()
       clearInput();
       printf("Invalid input\nAmount:");
     }
+    clearInput();
     lib.books[i]->amount += amount;
     // in this case we don't need more user input
     return;
