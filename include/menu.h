@@ -75,7 +75,7 @@
 void mainMenu();
 void returnMenu();
 void borrowMenu();
-int addMenu();
+void addMenu();
 void deleteMenu();
 void deleteBookMenu(book* b);
 library* search();

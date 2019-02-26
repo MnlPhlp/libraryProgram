@@ -227,8 +227,36 @@ book* searchSelect(library *results){
   return b;
 }
 
-int addMenu()
+void addMenu()
 {
+  // enter isbn first to detect if book is already stored
+  char isbn[11] = "";
+  do
+  {
+    printf("ISBN: ");
+  } while (isbnValidation(isbn));
+  int i = 0;
+  while (i < lib.count && !strstr(lib.books[i]->isbn, isbn))
+  {
+    i++;
+  }
+  
+  if(i < lib.count){
+    // if isbn is already stored just increase the count
+    printf("A Book with the enetered ISBN already exists\nhow many copys do you want to add");
+    int amount;
+    // ask for the added amount
+    printf("Amount: ");
+    while (scanf("%d", &amount) != 1 || amount <= 0)
+    {
+      clearInput();
+      printf("Invalid input\nAmount:");
+    }
+    lib.books[i]->amount += amount;
+    // in this case we don't need more user input
+    return;
+  }
+
   char title[buffSize] = "";
   do
   {
@@ -248,23 +276,11 @@ int addMenu()
     clearInput();
     printf("Invalid input\nAmount:");
   }
+  // add the book with entered data
+  addBook(amount, 0, isbn, title, author, NULL);
   clearInput();
-
-  char isbn[11] = "";
-  do
-  {
-    printf("ISBN: ");
-  } while (isbnValidation(isbn));
-  int i = 0;
-  while (i < lib.count && !strstr(lib.books[i]->isbn, isbn))
-  {
-    i++;
-  }
-  //if isbn is already stored increase count of the stored book by the entered amount
-  i < lib.count ? lib.books[i]->amount += amount : addBook(amount, 0, isbn, title, author, NULL);
   clearConsole();
   printf("Book added\n");
-  return 0;
 }
 
 void deleteMenu()
