@@ -8,9 +8,11 @@ INCLUDE	:= include
 ifeq ($(OS),Windows_NT)
 EXECUTABLE	:= main.exe
 DEBUG := debug.exe
+MAKE_BIN := md $(BIN)
 else
 EXECUTABLE	:= main
 DEBUG := debug
+MAKE_BIN := mkdir -p $(BIN)
 endif
 
 all: $(BIN)/$(EXECUTABLE)
@@ -22,7 +24,9 @@ run: all
 	./$(BIN)/$(EXECUTABLE)
 
 debug:
+	$(MAKE_BIN)
 	$(CC) $(C_FLAGS) --debug -I$(INCLUDE) -o $(BIN)/$(DEBUG) $(SRC)/*
 
 $(BIN)/$(EXECUTABLE): $(SRC)/*
+	$(MAKE_BIN)
 	$(CC) $(C_FLAGS) -I$(INCLUDE) $^ -o $@ 
