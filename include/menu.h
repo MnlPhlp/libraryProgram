@@ -62,6 +62,7 @@
                        " | (1) ISBN              |\n" \
                        " | (2) Title             |\n" \
                        " | (3) Author            |\n" \
+		               " | (4) Borrower          |\n" \
                        " |-----------------------|\n" \
                        " | (Q) QUIT              |\n" \
                        " '-----------------------'\n"
@@ -75,7 +76,7 @@
 void mainMenu();
 void returnMenu();
 void borrowMenu();
-int addMenu();
+void addMenu();
 void deleteMenu();
 void deleteBookMenu(book* b);
 library* search();
