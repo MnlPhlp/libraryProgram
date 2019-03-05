@@ -115,7 +115,7 @@ bool loadData(FILE *save)
     fread(&lib.books[i]->amount, sizeof(uint8), 1, save);
     //read borrowed amount as int
     fread(&lib.books[i]->borrowed, sizeof(uint8), 1, save);
-    //read isbn as char
+    //read ISBN as char
     fread(&lib.books[i]->isbn, 11, 1, save);
     //read title with length-value encoding
     fread(&length, sizeof(size_t), 1, save);
@@ -183,7 +183,7 @@ bool saveData(FILE *save)
     fwrite(&lib.books[i]->amount, sizeof(uint8), 1, save);
     //save borrowed amount as int
     fwrite(&lib.books[i]->borrowed, sizeof(uint8), 1, save);
-    //save isbn as char
+    //save ISBN as char
     fwrite(&lib.books[i]->isbn, 11, 1, save);
     //save title with length-value encoding
     length = strlen(lib.books[i]->title) + 1;
@@ -347,7 +347,7 @@ library *searchBook(char mode, char *keyword)
   }
   for (int i = 0, j = 0; i < lib.count; i++)
   {
-    // check if the choosen parameter contains the keyword
+    // check if the chosen parameter contains the keyword
     if (compare(lib.books[i],keyword))
     {
       j++;

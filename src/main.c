@@ -26,7 +26,7 @@ int main()
 
   else{
     printf("\nlibrary gets loaded from file '%s' ...\n", savefile);
-    //load library from savefile
+    //load library from save-file
     if (loadData(save))
     {
       printf(ANSI_COLOR_RED "no library loaded or created" ANSI_COLOR_RESET "\nprogram closed\n");
@@ -40,7 +40,7 @@ int main()
   mainMenu();
 
   save = openFile(savefile, "wb");
-  //save library to savefile
+  //save library to save-file
   clearConsole();
   printf("library gets saved into file '%s' ...\n", savefile);
   if (saveData(save))

@@ -65,7 +65,7 @@ void borrowInput(book* b){
   switch(borrowBook(b,borrower))
   {
     case 0:
-      printf("book '%s' succesfully borrowed by %s\n",b->title,borrower);
+      printf("book '%s' successfully borrowed by %s\n",b->title,borrower);
       break;
     case 1:
       printf("the book '%s' is currently not in stock\n",b->title);
@@ -221,7 +221,7 @@ book* searchSelect(library *results){
     clearConsole();
     printf("no Books found\n");
   }
-  // free the memmeory allocated for the results
+  // free the memory allocated for the results
   free(results->books);
   free(results);
   return b;
@@ -229,7 +229,7 @@ book* searchSelect(library *results){
 
 void addMenu()
 {
-  // enter isbn first to detect if book is already stored
+  // enter ISBN first to detect if book is already stored
   char isbn[11] = "";
   do
   {
@@ -242,8 +242,10 @@ void addMenu()
   }
   
   if(i < lib.count){
-    // if isbn is already stored just increase the count
-    printf("A Book with the enetered ISBN already exists\nhow many copys do you want to add\n");
+    // if ISBN is already stored just increase the count
+    printf("A Book with the entered ISBN already exists\n\n");
+    printBook(lib.books[i]);
+    printf("how many copies do you want to add\n");
     int amount;
     // ask for the added amount
     printf("Amount: ");
@@ -308,17 +310,17 @@ book *selectByIsbn()
 {
   char isbn[11];
   book *b;
-  //get a valid isbn from user to clearly identify book to borrow
+  //get a valid ISBN from user to clearly identify book to borrow
   do
   {
     printf("ISBN: ");
   } while (isbnValidation(isbn));
 
-  //because only a valid isbn can be entered there can only be one search result
+  //because only a valid ISBN can be entered there can only be one search result
   b = (book *) searchBook('i', isbn)->books;
   if (b==NULL){
     clearConsole();
-    printf("the library contains no book with isbn '%s'\n",isbn);
+    printf("the library contains no book with ISBN '%s'\n",isbn);
   }
   return b;
 }
@@ -327,17 +329,17 @@ void deleteByIsbn()
 {
   char isbn[11];
   library *results;
-  //get a valid isbn from user to clearly identify book to remove
+  //get a valid ISBN from user to clearly identify book to remove
   do
   {
     printf("ISBN: ");
   } while (isbnValidation(isbn));
 
-  //because only a valid isbn can be entered there can only be one or none search result
+  //because only a valid ISBN can be entered there can only be one or none search result
   results = searchBook('i', isbn);
   if (results->count == 0)
   {
-    printf("no book with the isbn '%s' was found\n", isbn);
+    printf("no book with the ISBN '%s' was found\n", isbn);
     return;
   }
   deleteBookMenu(results->books[0]);

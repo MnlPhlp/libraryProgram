@@ -13,8 +13,11 @@ bool isbnValidation(char *isbn)
   int i = 0;
   while ((c = getchar()) != '\n' && c != EOF)
   {
-    if (c != ' ' && c != '-')
-    {
+    if (c == ' ' && c == '-'){
+      //skip separation characters used in an ISBN
+      continue;
+    }
+
       if (i < 9 && !((c >= '0') && (c <= '9')))
       {
         clearInput();
@@ -41,7 +44,6 @@ bool isbnValidation(char *isbn)
         printf("to long\n");
         return true;
       }
-    }
   }
   //add null byte to end string
   isbn[10] = '\0';
@@ -111,7 +113,7 @@ void clearConsole()
   //on windows use system call
   system("cls");
 #else
-  //on linux and mac use escape sequence
+  //on Linux and mac use escape sequence
   printf("\033c");
 #endif
 }
@@ -203,7 +205,7 @@ bool getString(char *str, int length)
   }  
   // remove newline at end of string
   buffer[strlen(buffer)-1]='\0';
-  // coppy string to buffer of calling function
+  // copy string to buffer of calling function
   strncpy(str,buffer,length+1);
   return false;
 }
