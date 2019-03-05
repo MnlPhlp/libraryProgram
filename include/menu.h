@@ -47,7 +47,7 @@
 
 #define loadMenuText "  _______________________\n"  \
                      " |       Load Menu       |\n" \
-                     " | Choose your savefile  |\n" \
+                     " | Choose your save-file |\n" \
                      " |-----------------------|\n" \
                      " | (1) Standard (./Save) |\n" \
                      " | (2) Enter save path   |\n" \

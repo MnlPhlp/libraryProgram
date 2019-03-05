@@ -11,7 +11,7 @@
  *
  * saveFile: filepath to the File that should be loaded
  *
- * returns: true if an error occured
+ * returns: true if an error occurred
 */
 bool loadData(FILE * save);
 
@@ -20,10 +20,10 @@ bool loadData(FILE * save);
  * ----------------------------
  * writes library from memory to file
  *
- * lib: pointer to the library that should be safed
+ * lib: pointer to the library that should be saved
  * saveFile: filepath to the File that should be loaded
  *
- * returns: false if succesfull, true if an error occured
+ * returns: false if successful, true if an error occurred
 */
 
 
@@ -37,7 +37,7 @@ bool saveData(FILE *save);
  * lib: pointer to the library that should be extended
  * and all parameters the book has
  *
- * returns: 0 if succesfull, 1 if an error occured
+ * returns: 0 if successful, 1 if an error occur ed
 */
 bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower);
 
@@ -49,7 +49,7 @@ bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author,
  *
  * b: pointer to the book that should be removed 
  *
- * returns: 0 if succesfull, 1 if an error occured
+ * returns: 0 if successful, 1 if an error occur ed
 */
 bool deleteBook(book *b);
 
@@ -64,7 +64,7 @@ void freeBook(book *b);
  * book: pointer to the book that should be borrow
  * borrower: name of the borrower
  *
- * returns: 0 if succesfull, 1 if there are no copies left, 2 if memmory could not be allocated
+ * returns: 0 if successful, 1 if there are no copies left, 2 if memory could not be allocated
 */
 int borrowBook(book *book, char* borrower);
 void returnBook(book *book, int returner);
