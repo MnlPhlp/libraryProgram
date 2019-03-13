@@ -39,7 +39,7 @@ bool saveData(FILE *save);
  *
  * returns: 0 if successful, 1 if an error occur ed
 */
-bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author, char **borrower);
+bool addBook(int amount, int borrowed, char isbn[14], char *title, char *author, char **borrower);
 
 /*
  * Function: deleteBook
@@ -47,7 +47,7 @@ bool addBook(int amount, int borrowed, char isbn[11], char *title, char *author,
  * removes a Book from the library
  * the last Book in the array is moved to the free position
  *
- * b: pointer to the book that should be removed 
+ * b: pointer to the book that should be removed
  *
  * returns: 0 if successful, 1 if an error occur ed
 */

@@ -169,7 +169,7 @@ library *search(){
       do
       {
         printf("ISBN: ");
-      } while (getString(keyword, 10));
+      } while (getString(keyword, 13));
       results = searchBook('i', keyword);
       break;
 
@@ -230,7 +230,7 @@ book* searchSelect(library *results){
 void addMenu()
 {
   // enter ISBN first to detect if book is already stored
-  char isbn[11] = "";
+  char isbn[14] = "";
   do
   {
     printf("ISBN: ");
@@ -240,7 +240,7 @@ void addMenu()
   {
     i++;
   }
-  
+
   if(i < lib.count){
     // if ISBN is already stored just increase the count
     printf("A Book with the entered ISBN already exists\n\n");
@@ -308,7 +308,7 @@ void deleteMenu()
 
 book *selectByIsbn()
 {
-  char isbn[11];
+  char isbn[14];
   book *b;
   //get a valid ISBN from user to clearly identify book to borrow
   do
@@ -327,7 +327,7 @@ book *selectByIsbn()
 
 void deleteByIsbn()
 {
-  char isbn[11];
+  char isbn[14];
   library *results;
   //get a valid ISBN from user to clearly identify book to remove
   do
@@ -458,7 +458,7 @@ void bookMenu(book *b)
     case '3':
       deleteBookMenu(b);
       break;
-  
+
     default:
       break;
   }

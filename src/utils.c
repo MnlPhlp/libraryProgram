@@ -18,62 +18,36 @@ bool isbnValidation(char *isbn)
       continue;
     }
 
-      if (i < 9 && !((c >= '0') && (c <= '9')))
-      {
-        clearInput();
-        printf("First 9 characters have to be digits:\
-                char[%d]\" %c\" is invalid\n",
-               i, c);
-        return true;
-      }
-      if (i < 10)
-      {
-        if (c == 'x')
-        {
-          isbn[i] = 'X';
-        }
-        else
-        {
-          isbn[i] = c;
-        }
-        i++;
-      }
-      else
-      {
-        clearInput();
-        printf("to long\n");
-        return true;
-      }
+    if (i < 13 && !((c >= '0') && (c <= '9')))
+    {
+      clearInput();
+      printf("Input has to be digits:\nchar[%d]\" %c\" is invalid\n",i, c);
+      return true;
+    }
+    if(i > 12)
+    {
+      clearInput();
+      printf("Input to long\n");
+      return true;
+    }
+    isbn[i] = c;
+    i++;
   }
   //add null byte to end string
-  isbn[10] = '\0';
-  if (i != 10)
+  isbn[13] = '\0';
+  if (i != 13)
   {
-    printf("to short\n");
-    return true;
-  }
-
-  if (isbn[9] != 'x' && isbn[9] != 'X' && !(isbn[9] >= '0') && !(isbn[9] <= '9'))
-  {
-    printf("last digit is NaN or 'X'\n");
+    printf("Input to short\n");
     return true;
   }
 
   //  ISBN Checksum
   int total = 0;
-  for (int i = 0; i < 9; i++)
+  for(int i = 0; i<12; i++)
   {
-    total += (isbn[i] - '0') * (10 - i);
+    total += i%2 ? 3*(isbn[i]-'0') : (isbn[i]-'0');
   }
-  if (isbn[9] == 'X')
-  {
-    total += 10;
-  }
-  else
-  {
-    total += isbn[9] - '0';
-  }
-  if (total % 11)
+  if ((10 - total % 10) % 10 != isbn[12] - '0')
   {
     printf("Not an ISBN, check checksum\n");
     return true;
@@ -202,7 +176,7 @@ bool getString(char *str, int length)
     printf("input to long\n");
     clearInput();
     return true;
-  }  
+  }
   // remove newline at end of string
   buffer[strlen(buffer)-1]='\0';
   // copy string to buffer of calling function

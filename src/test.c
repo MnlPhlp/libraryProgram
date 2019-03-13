@@ -22,7 +22,7 @@ void runTests()
   library oldLib = lib;
   int amount;
   int borrowed;
-  char isbn[11];
+  char isbn[14];
   char title[32];
   char author[32];
   char **borrower ;
@@ -47,7 +47,7 @@ void runTests()
     {
       amount = 1+rand()%20;
       borrowed = amount - rand()%(amount+1);
-      randomString(isbn,10);
+      randomString(isbn,13);
       randomString(title,31);
       randomString(author,31);
       borrower= malloc(borrowed*sizeof(char*));
@@ -61,7 +61,7 @@ void runTests()
       stop = clock();
       overallTime	+= (float)(stop - start)/CLOCKS_PER_SEC;
     }
-    
+
     float average = (overallTime*1000000)/generatedAmount;
     printf("adding books took %.2f seconds\nthat is %.2f microseconds per book\n",overallTime,average);
     start = clock();
