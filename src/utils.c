@@ -13,7 +13,7 @@ bool isbnValidation(char *isbn)
   int i = 0;
   while ((c = getchar()) != '\n' && c != EOF)
   {
-    if (c == ' ' || c == '-'){
+    if (c == ' ' || c == '-'|| c == 9){
       //skip separation characters used in an ISBN
       continue;
     }
