@@ -55,7 +55,7 @@
                      " | (Q) QUIT              |\n" \
                      " '-----------------------'\n"
 
-#define searchSelectText "  _______________________\n"  \
+#define searchMenuText "  _______________________\n"  \
                        " |      Search Menu      |\n" \
                        " |-----------------------|\n" \
                        " | Search by...          |\n" \

@@ -39,7 +39,7 @@ bool saveData(FILE *save);
  *
  * returns: 0 if successful, 1 if an error occur ed
 */
-bool addBook(int amount, int borrowed, char isbn[14], char *title, char *author, char **borrower);
+bool addBook(int amount, char isbn[14], char *title, char *author);
 
 /*
  * Function: deleteBook

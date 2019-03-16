@@ -71,7 +71,7 @@ void borrowInput(book* b){
       printf("the book '%s' is currently not in stock\n",b->title);
       break;
     case 2:
-      printf("book could not be borrowed because of an error\n");
+      printf("book could not be borrowed because memory could not be allocated\n");
       break;
   }
 }
@@ -132,6 +132,8 @@ void borrowMenu()
       borrowInput(b);
     }
   }
+  // clear the output for the next menu
+  clearConsole();
 }
 
 void returnMenu()
@@ -158,13 +160,15 @@ void returnMenu()
       returnInput(b);
     }
   }
+  // clear the output for the next menu
+  clearConsole();
 }
 
 library *search(){
   char keyword[buffSize + 1];
-  // create empty library
-  library *results = calloc(1,sizeof(library));
-    switch (menu(searchSelectText, 4))
+  // create library pointer to store results
+  library *results = NULL;
+    switch (menu(searchMenuText, 4))
     {
     case '1':
       do
@@ -223,8 +227,10 @@ book* searchSelect(library *results){
     printf("no Books found\n");
   }
   // free the memory allocated for the results
-  free(results->books);
-  free(results);
+  if (results != NULL){
+    free(results->books);
+    free(results);
+  }
   return b;
 }
 
@@ -281,7 +287,7 @@ void addMenu()
     printf("Invalid input\nAmount:");
   }
   // add the book with entered data
-  addBook(amount, 0, isbn, title, author, NULL);
+  addBook(amount, isbn, title, author);
   clearInput();
   clearConsole();
   printf("Book added\n");
@@ -310,6 +316,7 @@ void deleteMenu()
 book *selectByIsbn()
 {
   char isbn[14];
+  library *results;
   book *b;
   //get a valid ISBN from user to clearly identify book to borrow
   do
@@ -317,12 +324,19 @@ book *selectByIsbn()
     printf("ISBN: ");
   } while (isbnValidation(isbn));
 
-  //because only a valid ISBN can be entered there can only be one search result
-  b = (book *) searchBook('i', isbn)->books;
-  if (b==NULL){
+  // search for the entered isbn
+  results = searchBook('i', isbn);
+  //because only a valid ISBN can be entered there can only be one search result or none
+  if (results->count==0){
     clearConsole();
     printf("the library contains no book with ISBN '%s'\n",isbn);
   }
+  else{
+    b = results->books[0];
+  }
+  //free memory allocated for the search results
+  free(results->books);
+  free(results);
   return b;
 }
 

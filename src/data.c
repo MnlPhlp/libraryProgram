@@ -207,35 +207,28 @@ bool saveData(FILE *save)
   return false;
 }
 
-book *newBook(int amount, int borrowed, char *isbn, char *title, char *author, char **borrower)
+book *newBook(int amount,  char *isbn, char *title, char *author)
 {
   book *newBook = malloc(sizeof(book));
   newBook->amount = amount;
-  newBook->borrowed = borrowed;
+  newBook->borrowed = 0;
   strcpy(newBook->isbn, isbn);
   newBook->title = malloc(strlen(title) + 1);
   strcpy(newBook->title, title);
   newBook->author = malloc(strlen(author) + 1);
   strcpy(newBook->author, author);
-  newBook->borrower = malloc(sizeof(char *) * borrowed);
-
-  for (int i = 0; i < newBook->borrowed; i++)
-  {
-    newBook->borrower[i] = malloc(strlen(borrower[i]));
-    strcpy(newBook->borrower[i], borrower[i]);
-  }
-
+  newBook->borrower = NULL;
   return newBook;
 }
 
-bool addBook(int amount, int borrowed, char *isbn, char *title, char *author, char **borrower)
+bool addBook(int amount, char *isbn, char *title, char *author)
 {
   // increase count of books in library
   lib.count += 1;
   // allocate more space in book array
   lib.books = realloc(lib.books, lib.count * sizeof(book *));
   // store pointer to the new book at last position of book array
-  lib.books[lib.count - 1] = newBook(amount, borrowed, isbn, title, author, borrower);
+  lib.books[lib.count - 1] = newBook(amount, isbn, title, author);
   return false;
 }
 
