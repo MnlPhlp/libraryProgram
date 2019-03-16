@@ -57,7 +57,9 @@ void runTests()
         randomString(borrower[j],31);
       }
       start = clock();
-      addBook(amount,borrowed,isbn,title,author,borrower);
+      addBook(amount,isbn,title,author);
+      lib.books[i]->borrowed=borrowed;
+      lib.books[i]->borrower=borrower;
       stop = clock();
       overallTime	+= (float)(stop - start)/CLOCKS_PER_SEC;
     }
