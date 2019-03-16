@@ -267,12 +267,22 @@ book* searchSelect(library *results){
 
 void addMenu()
 {
+  // clear ouput of main menu
+  clearConsole();
+  printf("Enter the data of the new book.\n");
   // enter ISBN first to detect if book is already stored
   char isbn[14] = "";
   do
   {
-    printf("ISBN: ");
+    printf("ISBN (Q to quit): ");
   } while (isbnValidation(isbn));
+  if (isbn[0] == 'Q'){
+    // quit the add menu
+    clearConsole();
+    printf("adding was cancled\n");
+    // return to main menu
+    return;
+  }
   int i = 0;
   while (i < lib.count && !strstr(lib.books[i]->isbn, isbn))
   {
@@ -325,9 +335,11 @@ void addMenu()
   }
   // add the book with entered data
   addBook(amount, isbn, title, author);
+  // clear input buffer
   clearInput();
+  // clear output
   clearConsole();
-  printf("Book added\n");
+  printf("Book '%s' added\n",title);
 }
 
 void deleteMenu()
