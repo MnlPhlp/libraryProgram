@@ -18,14 +18,26 @@ bool isbnValidation(char *isbn)
       continue;
     }
 
+    if ((c == 'q' || c == 'Q') && i == 0){
+      //quit isbn check if user enters a q as first/only character
+      isbn[0]='Q';
+      //clear input buffer
+      clearInput();
+      return false;
+    } 
+
+    //check if a character that's not a number is entered
     if (i < 13 && !((c >= '0') && (c <= '9')))
     {
+      //clear input buffer
       clearInput();
+      //notify user about the wrong character
       printf("Input has to be digits:\nchar[%d]\" %c\" is invalid\n",i, c);
       return true;
     }
     if(i > 12)
     {
+      //clear input buffer
       clearInput();
       printf("Input to long\n");
       return true;

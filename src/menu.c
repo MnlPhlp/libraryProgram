@@ -32,9 +32,13 @@ void mainMenu()
       break;
     case '6':
       if (lib.count > 0){
+        // print the whole library
         searchResults(&lib);
         printf("Enter to continue..");
+        // clear input buffer
         clearInput();
+        // clear output
+        clearConsole();
       }
       else
       {
@@ -59,13 +63,18 @@ void mainMenu()
 
 void borrowInput(book* b){
   char borrower[buffSize];
+  //show book which will be borrowed
+  printf("Borrowing book:\n");
+  printBook(b);
   do{
     printf("Name of borrower: ");
   } while (getString(borrower, buffSize - 1));
+  // clear output for the next menu
+  clearConsole();
   switch(borrowBook(b,borrower))
   {
     case 0:
-      printf("book '%s' successfully borrowed by %s\n",b->title,borrower);
+      printf("book '%s' was successfully borrowed by '%s'\n",b->title,borrower);
       break;
     case 1:
       printf("the book '%s' is currently not in stock\n",b->title);
@@ -99,18 +108,25 @@ void returnInput(book* b){
     if (toupper(input[0]) == 'Q')
     {
       clearConsole();
-      printf("no borrower selected\n");
+      printf("no book returned\n");
+      // clear output
+      clearConsole();
       return;
     }
     selection = atoi(input);
     // set firstTry false to give error message if user entered invalid input
     firstTry = false;
   }
+  // clear output
+  clearConsole();
   returnBook(b,selection-1);
+  printf("book '%s' returned by '%s'",b->title,b->borrower[selection-1]);
 }
 
 void borrowMenu()
 {
+  // clear output of the main menu
+  clearConsole();
   book *b = NULL;
   while (true)
   {
@@ -125,9 +141,14 @@ void borrowMenu()
       break;
 
     case 'Q':
+      // clear the output for the next menu
+      clearConsole();
+      // return to main menu
       return;
       break;
     }
+    // clear the output for the next menu
+    clearConsole();
     if (b != NULL){
       // check if book is in stock before asking borrower for his name
       if (b->amount > b ->borrowed){
@@ -139,13 +160,12 @@ void borrowMenu()
       }
     }
   }
-  // clear the output for the next menu
-  clearConsole();
 }
 
 void returnMenu()
 {
-
+  // clear output of the main menu
+  clearConsole();
   book *b = NULL;
   while (true)
   {
@@ -160,6 +180,9 @@ void returnMenu()
       break;
 
     case 'Q':
+      // clear the output for the next menu
+      clearConsole();
+      // return to the main menu
       return;
       break;
     }
@@ -167,11 +190,11 @@ void returnMenu()
       returnInput(b);
     }
   }
-  // clear the output for the next menu
-  clearConsole();
 }
 
 library *search(){
+  // clear output of the last program
+  clearConsole();
   char keyword[buffSize + 1];
   // create library pointer to store results
   library *results = NULL;
@@ -220,10 +243,11 @@ library *search(){
 }
 
 book* searchSelect(library *results){
+  // clear the output of the search menu
   clearConsole();
   book *b = NULL;
   //if there are results show them
-  if (results->count > 0){
+  if (results !=NULL && results->count > 0){
     searchResults(results);
     printf("select a book to continue with (Q to quit)\n");
     b = selectBook(results);
@@ -243,12 +267,22 @@ book* searchSelect(library *results){
 
 void addMenu()
 {
+  // clear ouput of main menu
+  clearConsole();
+  printf("Enter the data of the new book.\n");
   // enter ISBN first to detect if book is already stored
   char isbn[14] = "";
   do
   {
-    printf("ISBN: ");
+    printf("ISBN (Q to quit): ");
   } while (isbnValidation(isbn));
+  if (isbn[0] == 'Q'){
+    // quit the add menu
+    clearConsole();
+    printf("adding was cancled\n");
+    // return to main menu
+    return;
+  }
   int i = 0;
   while (i < lib.count && !strstr(lib.books[i]->isbn, isbn))
   {
@@ -256,9 +290,11 @@ void addMenu()
   }
 
   if(i < lib.count){
+    //save addres of the found book
+    book *b=lib.books[i];
     // if ISBN is already stored just increase the count
     printf("A Book with the entered ISBN already exists\n\n");
-    printBook(lib.books[i]);
+    printBook(b);
     printf("how many copies do you want to add\n");
     int amount;
     // ask for the added amount
@@ -269,8 +305,12 @@ void addMenu()
       printf("Invalid input\nAmount:");
     }
     clearInput();
-    lib.books[i]->amount += amount;
+    b->amount += amount;
     // in this case we don't need more user input
+    //clear output for main menu
+    clearConsole();
+    printf("added %d cop%s to the book '%s'\n"
+    , amount, b->amount == 1 ? "y" : "ies", b->title);
     return;
   }
 
@@ -295,27 +335,39 @@ void addMenu()
   }
   // add the book with entered data
   addBook(amount, isbn, title, author);
+  // clear input buffer
   clearInput();
+  // clear output
   clearConsole();
-  printf("Book added\n");
+  printf("Book '%s' added\n",title);
 }
 
 void deleteMenu()
 {
+  // clear the output of the main menu
+  clearConsole();
+  book *b;
   while (true)
   {
     switch (menu(deleteMenuText, 2))
     {
     case '1':
+      b = searchSelect(search());
       break;
 
     case '2':
-      deleteByIsbn();
+      b = selectByIsbn();
       break;
 
     case 'Q':
+      // clear the output for the next menu
+      clearConsole();
+      // return to main menu
       return;
       break;
+    }
+    if (b != NULL){
+      deleteBookMenu(b);
     }
   }
 }
@@ -325,12 +377,15 @@ book *selectByIsbn()
   char isbn[14];
   library *results;
   book *b;
-  //get a valid ISBN from user to clearly identify book to borrow
+  //get a valid ISBN from user to clearly identify book
   do
   {
-    printf("ISBN: ");
+    printf("enter ISBN (Q to quit): ");
   } while (isbnValidation(isbn));
-
+  if (isbn[0] == 'Q'){
+    clearConsole();
+    printf("no ISBN entered\n");
+  }
   // search for the entered isbn
   results = searchBook('i', isbn);
   //because only a valid ISBN can be entered there can only be one search result or none
@@ -347,39 +402,47 @@ book *selectByIsbn()
   return b;
 }
 
-void deleteByIsbn()
-{
-  char isbn[14];
-  library *results;
-  //get a valid ISBN from user to clearly identify book to remove
-  do
-  {
-    printf("ISBN: ");
-  } while (isbnValidation(isbn));
-
-  //because only a valid ISBN can be entered there can only be one or none search result
-  results = searchBook('i', isbn);
-  if (results->count == 0)
-  {
-    printf("no book with the ISBN '%s' was found\n", isbn);
-    return;
-  }
-  deleteBookMenu(results->books[0]);
-}
-
 void deleteBookMenu(book* b){
   int amount;
-  printf("Amount of copies you want to remove (%d available): ", b->amount);
-  while (scanf("%d", &amount) != 1 || amount > b->amount || amount <= 0)
+  // clear output of menu
+  clearConsole();
+  // show which book will be deleted
+  printf("removing book:\n");
+  printBook(b);
+  // ask the user how many copies he wants to remove
+  printf("enter the amount of copies you want to remove\n"
+         "you can only remove the %d in stock (%d borrowed)\n"
+         "Amount: ", b->amount - b->borrowed, b->borrowed);
+  
+  // accept only a number between 0 and the amount of copies in stock
+  while (scanf("%d", &amount) != 1 || amount > b->amount-b->borrowed || amount < 0)
   {
     printf("Invalid Input\nAmount: ");
+    // clear Input buffer
     clearInput();
   }
+  // clear Input buffer
   clearInput();
-  if (amount == b->amount)
+  // clear output
+  clearConsole();
+  if (amount == b->amount){
+    // delete the book completely from the library
+    printf("the book '%s' was deleted from the library\n", b->title);
     deleteBook(b);
-  else
+  }
+  else{
+    // remove given amount of copies
     b->amount -= amount;
+    // inform the user
+    if (amount == 1){
+      printf("%d copy of the book '%s' was removed.\n%d cop%s remaining (%d in stock)\n"
+      ,amount, b->title, b->amount, b->amount == 1 ? "y" : "ies", b->amount - b->borrowed);
+    }
+    else{
+      printf("%d copies of the book '%s' were removed.\n%d cop%s remaining (%d in stock)\n"
+      ,amount, b->title, b->amount, b->amount == 1 ? "y" : "ies", b->amount - b->borrowed);
+    }
+  }
 }
 
 bool loadMenu(char *saveFile, int bufferSize)
@@ -459,8 +522,8 @@ book* selectBook(library *results){
     // set firstTry false to give error message if user entered invalid input
     firstTry = false;
   }
+  // clear output for the next menu
   clearConsole();
-  printf("selected Book %d\n", selection);
   return results->books[selection-1];
 }
 
