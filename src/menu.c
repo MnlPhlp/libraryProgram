@@ -376,7 +376,7 @@ book *selectByIsbn()
 {
   char isbn[14];
   library *results;
-  book *b;
+  book *b = NULL;
   //get a valid ISBN from user to clearly identify book
   do
   {
