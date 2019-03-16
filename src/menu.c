@@ -32,9 +32,13 @@ void mainMenu()
       break;
     case '6':
       if (lib.count > 0){
+        // print the whole library
         searchResults(&lib);
         printf("Enter to continue..");
+        // clear input buffer
         clearInput();
+        // clear output
+        clearConsole();
       }
       else
       {
@@ -104,14 +108,19 @@ void returnInput(book* b){
     if (toupper(input[0]) == 'Q')
     {
       clearConsole();
-      printf("no borrower selected\n");
+      printf("no book returned\n");
+      // clear output
+      clearConsole();
       return;
     }
     selection = atoi(input);
     // set firstTry false to give error message if user entered invalid input
     firstTry = false;
   }
+  // clear output
+  clearConsole();
   returnBook(b,selection-1);
+  printf("book '%s' returned by '%s'",b->title,b->borrower[selection-1]);
 }
 
 void borrowMenu()
@@ -271,9 +280,11 @@ void addMenu()
   }
 
   if(i < lib.count){
+    //save addres of the found book
+    book *b=lib.books[i];
     // if ISBN is already stored just increase the count
     printf("A Book with the entered ISBN already exists\n\n");
-    printBook(lib.books[i]);
+    printBook(b);
     printf("how many copies do you want to add\n");
     int amount;
     // ask for the added amount
@@ -284,8 +295,12 @@ void addMenu()
       printf("Invalid input\nAmount:");
     }
     clearInput();
-    lib.books[i]->amount += amount;
+    b->amount += amount;
     // in this case we don't need more user input
+    //clear output for main menu
+    clearConsole();
+    printf("added %d cop%s to the book '%s'\n"
+    , amount, b->amount == 1 ? "y" : "ies", b->title);
     return;
   }
 
@@ -317,6 +332,8 @@ void addMenu()
 
 void deleteMenu()
 {
+  // clear the output of the main menu
+  clearConsole();
   book *b;
   while (true)
   {
@@ -331,12 +348,14 @@ void deleteMenu()
       break;
 
     case 'Q':
+      // clear the output for the next menu
+      clearConsole();
       // return to main menu
       return;
       break;
     }
     if (b != NULL){
-      deleteMenu(b);
+      deleteBookMenu(b);
     }
   }
 }
@@ -373,17 +392,45 @@ book *selectByIsbn()
 
 void deleteBookMenu(book* b){
   int amount;
-  printf("Amount of copies you want to remove (%d available): ", b->amount);
-  while (scanf("%d", &amount) != 1 || amount > b->amount || amount <= 0)
+  // clear output of menu
+  clearConsole();
+  // show which book will be deleted
+  printf("removing book:\n");
+  printBook(b);
+  // ask the user how many copies he wants to remove
+  printf("enter the amount of copies you want to remove\n"
+         "you can only remove the %d in stock (%d borrowed)\n"
+         "Amount: ", b->amount - b->borrowed, b->borrowed);
+  
+  // accept only a number between 0 and the amount of copies in stock
+  while (scanf("%d", &amount) != 1 || amount > b->amount-b->borrowed || amount < 0)
   {
     printf("Invalid Input\nAmount: ");
+    // clear Input buffer
     clearInput();
   }
+  // clear Input buffer
   clearInput();
-  if (amount == b->amount)
+  // clear output
+  clearConsole();
+  if (amount == b->amount){
+    // delete the book completely from the library
+    printf("the book '%s' was deleted from the library\n", b->title);
     deleteBook(b);
-  else
+  }
+  else{
+    // remove given amount of copies
     b->amount -= amount;
+    // inform the user
+    if (amount == 1){
+      printf("%d copy of the book '%s' was removed.\n%d cop%s remaining (%d in stock)\n"
+      ,amount, b->title, b->amount, b->amount == 1 ? "y" : "ies", b->amount - b->borrowed);
+    }
+    else{
+      printf("%d copies of the book '%s' were removed.\n%d cop%s remaining (%d in stock)\n"
+      ,amount, b->title, b->amount, b->amount == 1 ? "y" : "ies", b->amount - b->borrowed);
+    }
+  }
 }
 
 bool loadMenu(char *saveFile, int bufferSize)
@@ -463,8 +510,8 @@ book* selectBook(library *results){
     // set firstTry false to give error message if user entered invalid input
     firstTry = false;
   }
+  // clear output for the next menu
   clearConsole();
-  printf("selected Book %d\n", selection);
   return results->books[selection-1];
 }
 
