@@ -59,13 +59,18 @@ void mainMenu()
 
 void borrowInput(book* b){
   char borrower[buffSize];
+  //show book which will be borrowed
+  printf("Borrowing book:\n");
+  printBook(b);
   do{
     printf("Name of borrower: ");
   } while (getString(borrower, buffSize - 1));
+  // clear output for the next menu
+  clearConsole();
   switch(borrowBook(b,borrower))
   {
     case 0:
-      printf("book '%s' successfully borrowed by %s\n",b->title,borrower);
+      printf("book '%s' was successfully borrowed by '%s'\n",b->title,borrower);
       break;
     case 1:
       printf("the book '%s' is currently not in stock\n",b->title);
@@ -111,6 +116,8 @@ void returnInput(book* b){
 
 void borrowMenu()
 {
+  // clear output of the main menu
+  clearConsole();
   book *b = NULL;
   while (true)
   {
@@ -125,9 +132,14 @@ void borrowMenu()
       break;
 
     case 'Q':
+      // clear the output for the next menu
+      clearConsole();
+      // return to main menu
       return;
       break;
     }
+    // clear the output for the next menu
+    clearConsole();
     if (b != NULL){
       // check if book is in stock before asking borrower for his name
       if (b->amount > b ->borrowed){
@@ -139,13 +151,12 @@ void borrowMenu()
       }
     }
   }
-  // clear the output for the next menu
-  clearConsole();
 }
 
 void returnMenu()
 {
-
+  // clear output of the main menu
+  clearConsole();
   book *b = NULL;
   while (true)
   {
@@ -160,6 +171,9 @@ void returnMenu()
       break;
 
     case 'Q':
+      // clear the output for the next menu
+      clearConsole();
+      // return to the main menu
       return;
       break;
     }
@@ -167,11 +181,11 @@ void returnMenu()
       returnInput(b);
     }
   }
-  // clear the output for the next menu
-  clearConsole();
 }
 
 library *search(){
+  // clear output of the last program
+  clearConsole();
   char keyword[buffSize + 1];
   // create library pointer to store results
   library *results = NULL;
@@ -220,10 +234,11 @@ library *search(){
 }
 
 book* searchSelect(library *results){
+  // clear the output of the search menu
   clearConsole();
   book *b = NULL;
   //if there are results show them
-  if (results->count > 0){
+  if (results !=NULL && results->count > 0){
     searchResults(results);
     printf("select a book to continue with (Q to quit)\n");
     b = selectBook(results);
@@ -302,20 +317,26 @@ void addMenu()
 
 void deleteMenu()
 {
+  book *b;
   while (true)
   {
     switch (menu(deleteMenuText, 2))
     {
     case '1':
+      b = searchSelect(search());
       break;
 
     case '2':
-      deleteByIsbn();
+      b = selectByIsbn();
       break;
 
     case 'Q':
+      // return to main menu
       return;
       break;
+    }
+    if (b != NULL){
+      deleteMenu(b);
     }
   }
 }
@@ -325,12 +346,15 @@ book *selectByIsbn()
   char isbn[14];
   library *results;
   book *b;
-  //get a valid ISBN from user to clearly identify book to borrow
+  //get a valid ISBN from user to clearly identify book
   do
   {
-    printf("ISBN: ");
+    printf("enter ISBN (Q to quit): ");
   } while (isbnValidation(isbn));
-
+  if (isbn[0] == 'Q'){
+    clearConsole();
+    printf("no ISBN entered\n");
+  }
   // search for the entered isbn
   results = searchBook('i', isbn);
   //because only a valid ISBN can be entered there can only be one search result or none
@@ -345,26 +369,6 @@ book *selectByIsbn()
   free(results->books);
   free(results);
   return b;
-}
-
-void deleteByIsbn()
-{
-  char isbn[14];
-  library *results;
-  //get a valid ISBN from user to clearly identify book to remove
-  do
-  {
-    printf("ISBN: ");
-  } while (isbnValidation(isbn));
-
-  //because only a valid ISBN can be entered there can only be one or none search result
-  results = searchBook('i', isbn);
-  if (results->count == 0)
-  {
-    printf("no book with the ISBN '%s' was found\n", isbn);
-    return;
-  }
-  deleteBookMenu(results->books[0]);
 }
 
 void deleteBookMenu(book* b){

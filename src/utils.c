@@ -18,6 +18,12 @@ bool isbnValidation(char *isbn)
       continue;
     }
 
+    if ((c == 'q' || c == 'Q') && i == 0){
+      // quit isbn check if user enters a q as first/only character
+      isbn[0]='Q';
+      return false;
+    } 
+
     if (i < 13 && !((c >= '0') && (c <= '9')))
     {
       clearInput();
