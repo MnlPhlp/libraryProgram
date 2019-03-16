@@ -129,7 +129,14 @@ void borrowMenu()
       break;
     }
     if (b != NULL){
-      borrowInput(b);
+      // check if book is in stock before asking borrower for his name
+      if (b->amount > b ->borrowed){
+        // ask the user to input his name and borrow the book
+        borrowInput(b);
+      }
+      else{
+        printf("the book '%s' is currently not in stock\n",b->title);
+      }
     }
   }
   // clear the output for the next menu
