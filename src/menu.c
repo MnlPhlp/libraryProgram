@@ -162,7 +162,8 @@ void returnMenu()
 
 library *search(){
   char keyword[buffSize + 1];
-  library *results = NULL;
+  // create empty library
+  library *results = calloc(1,sizeof(library));
     switch (menu(searchSelectText, 4))
     {
     case '1':
