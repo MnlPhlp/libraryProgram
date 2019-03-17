@@ -189,10 +189,11 @@ void returnMenu()
       }
       else
       {
-        printf("book '%s' is not borrowed\n");
+        clearConsole();
+        printf("book '%s' is not borrowed\n",b->title);
       }
-      
-      
+
+
     }
   }
 }
