@@ -347,7 +347,7 @@ void deleteMenu()
 {
   // clear the output of the main menu
   clearConsole();
-  book *b;
+  book *b = NULL;
   while (true)
   {
     switch (menu(deleteMenuText, 2))
@@ -377,7 +377,7 @@ book *selectByIsbn()
 {
   char isbn[14];
   library *results;
-  book *b;
+  book *b = NULL;
   //get a valid ISBN from user to clearly identify book
   do
   {
