@@ -21,7 +21,7 @@ void mainMenu()
       returnMenu();
       break;
     case '3':
-        searchMenu();
+        search();
       break;
     case '4':
       addMenu();
@@ -129,7 +129,7 @@ void borrowMenu()
     switch (menu(borrowMenuText, 2))
     {
     case '1':
-      b = searchSelect(search());
+      b = searchSelect(searchMenu());
       break;
 
     case '2':
@@ -168,7 +168,7 @@ void returnMenu()
     switch (menu(returnMenuText, 2))
     {
     case '1':
-      b = searchSelect(search());
+      b = searchSelect(searchMenu());
       break;
 
     case '2':
@@ -197,7 +197,7 @@ void returnMenu()
   }
 }
 
-library *search(){
+library *searchMenu(){
   // clear output of the last program
   clearConsole();
   char keyword[buffSize + 1];
@@ -358,7 +358,7 @@ void deleteMenu()
     switch (menu(deleteMenuText, 2))
     {
     case '1':
-      b = searchSelect(search());
+      b = searchSelect(searchMenu());
       break;
 
     case '2':
@@ -555,10 +555,10 @@ void bookMenu(book *b)
   }
 }
 
-void searchMenu(){
+void search(){
   library *results;
   while(true){
-    results = search();
+    results = searchMenu();
     if (results == NULL){
       break;
     }

@@ -58,9 +58,8 @@ FILE *openFile(char *saveFile, char *mode)
   FILE *save = fopen(saveFile, mode);
   while (save == NULL)
   {
-    switch (errno)
-    {
-    case 2:
+    // check errno variable set bei fopen
+    if (errno == 2){
       // 2 means file/folder does not exist
       printf("file '%s' does not exist. Do you want to create it?\n"
        ANSI_COLOR_YELLOW "This only works if the folder already exists\n" ANSI_COLOR_RESET, saveFile);
@@ -85,16 +84,15 @@ FILE *openFile(char *saveFile, char *mode)
       else
         return NULL;
       break;
-
-    default:
-      printf("try again?");
+    }
+    else{
       printf(ANSI_COLOR_RED "Save file could not be opened\n" ANSI_COLOR_RESET
              "Error message: " ANSI_COLOR_YELLOW "%s\n" ANSI_COLOR_RESET,
              strerror(errno));
       printf("try again? ");
-      if (!yesno(false))
+      if (!yesno(false)){
         return NULL;
-      break;
+      }
     }
   }
   return save;

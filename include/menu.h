@@ -1,9 +1,11 @@
+// use include guard
 #ifndef MENU
 #define MENU
 
 #include <stdbool.h>
 #include "structs.h"
 
+//define the texts used in the menus
 #define mainMenuText "  _______________________\n"  \
                      " |       Main Menu       |\n" \
                      " |-----------------------|\n" \
@@ -66,28 +68,93 @@
                        " | (Q) QUIT              |\n" \
                        " '-----------------------'\n"
 
+//define ANSI escape sequences used for colors in output
 #define ANSI_COLOR_RED "\x1b[31m"
 #define ANSI_COLOR_RESET "\x1b[0m"
 #define ANSI_COLOR_YELLOW "\x1b[33m"
 
-#define buffSize 32
+//define buffer size for input
+#define buffSize 255
 
+/*
+ * Function: ...Menu
+ * ----------------------------
+ * top level menu functions 
+ * allow the user to select a specific action
+ */ 
 void mainMenu();
 void returnMenu();
 void borrowMenu();
 void addMenu();
-void deleteMenu();
-void deleteBookMenu(book* b);
-library* search();
-book *searchSelect(library *results);
-void searchMenu();
+void search();
 bool loadMenu();
-void searchResults( library *results);
+void deleteMenu();
 void bookMenu();
 
-book *selectByIsbn();
-void deleteByIsbn();
+/*
+ * Function: deleteBookMenu
+ * ----------------------------
+ * lets the user choose how many copies of a book he wants to remove
+ * if all copies are removed the book is completely deleted
+ * 
+ * b: pointer to the book of wich copies are removed
+ */ 
+void deleteBookMenu(book* b);
 
+/*
+ * Function: search
+ * ----------------------------
+ * lets the user search for a book
+ * by Title, Author, Borrower or ISBN
+ * 
+ * returns: library struct containing all the results
+ */ 
+library* searchMenu();
+
+/*
+ * Function: selectBook
+ * ----------------------------
+ * lets the user select a book from a library
+ * 
+ * results: library containing the books to select from
+ * 
+ * returns: pointer to the selected book
+ */
 book* selectBook(library *results);
+
+/*
+ * Function: searchSelect
+ * ----------------------------
+ * takes search results as input and handels if NULL is given
+ * calls selectBook and frees the results after a book is selected
+ * 
+ * results: library containing the books to select from
+ * 
+ * returns: pointer to the selected book
+ */
+book *searchSelect(library *results);
+
+/*
+ * Function: searchResults
+ * ----------------------------
+ * prints a library in an order selected by the user
+ * can be ordered by title, author of ISBN
+ * 
+ * results: library containing the books to print
+ * 
+ */
+void searchResults( library *results);
+
+/*
+ * Function: searchResults
+ * ----------------------------
+ * selects a book by ISBN from the global library
+ * can only be used with the complete ISBN
+ * calls the search but with valid ISBN so there can be only one or no result
+ * 
+ * 
+ * returns: the selected book or NULL if there is no matching book
+ */
+book *selectByIsbn();
 
 #endif
