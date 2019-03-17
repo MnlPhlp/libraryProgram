@@ -189,6 +189,7 @@ void returnMenu()
       }
       else
       {
+        clearConsole();
         printf("book '%s' is not borrowed\n",b->title);
       }
 
