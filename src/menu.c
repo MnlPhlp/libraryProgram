@@ -296,7 +296,7 @@ void addMenu()
     // ask for the added amount
     printf("Amount: ");
     // check if input was successful
-    while (scanf("%d", &amount) != 1 || amount + b->amount > 255)
+    while (scanf("%d", &amount) != 1 || amount + b->amount > 255 || amount + b->amount < 0)
     {
       clearInput();
       printf("Invalid input\nAmount:");
@@ -410,7 +410,7 @@ void deleteBookMenu(book* b){
   printf("enter the amount of copies you want to remove\n"
          "you can only remove the %d in stock (%d borrowed)\n"
          "Amount: ", b->amount - b->borrowed, b->borrowed);
-  
+
   // accept only a number between 0 and the amount of copies in stock
   while (scanf("%d", &amount) != 1 || amount > b->amount-b->borrowed || amount < 0)
   {
