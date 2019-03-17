@@ -116,7 +116,7 @@ void returnInput(book* b){
   // clear output
   clearConsole();
   returnBook(b,selection-1);
-  printf("a copy of book '%s' was returned",b->title);
+  printf("a copy of book '%s' was returned\n",b->title);
 }
 
 void borrowMenu()
@@ -183,7 +183,16 @@ void returnMenu()
       break;
     }
     if (b != NULL){
-      returnInput(b);
+      // check if book is borrowed
+      if (b->borrowed > 0){
+        returnInput(b);
+      }
+      else
+      {
+        printf("book '%s' is not borrowed\n");
+      }
+      
+      
     }
   }
 }
