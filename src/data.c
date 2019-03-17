@@ -207,7 +207,7 @@ bool saveData(FILE *save)
   return false;
 }
 
-book *newBook(int amount,  char *isbn, char *title, char *author)
+book *newBook(uint8 amount,  char *isbn, char *title, char *author)
 {
   book *newBook = malloc(sizeof(book));
   newBook->amount = amount;
@@ -221,7 +221,7 @@ book *newBook(int amount,  char *isbn, char *title, char *author)
   return newBook;
 }
 
-bool addBook(int amount, char *isbn, char *title, char *author)
+bool addBook(uint8 amount, char *isbn, char *title, char *author)
 {
   // increase count of books in library
   lib.count += 1;
