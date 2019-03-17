@@ -10,7 +10,7 @@
 library lib = {0, NULL};
 
 unsigned long hashStr(char *str){
-  unsigned long hash;
+  unsigned long hash = 0;
   int count = 0;
   // loop over the string and add up values
   while (*str != '\00'){
