@@ -116,7 +116,7 @@ void returnInput(book* b){
   // clear output
   clearConsole();
   returnBook(b,selection-1);
-  printf("book '%s' returned by '%s'",b->title,b->borrower[selection-1]);
+  printf("a copy of book '%s' was returned",b->title);
 }
 
 void borrowMenu()
