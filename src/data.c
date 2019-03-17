@@ -6,12 +6,16 @@
 #include "../include/menu.h"
 #include "../include/utils.h"
 
+// create empty library as global veriable to save all the data
 library lib = {0, NULL};
 
-unsigned long hashStr(char * str){
-  unsigned long hash = *str;
+unsigned long hashStr(char *str){
+  unsigned long hash;
   int count = 0;
+  // loop over the string and add up values
   while (*str != '\00'){
+    /* multiply the character value by 'count' to detect switched characters
+     the hash variable will overflow for long strings but that doesn't matter */
     hash += *str * count  ;
     count ++;
     str ++;
@@ -22,8 +26,10 @@ unsigned long hashStr(char * str){
 unsigned long hashLib()
 {
   unsigned long hash = lib.count;
+  // loop over the books and hash them
   for(int i = 0; i < lib.count; i++)
   {
+    // add up all numeric values that a book has, plus hashes of the strings
     hash += lib.books[i]->amount;
     hash += lib.books[i]->borrowed;
     hash += hashStr(lib.books[i]->author);
@@ -63,6 +69,7 @@ FILE *openFile(char *saveFile, char *mode)
       {
         // use fopen with mode w to create the file
         save = fopen(saveFile, "wb");
+        // check if the file was created successfuly
         if (save != NULL)
         {
           clearConsole();
@@ -207,22 +214,55 @@ bool saveData(FILE *save)
   return false;
 }
 
-book *newBook(int amount,  char *isbn, char *title, char *author)
+book *newBook(uint8 amount,  char *isbn, char *title, char *author)
 {
+  // allocate memory for the new book
   book *newBook = malloc(sizeof(book));
+  // check if allocation failed
+  if (newBook == NULL){
+    printf("could not allocate all the memory for a new book\n");
+    return NULL;
+  }
+  // save all the book values to the struct
   newBook->amount = amount;
   newBook->borrowed = 0;
   strcpy(newBook->isbn, isbn);
+  // allocate memory for the title
   newBook->title = malloc(strlen(title) + 1);
+  // check if allocation failed
+  if (newBook->title == NULL){
+    // free everything allocated so far
+    free(newBook);
+    // notify the user
+    printf("could not allocate all the memory for a new book\n");
+    return NULL;
+  }
+  // copy title to the struct
   strcpy(newBook->title, title);
+  // allocate memory for the author
   newBook->author = malloc(strlen(author) + 1);
+  // check if allocation failed
+  if (newBook->author == NULL){
+    // free everything allocated so far
+    free(newBook->title);
+    free(newBook);
+    // notify the user
+    printf("could not allocate all the memory for a new book\n");
+    return NULL;
+  }
   strcpy(newBook->author, author);
   newBook->borrower = NULL;
   return newBook;
 }
 
-bool addBook(int amount, char *isbn, char *title, char *author)
+bool addBook(uint8 amount, char *isbn, char *title, char *author)
 {
+  /* make sure the variable can store more books 
+     this will probably never be true because memory is the bigger problem*/
+  if (lib.count == __INT_MAX__){
+    printf("no more books can be stored\n");
+    return true;
+  }
   // increase count of books in library
   lib.count += 1;
   // allocate more space in book array

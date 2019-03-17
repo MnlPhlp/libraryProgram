@@ -295,11 +295,12 @@ void addMenu()
     // if ISBN is already stored just increase the count
     printf("A Book with the entered ISBN already exists\n\n");
     printBook(b);
-    printf("how many copies do you want to add\n");
+    printf("how many copies do you want to add (max. %d)\n",255 - b->amount);
     int amount;
     // ask for the added amount
     printf("Amount: ");
-    while (scanf("%d", &amount) != 1 || amount <= 0)
+    // check if input was successful
+    while (scanf("%d", &amount) != 1 || amount + b->amount > 255)
     {
       clearInput();
       printf("Invalid input\nAmount:");
@@ -327,8 +328,8 @@ void addMenu()
   } while (getString(author, buffSize - 1));
 
   int amount;
-  printf("Amount: ");
-  while (scanf("%d", &amount) != 1 || amount <= 0)
+  printf("Amount (max. 255): ");
+  while (scanf("%d", &amount) != 1 || amount > 255)
   {
     clearInput();
     printf("Invalid input\nAmount:");
@@ -346,7 +347,7 @@ void deleteMenu()
 {
   // clear the output of the main menu
   clearConsole();
-  book *b;
+  book *b = NULL;
   while (true)
   {
     switch (menu(deleteMenuText, 2))
