@@ -3,10 +3,10 @@
 #include <string.h>
 #include <stddef.h>
 #include <time.h>
-#include "../include/structs.h"
-#include "../include/data.h"
-#include "../include/menu.h"
-#include "../include/utils.h"
+#include "structs.h"
+#include "data.h"
+#include "menu.h"
+#include "utils.h"
 
 void randomString(char * str, int len){
   for(int i = 0; i < len; i++)

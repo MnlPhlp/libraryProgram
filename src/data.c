@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include "../include/data.h"
-#include "../include/menu.h"
-#include "../include/utils.h"
+#include "data.h"
+#include "menu.h"
+#include "utils.h"
 
 // create empty library as global veriable to save all the data
 library lib = {0, NULL};

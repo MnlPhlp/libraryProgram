@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
-#include "../include/menu.h"
-#include "../include/structs.h"
-#include "../include/data.h"
-#include "../include/utils.h"
+#include "menu.h"
+#include "structs.h"
+#include "data.h"
+#include "utils.h"
 
 int main()
 {

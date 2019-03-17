@@ -3,9 +3,9 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/data.h"
-#include "../include/menu.h"
-#include "../include/utils.h"
+#include "data.h"
+#include "menu.h"
+#include "utils.h"
 
 void runTests(); //Was das? :D
 
