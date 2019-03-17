@@ -13,7 +13,6 @@
                      " | (4) Add a book        |\n" \
                      " | (5) Remove a book     |\n" \
                      " | (6) Show all books    |\n" \
-                     " | (7) Tests r/woosh     |\n" \
                      " |-----------------------|\n" \
                      " | (Q) QUIT              |\n" \
                      " '-----------------------'\n"

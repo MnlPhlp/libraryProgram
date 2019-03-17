@@ -23,10 +23,6 @@ clean:
 run: all
 	./$(BIN)/$(EXECUTABLE)
 
-debug:
-	$(MAKE_BIN)
-	$(CC) $(C_FLAGS) --debug -I$(INCLUDE) -o $(BIN)/$(DEBUG) $(SRC)/*
-
 $(BIN)/$(EXECUTABLE): $(SRC)/*
 	$(MAKE_BIN)
 	$(CC) $(C_FLAGS) -I$(INCLUDE) $^ -o $@ 

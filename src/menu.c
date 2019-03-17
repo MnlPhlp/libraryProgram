@@ -7,13 +7,12 @@
 #include "menu.h"
 #include "utils.h"
 
-void runTests(); //Was das? :D
 
 void mainMenu()
 {
   while (true)
   {
-    switch (menu(mainMenuText, 7))
+    switch (menu(mainMenuText, 6))
     {
     case '1':
       borrowMenu();
@@ -47,9 +46,6 @@ void mainMenu()
         clearInput();
       }
 
-      break;
-    case '7':
-      runTests();
       break;
     case 'Q':
       return;
