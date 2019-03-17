@@ -6,12 +6,16 @@
 #include "../include/menu.h"
 #include "../include/utils.h"
 
+// create empty library as global veriable to save all the data
 library lib = {0, NULL};
 
-unsigned long hashStr(char * str){
-  unsigned long hash = *str;
+unsigned long hashStr(char *str){
+  unsigned long hash;
   int count = 0;
+  // loop over the string and add up values
   while (*str != '\00'){
+    /* multiply the character value by 'count' to detect switched characters
+     the hash variable will overflow for long strings but that doesn't matter */
     hash += *str * count  ;
     count ++;
     str ++;
@@ -22,8 +26,10 @@ unsigned long hashStr(char * str){
 unsigned long hashLib()
 {
   unsigned long hash = lib.count;
+  // loop over the books and hash them
   for(int i = 0; i < lib.count; i++)
   {
+    // add up all numeric values that a book has, plus hashes of the strings
     hash += lib.books[i]->amount;
     hash += lib.books[i]->borrowed;
     hash += hashStr(lib.books[i]->author);
@@ -63,6 +69,7 @@ FILE *openFile(char *saveFile, char *mode)
       {
         // use fopen with mode w to create the file
         save = fopen(saveFile, "wb");
+        // check if the file was created successfuly
         if (save != NULL)
         {
           clearConsole();
