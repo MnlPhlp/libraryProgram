@@ -216,13 +216,40 @@ bool saveData(FILE *save)
 
 book *newBook(uint8 amount,  char *isbn, char *title, char *author)
 {
+  // allocate memory for the new book
   book *newBook = malloc(sizeof(book));
+  // check if allocation failed
+  if (newBook == NULL){
+    printf("could not allocate all the memory for a new book\n");
+    return NULL;
+  }
+  // save all the book values to the struct
   newBook->amount = amount;
   newBook->borrowed = 0;
   strcpy(newBook->isbn, isbn);
+  // allocate memory for the title
   newBook->title = malloc(strlen(title) + 1);
+  // check if allocation failed
+  if (newBook->title == NULL){
+    // free everything allocated so far
+    free(newBook);
+    // notify the user
+    printf("could not allocate all the memory for a new book\n");
+    return NULL;
+  }
+  // copy title to the struct
   strcpy(newBook->title, title);
+  // allocate memory for the author
   newBook->author = malloc(strlen(author) + 1);
+  // check if allocation failed
+  if (newBook->author == NULL){
+    // free everything allocated so far
+    free(newBook->title);
+    free(newBook);
+    // notify the user
+    printf("could not allocate all the memory for a new book\n");
+    return NULL;
+  }
   strcpy(newBook->author, author);
   newBook->borrower = NULL;
   return newBook;
@@ -230,6 +257,12 @@ book *newBook(uint8 amount,  char *isbn, char *title, char *author)
 
 bool addBook(uint8 amount, char *isbn, char *title, char *author)
 {
+  /* make sure the variable can store more books 
+     this will probably never be true because memory is the bigger problem*/
+  if (lib.count == __INT_MAX__){
+    printf("no more books can be stored\n");
+    return true;
+  }
   // increase count of books in library
   lib.count += 1;
   // allocate more space in book array
